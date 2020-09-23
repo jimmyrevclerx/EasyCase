@@ -1,0 +1,254 @@
+﻿@model IEnumerable<Easycase.Model.Corporate.BLCorporateViewProfile>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/datatable")
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title"></h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/home/index">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">corporate</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <input type="hidden" id="hdnCorporateId" />
+    <input type="hidden" id="hdnBusinessName" />
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title m-b-0"><a href="/corporate/create" class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> New Case</a></h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" id="clientTable">
+                        <thead class="thead-light">
+                            <tr>
+                                @*<th>
+                                    <label class="customcheckbox m-b-20">
+                                        <input type="checkbox" id="mainCheckbox" />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </th>*@
+                                <th scope="col">Case No</th>
+                                <th scope="col">Business Name</th>
+                                <th scope="col">Key Contact</th>
+                                <th scope="col">Contact No</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="customtable">
+                            @foreach (var item in Model)
+                            {
+                                <tr id="tr@(item.ID)">
+                                    @*<th>
+                                        <label class="customcheckbox">
+                                            <input type="checkbox" class="listCheckbox" />
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </th>*@
+                                    <td>@item.CRA</td>
+                                    <td>@(item.BussinessName)</td>
+                                    <td>@item.KeyContactPerson</td>
+                                    <td>@item.Phone</td>
+                                    <td>@item.Email</td>
+                                    <td>
+
+                                        <button type="button" class="btn btn-light" onclick="OpenNoteModal(@item.ID,'@item.BussinessName')"><i class="fa fa-file-text" style="color: blue;font-size: 25px;" aria-hidden="true"></i></button>
+                                        <a href="/corporate/create/@item.ID" class="btn btn-cyan btn-sm">Edit</a>
+                                        <button type="button" onclick="confirmDelete(@item.ID)" class="btn btn-danger btn-sm">Delete</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteconfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <input type="hidden" id="hdnId" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You want to delete this record.
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="deleteRecord()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteNoteconfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <input type="hidden" id="hdnId" />
+            <input type="hidden" id="hdnBusinessName" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You want to delete this record.
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="deleteCaseNote()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="notemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+    <script>
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+            $("#casesli").addClass("selected");
+        });
+        $('#clientTable').DataTable();
+
+        function confirmDelete(id) {
+            $("#hdnId").val(id);
+            $("#deleteconfirm").modal("show");
+        }
+        function deleteRecord() {
+            $.ajax({
+                url: "/Corporate/Delete",
+                type: "POST",
+                data: { id: $("#hdnId").val() },
+                success: function (response) {
+                    var id = $("#hdnId").val();
+                    $("#clientTable").find("#tr" + id).remove();
+                    toastr.success('Record deleted successfully!', 'Success');
+                    $("#deleteconfirm").modal("hide");
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+
+        function OpenNoteModal(id,businessname)
+        {
+            $.ajax({
+                url: "/Corporate/OpenCaseNote",
+                type: "GET",
+                data: { id: id },
+                success: function (response) {
+                     $("#notemodal").html(response);
+                    $("#notemodal").modal("show");
+                    $("#clientname").html(" " + businessname);
+                    $("#hdnCorporateId").val(id);
+                     $("#hdnBusinessName").val(businessname);
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+            
+        }
+
+        function ShowNotes()
+        {
+            $("#plus-circle").css("display", "none");
+            $("#minus-circle").css("display", "block");
+            $("#note-edit").css("display", "block");
+        }
+        function HideNotes()
+        {
+            $("#plus-circle").css("display", "block");
+            $("#minus-circle").css("display", "none");
+            $("#note-edit").css("display", "none");
+        }
+        function CaseNoteList(id)
+        {
+            $.ajax({
+                url: "/Corporate/OpenCaseNote",
+                type: "GET",
+                data: { id: id },
+                success: function (response) {
+                    $("#notemodal").html(response);
+                    $("#clientname").html(" " + $("#hdnBusinessName").val());
+                    $("#hdnCorporateId").val(id);
+                    $("#hdnBusinessName").val(businessname);
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+        function EditNote(noteId,subject,notes,date)
+        {
+            $("#date").val(date);
+            $("#subject").val(subject);
+            $("#notes").val(notes);
+            $("#currentNoteId").val(noteId);
+            $("#plus-circle").css("display", "none");
+            $("#minus-circle").css("display", "block");
+            $("#note-edit").css("display", "block");
+        }
+        function SaveNotes()
+        {
+            var data = new Object();
+            data.Date = $("#date").val();
+            data.Subject = $("#subject").val();
+            data.Notes = $("#notes").val();
+            data.CorporateProfileId = $("#hdnCorporateId").val();
+            data.ID = $("#currentNoteId").val();
+            if (data.Notes != ""&&data.Date != "") {
+                $.ajax({
+                    url: "/Corporate/SaveCaseNote",
+                    type: "POST",
+                    data: data,
+                    success: function (response) {
+                        $("#currentNoteId").val(0);
+                        CaseNoteList($("#hdnCorporateId").val());
+                    },
+                    error: function (er) {
+                        toastr.error(er, 'Error');
+                    }
+                });
+            } 
+        }
+
+        function deleteCaseNote(id) {
+            $.ajax({
+                url: "/Corporate/DeleteCaseNotes",
+                type: "POST",
+                data: { id: id },
+                success: function (response) {
+                    CaseNoteList($("#hdnCorporateId").val());
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+    </script>
+}

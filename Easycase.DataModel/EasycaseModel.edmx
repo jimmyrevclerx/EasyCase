@@ -1,0 +1,1983 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EasyCaseDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Assigned">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="bigint" Nullable="false" />
+          <Property Name="ClientId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BusinessHours">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConsultingDuration" Type="int" />
+          <Property Name="WaitTime" Type="int" />
+          <Property Name="LeadDays" Type="int" />
+          <Property Name="Holidays" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+        </EntityType>
+        <EntityType Name="Cases">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="bigint" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+          <Property Name="CaseTypeId" Type="bigint" />
+          <Property Name="Deleted" Type="bit" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CaseNumber" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CasesNote">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CorporateProfileId" Type="bigint" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="200" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+        </EntityType>
+        <EntityType Name="CaseStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+          <Property Name="Show" Type="bit" />
+        </EntityType>
+        <EntityType Name="CaseTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="500" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Email" Type="nvarchar" MaxLength="500" />
+          <Property Name="PhoneNo" Type="nvarchar" MaxLength="30" />
+          <Property Name="Prefix" Type="int" />
+          <Property Name="DOB" Type="datetime" />
+          <Property Name="Country" Type="nvarchar" MaxLength="100" />
+          <Property Name="PurposeId" Type="bigint" />
+          <Property Name="Citizenship" Type="nvarchar" MaxLength="100" />
+          <Property Name="ImageId" Type="bigint" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="MartialStatusId" Type="bigint" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="CompanyDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="200" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="200" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="200" />
+          <Property Name="CompanyEmail" Type="nvarchar" MaxLength="200" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="500" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="500" />
+          <Property Name="City" Type="nvarchar" MaxLength="100" />
+          <Property Name="Province" Type="nvarchar" MaxLength="100" />
+          <Property Name="Country" Type="nvarchar" MaxLength="100" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="20" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="20" />
+          <Property Name="MembershipType" Type="nvarchar" MaxLength="200" />
+          <Property Name="MembershipNumber" Type="nvarchar" MaxLength="30" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContactTypeId" Type="bigint" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="WorkNo" Type="nvarchar" MaxLength="30" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" />
+          <Property Name="Prefix" Type="nvarchar" MaxLength="100" />
+          <Property Name="OtherNo" Type="nvarchar" MaxLength="30" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FaxNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="MailingAddress" Type="nvarchar" MaxLength="500" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Status" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="ContactTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="CorporateJobDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProfileId" Type="bigint" />
+          <Property Name="LMIANo" Type="nvarchar" MaxLength="100" />
+          <Property Name="PositionDescription" Type="nvarchar" MaxLength="500" />
+          <Property Name="ApprovedDate" Type="datetime" />
+          <Property Name="PositionAvailable" Type="int" />
+          <Property Name="Expiry" Type="datetime" />
+          <Property Name="Status" Type="bigint" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CorporatePositions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CorporateJobDetailId" Type="bigint" />
+          <Property Name="Position" Type="nvarchar" MaxLength="100" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="200" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CorporateProfileInformation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+          <Property Name="BussinessName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Email" Type="nvarchar" MaxLength="500" />
+          <Property Name="CRA" Type="nvarchar" MaxLength="100" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="30" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="500" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="500" />
+          <Property Name="Address3" Type="nvarchar" MaxLength="500" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="30" />
+          <Property Name="Website" Type="nvarchar" MaxLength="200" />
+          <Property Name="KeyContactPerson" Type="nvarchar" MaxLength="200" />
+          <Property Name="KeyContactPosition" Type="nvarchar" MaxLength="200" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="EducationDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CaseId" Type="bigint" Nullable="false" />
+          <Property Name="EducationHistory" Type="nvarchar(max)" />
+          <Property Name="ECACompleted" Type="nchar" MaxLength="3" />
+          <Property Name="CICEnglishExam" Type="nchar" MaxLength="3" />
+          <Property Name="SpouseEducation" Type="nvarchar(max)" />
+          <Property Name="CICEnglishExamSpouse" Type="nchar" MaxLength="3" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Holidays">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="int" />
+          <Property Name="HolidayOfYear" Type="nvarchar(max)" />
+          <Property Name="HolidayDates" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageName" Type="nvarchar(max)" />
+          <Property Name="OriginalName" Type="nvarchar(max)" />
+          <Property Name="ImagePath" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LinkCases">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="168" />
+          <Property Name="CaseId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ManageHours">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Day" Type="nvarchar" MaxLength="10" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="StartTime" Type="nvarchar" MaxLength="20" />
+          <Property Name="EndTime" Type="nvarchar" MaxLength="20" />
+          <Property Name="LunchStartTime" Type="nvarchar" MaxLength="20" />
+          <Property Name="LunchEndTime" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+        </EntityType>
+        <EntityType Name="MartialStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Mentions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="bigint" Nullable="false" />
+          <Property Name="ClientId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OtherDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CaseId" Type="bigint" Nullable="false" />
+          <Property Name="TemporaryWorker" Type="bit" />
+          <Property Name="SkilledWorker" Type="bit" />
+          <Property Name="TradeCertificate" Type="bit" />
+          <Property Name="ProvinceNominee" Type="bit" />
+          <Property Name="JobOffer" Type="bit" />
+          <Property Name="IsBCEmployerOffer" Type="bit" />
+          <Property Name="BCDistrict" Type="int" />
+          <Property Name="BCJobNOC" Type="nvarchar" MaxLength="500" />
+          <Property Name="YearsBCRelatedJobExperience" Type="nvarchar" MaxLength="100" />
+          <Property Name="BCCurrentEmployer" Type="bit" />
+          <Property Name="IsPostSecondaryCredentialBC" Type="bit" />
+          <Property Name="Wage" Type="int" />
+          <Property Name="CLBLevel" Type="int" />
+          <Property Name="IsECAObtained" Type="bit" />
+          <Property Name="IsTradesCertificationTrainingAuthority" Type="bit" />
+          <Property Name="EmployementHistory" Type="nvarchar(max)" />
+          <Property Name="PaymentCycle" Type="nvarchar" MaxLength="20" />
+          <Property Name="FullTimeEmployees" Type="int" />
+          <Property Name="HourlyWage" Type="int" />
+          <Property Name="AppliedPNPFromEmployerPast" Type="bit" />
+          <Property Name="IsEmployerWillingToSupportPNP" Type="bit" />
+          <Property Name="PositionsApplied" Type="nvarchar" MaxLength="100" />
+          <Property Name="SpouseEmployementHistory" Type="nvarchar(max)" />
+          <Property Name="FamilyLivingCanada" Type="bit" />
+          <Property Name="Children" Type="bit" />
+          <Property Name="ChildrenCount" Type="int" />
+          <Property Name="ChildrenAges" Type="nvarchar" MaxLength="100" />
+          <Property Name="Networth" Type="int" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ProfileInformation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProfileId" Type="bigint" Nullable="false" />
+          <Property Name="RelationToPrimaryApplicant" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="HearFromAboutus" Type="nvarchar" MaxLength="100" />
+          <Property Name="LikeToDoInCanada" Type="nvarchar" MaxLength="100" />
+          <Property Name="HaveYouAcceptedSchoolCollege" Type="nchar" MaxLength="3" />
+          <Property Name="VisitPrevious" Type="nchar" MaxLength="3" />
+          <Property Name="HaveVisitorOrStudentVisa" Type="nchar" MaxLength="3" />
+          <Property Name="HaveYourSpouseVisitorOrStudentVisa" Type="nchar" MaxLength="3" />
+          <Property Name="SpuseRefusedAnyApplication" Type="nchar" MaxLength="3" />
+          <Property Name="PreferedDestination" Type="nvarchar" MaxLength="100" />
+          <Property Name="SpuseAppliedPermanentResidence" Type="nchar" MaxLength="3" />
+          <Property Name="SpuseAnyIllegalCase" Type="nchar" MaxLength="3" />
+          <Property Name="SpuseAppliedAnyVisa" Type="nchar" MaxLength="3" />
+          <Property Name="FurtherInformation" Type="nvarchar" MaxLength="100" />
+          <Property Name="PrimaryLanguage" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Purpose">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="ServiceFee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceName" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsExpense" Type="nvarchar" MaxLength="3" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="AdditionalInfo" Type="nvarchar" MaxLength="500" />
+          <Property Name="Fee" Type="float" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+          <Property Name="Deleted" Type="bit" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Support">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+          <Property Name="ImageId" Type="bigint" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" />
+          <Property Name="Greeting" Type="nvarchar(max)" />
+          <Property Name="PhoneNo" Type="nvarchar" MaxLength="30" />
+          <Property Name="FacebookUrl" Type="nvarchar" MaxLength="200" />
+          <Property Name="Linkdin" Type="nvarchar" MaxLength="200" />
+          <Property Name="WebsiteUrl" Type="nvarchar" MaxLength="200" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="DueDate" Type="date" />
+          <Property Name="TimeDue" Type="nvarchar" MaxLength="20" />
+          <Property Name="Priority" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="RelatedCase" Type="bigint" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="Deleted" Type="bit" />
+          <Property Name="Archived" Type="bit" />
+        </EntityType>
+        <EntityType Name="TaskNote">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="bigint" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="200" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Date" Type="date" />
+          <Property Name="NotifyUser" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Assigned_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="Assigned" Type="Self.Assigned" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Assigned">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Assigned_Task">
+          <End Role="Task" Type="Self.Task" Multiplicity="1" />
+          <End Role="Assigned" Type="Self.Assigned" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Assigned">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cases_CaseTypes">
+          <End Role="CaseTypes" Type="Self.CaseTypes" Multiplicity="0..1" />
+          <End Role="Cases" Type="Self.Cases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CaseTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cases">
+              <PropertyRef Name="CaseTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cases_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Cases" Type="Self.Cases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cases">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CasesNote_CorporateProfileInformation">
+          <End Role="CorporateProfileInformation" Type="Self.CorporateProfileInformation" Multiplicity="0..1" />
+          <End Role="CasesNote" Type="Self.CasesNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CorporateProfileInformation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CasesNote">
+              <PropertyRef Name="CorporateProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clients_Images">
+          <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
+          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Clients">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clients_MartialStatus">
+          <End Role="MartialStatus" Type="Self.MartialStatus" Multiplicity="0..1" />
+          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MartialStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Clients">
+              <PropertyRef Name="MartialStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clients_Purpose">
+          <End Role="Purpose" Type="Self.Purpose" Multiplicity="0..1" />
+          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Purpose">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Clients">
+              <PropertyRef Name="PurposeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contacts_ContactTypes">
+          <End Role="ContactTypes" Type="Self.ContactTypes" Multiplicity="0..1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContactTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Contacts">
+              <PropertyRef Name="ContactTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CorporateJobDetails_CaseStatus">
+          <End Role="CaseStatus" Type="Self.CaseStatus" Multiplicity="0..1" />
+          <End Role="CorporateJobDetails" Type="Self.CorporateJobDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CaseStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CorporateJobDetails">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CorporateJobDetails_CorporateProfileInformation">
+          <End Role="CorporateProfileInformation" Type="Self.CorporateProfileInformation" Multiplicity="0..1" />
+          <End Role="CorporateJobDetails" Type="Self.CorporateJobDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CorporateProfileInformation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CorporateJobDetails">
+              <PropertyRef Name="ProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CorporatePositions_CorporateJobDetails">
+          <End Role="CorporateJobDetails" Type="Self.CorporateJobDetails" Multiplicity="0..1" />
+          <End Role="CorporatePositions" Type="Self.CorporatePositions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CorporateJobDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CorporatePositions">
+              <PropertyRef Name="CorporateJobDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EducationDetails_Cases">
+          <End Role="Cases" Type="Self.Cases" Multiplicity="1" />
+          <End Role="EducationDetails" Type="Self.EducationDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cases">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EducationDetails">
+              <PropertyRef Name="CaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LinkCases_Cases">
+          <End Role="Cases" Type="Self.Cases" Multiplicity="1" />
+          <End Role="LinkCases" Type="Self.LinkCases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cases">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LinkCases">
+              <PropertyRef Name="CaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mentions_Task">
+          <End Role="Task" Type="Self.Task" Multiplicity="1" />
+          <End Role="Mentions" Type="Self.Mentions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Mentions">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mentions_Task1">
+          <End Role="Task" Type="Self.Task" Multiplicity="1" />
+          <End Role="Mentions" Type="Self.Mentions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Mentions">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OtherDetails_Cases">
+          <End Role="Cases" Type="Self.Cases" Multiplicity="1" />
+          <End Role="OtherDetails" Type="Self.OtherDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cases">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OtherDetails">
+              <PropertyRef Name="CaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProfileInformation_ProfileInformation">
+          <End Role="Cases" Type="Self.Cases" Multiplicity="1" />
+          <End Role="ProfileInformation" Type="Self.ProfileInformation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cases">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProfileInformation">
+              <PropertyRef Name="ProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Support_Images">
+          <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
+          <End Role="Support" Type="Self.Support" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Support">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_CorporateProfileInformation">
+          <End Role="CorporateProfileInformation" Type="Self.CorporateProfileInformation" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CorporateProfileInformation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="RelatedCase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskNote_Task">
+          <End Role="Task" Type="Self.Task" Multiplicity="1" />
+          <End Role="TaskNote" Type="Self.TaskNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TaskNote">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EasyCaseDBModelStoreContainer">
+          <EntitySet Name="Assigned" EntityType="Self.Assigned" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BusinessHours" EntityType="Self.BusinessHours" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cases" EntityType="Self.Cases" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CasesNote" EntityType="Self.CasesNote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CaseStatus" EntityType="Self.CaseStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CaseTypes" EntityType="Self.CaseTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyDetails" EntityType="Self.CompanyDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContactTypes" EntityType="Self.ContactTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CorporateJobDetails" EntityType="Self.CorporateJobDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CorporatePositions" EntityType="Self.CorporatePositions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CorporateProfileInformation" EntityType="Self.CorporateProfileInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EducationDetails" EntityType="Self.EducationDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Holidays" EntityType="Self.Holidays" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LinkCases" EntityType="Self.LinkCases" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ManageHours" EntityType="Self.ManageHours" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MartialStatus" EntityType="Self.MartialStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mentions" EntityType="Self.Mentions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OtherDetails" EntityType="Self.OtherDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProfileInformation" EntityType="Self.ProfileInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Purpose" EntityType="Self.Purpose" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceFee" EntityType="Self.ServiceFee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Support" EntityType="Self.Support" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaskNote" EntityType="Self.TaskNote" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Assigned_Clients" Association="Self.FK_Assigned_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Assigned" EntitySet="Assigned" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Assigned_Task" Association="Self.FK_Assigned_Task">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="Assigned" EntitySet="Assigned" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cases_CaseTypes" Association="Self.FK_Cases_CaseTypes">
+            <End Role="CaseTypes" EntitySet="CaseTypes" />
+            <End Role="Cases" EntitySet="Cases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cases_Clients" Association="Self.FK_Cases_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Cases" EntitySet="Cases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CasesNote_CorporateProfileInformation" Association="Self.FK_CasesNote_CorporateProfileInformation">
+            <End Role="CorporateProfileInformation" EntitySet="CorporateProfileInformation" />
+            <End Role="CasesNote" EntitySet="CasesNote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clients_Images" Association="Self.FK_Clients_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="Clients" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clients_MartialStatus" Association="Self.FK_Clients_MartialStatus">
+            <End Role="MartialStatus" EntitySet="MartialStatus" />
+            <End Role="Clients" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clients_Purpose" Association="Self.FK_Clients_Purpose">
+            <End Role="Purpose" EntitySet="Purpose" />
+            <End Role="Clients" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contacts_ContactTypes" Association="Self.FK_Contacts_ContactTypes">
+            <End Role="ContactTypes" EntitySet="ContactTypes" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CorporateJobDetails_CaseStatus" Association="Self.FK_CorporateJobDetails_CaseStatus">
+            <End Role="CaseStatus" EntitySet="CaseStatus" />
+            <End Role="CorporateJobDetails" EntitySet="CorporateJobDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CorporateJobDetails_CorporateProfileInformation" Association="Self.FK_CorporateJobDetails_CorporateProfileInformation">
+            <End Role="CorporateProfileInformation" EntitySet="CorporateProfileInformation" />
+            <End Role="CorporateJobDetails" EntitySet="CorporateJobDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CorporatePositions_CorporateJobDetails" Association="Self.FK_CorporatePositions_CorporateJobDetails">
+            <End Role="CorporateJobDetails" EntitySet="CorporateJobDetails" />
+            <End Role="CorporatePositions" EntitySet="CorporatePositions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EducationDetails_Cases" Association="Self.FK_EducationDetails_Cases">
+            <End Role="Cases" EntitySet="Cases" />
+            <End Role="EducationDetails" EntitySet="EducationDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LinkCases_Cases" Association="Self.FK_LinkCases_Cases">
+            <End Role="Cases" EntitySet="Cases" />
+            <End Role="LinkCases" EntitySet="LinkCases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mentions_Task" Association="Self.FK_Mentions_Task">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="Mentions" EntitySet="Mentions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mentions_Task1" Association="Self.FK_Mentions_Task1">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="Mentions" EntitySet="Mentions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OtherDetails_Cases" Association="Self.FK_OtherDetails_Cases">
+            <End Role="Cases" EntitySet="Cases" />
+            <End Role="OtherDetails" EntitySet="OtherDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProfileInformation_ProfileInformation" Association="Self.FK_ProfileInformation_ProfileInformation">
+            <End Role="Cases" EntitySet="Cases" />
+            <End Role="ProfileInformation" EntitySet="ProfileInformation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Support_Images" Association="Self.FK_Support_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="Support" EntitySet="Support" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_CorporateProfileInformation" Association="Self.FK_Task_CorporateProfileInformation">
+            <End Role="CorporateProfileInformation" EntitySet="CorporateProfileInformation" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskNote_Task" Association="Self.FK_TaskNote_Task">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="TaskNote" EntitySet="TaskNote" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EasyCaseDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="EasyCaseDBEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Images" EntityType="EasyCaseDBModel.Image" />
+          <EntitySet Name="Logs" EntityType="EasyCaseDBModel.Log" />
+          <EntitySet Name="MartialStatus" EntityType="EasyCaseDBModel.MartialStatu" />
+          <EntitySet Name="Purposes" EntityType="EasyCaseDBModel.Purpose" />
+          <EntitySet Name="CorporatePositions" EntityType="EasyCaseDBModel.CorporatePosition" />
+          <EntitySet Name="CorporateProfileInformations" EntityType="EasyCaseDBModel.CorporateProfileInformation" />
+          <EntitySet Name="CasesNotes" EntityType="EasyCaseDBModel.CasesNote" />
+          <AssociationSet Name="FK_CasesNote_CorporateProfileInformation" Association="EasyCaseDBModel.FK_CasesNote_CorporateProfileInformation">
+            <End Role="CorporateProfileInformation" EntitySet="CorporateProfileInformations" />
+            <End Role="CasesNote" EntitySet="CasesNotes" />
+          </AssociationSet>
+          <EntitySet Name="Assigneds" EntityType="EasyCaseDBModel.Assigned" />
+          <EntitySet Name="Mentions" EntityType="EasyCaseDBModel.Mention" />
+          <EntitySet Name="Tasks" EntityType="EasyCaseDBModel.Task" />
+          <AssociationSet Name="FK_Assigned_Task" Association="EasyCaseDBModel.FK_Assigned_Task">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="Assigned" EntitySet="Assigneds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_CorporateProfileInformation" Association="EasyCaseDBModel.FK_Task_CorporateProfileInformation">
+            <End Role="CorporateProfileInformation" EntitySet="CorporateProfileInformations" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mentions_Task" Association="EasyCaseDBModel.FK_Mentions_Task">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="Mention" EntitySet="Mentions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mentions_Task1" Association="EasyCaseDBModel.FK_Mentions_Task1">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="Mention" EntitySet="Mentions" />
+          </AssociationSet>
+          <EntitySet Name="TaskNotes" EntityType="EasyCaseDBModel.TaskNote" />
+          <AssociationSet Name="FK_TaskNote_Task" Association="EasyCaseDBModel.FK_TaskNote_Task">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="TaskNote" EntitySet="TaskNotes" />
+          </AssociationSet>
+          <EntitySet Name="ContactTypes" EntityType="EasyCaseDBModel.ContactType" />
+          <EntitySet Name="Contacts" EntityType="EasyCaseDBModel.Contact" />
+          <AssociationSet Name="FK_Contacts_ContactTypes" Association="EasyCaseDBModel.FK_Contacts_ContactTypes">
+            <End Role="ContactType" EntitySet="ContactTypes" />
+            <End Role="Contact" EntitySet="Contacts" />
+          </AssociationSet>
+          <EntitySet Name="BusinessHours" EntityType="EasyCaseDBModel.BusinessHour" />
+          <EntitySet Name="ManageHours" EntityType="EasyCaseDBModel.ManageHour" />
+          <EntitySet Name="Holidays" EntityType="EasyCaseDBModel.Holiday" />
+          <EntitySet Name="CompanyDetails" EntityType="EasyCaseDBModel.CompanyDetail" />
+          <EntitySet Name="Supports" EntityType="EasyCaseDBModel.Support" />
+          <AssociationSet Name="FK_Support_Images" Association="EasyCaseDBModel.FK_Support_Images">
+            <End Role="Image" EntitySet="Images" />
+            <End Role="Support" EntitySet="Supports" />
+          </AssociationSet>
+          <EntitySet Name="CaseTypes" EntityType="EasyCaseDBModel.CaseType" />
+          <EntitySet Name="CaseStatus" EntityType="EasyCaseDBModel.CaseStatu" />
+          <EntitySet Name="CorporateJobDetails" EntityType="EasyCaseDBModel.CorporateJobDetail" />
+          <AssociationSet Name="FK_CorporateJobDetails_CaseStatus" Association="EasyCaseDBModel.FK_CorporateJobDetails_CaseStatus">
+            <End Role="CaseStatu" EntitySet="CaseStatus" />
+            <End Role="CorporateJobDetail" EntitySet="CorporateJobDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CorporateJobDetails_CorporateProfileInformation" Association="EasyCaseDBModel.FK_CorporateJobDetails_CorporateProfileInformation">
+            <End Role="CorporateProfileInformation" EntitySet="CorporateProfileInformations" />
+            <End Role="CorporateJobDetail" EntitySet="CorporateJobDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CorporatePositions_CorporateJobDetails" Association="EasyCaseDBModel.FK_CorporatePositions_CorporateJobDetails">
+            <End Role="CorporateJobDetail" EntitySet="CorporateJobDetails" />
+            <End Role="CorporatePosition" EntitySet="CorporatePositions" />
+          </AssociationSet>
+          <EntitySet Name="ServiceFees" EntityType="EasyCaseDBModel.ServiceFee" />
+          <EntitySet Name="Clients" EntityType="EasyCaseDBModel.Client" />
+          <AssociationSet Name="FK_Assigned_Clients" Association="EasyCaseDBModel.FK_Assigned_Clients">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Assigned" EntitySet="Assigneds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clients_Images" Association="EasyCaseDBModel.FK_Clients_Images">
+            <End Role="Image" EntitySet="Images" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clients_MartialStatus" Association="EasyCaseDBModel.FK_Clients_MartialStatus">
+            <End Role="MartialStatu" EntitySet="MartialStatus" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clients_Purpose" Association="EasyCaseDBModel.FK_Clients_Purpose">
+            <End Role="Purpose" EntitySet="Purposes" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <EntitySet Name="Cases" EntityType="EasyCaseDBModel.Case" />
+          <AssociationSet Name="FK_Cases_CaseTypes" Association="EasyCaseDBModel.FK_Cases_CaseTypes">
+            <End Role="CaseType" EntitySet="CaseTypes" />
+            <End Role="Case" EntitySet="Cases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cases_Clients" Association="EasyCaseDBModel.FK_Cases_Clients">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Case" EntitySet="Cases" />
+          </AssociationSet>
+          <EntitySet Name="ProfileInformations" EntityType="EasyCaseDBModel.ProfileInformation" />
+          <AssociationSet Name="FK_ProfileInformation_ProfileInformation" Association="EasyCaseDBModel.FK_ProfileInformation_ProfileInformation">
+            <End Role="Case" EntitySet="Cases" />
+            <End Role="ProfileInformation" EntitySet="ProfileInformations" />
+          </AssociationSet>
+          <EntitySet Name="EducationDetails" EntityType="EasyCaseDBModel.EducationDetail" />
+          <AssociationSet Name="FK_EducationDetails_Cases" Association="EasyCaseDBModel.FK_EducationDetails_Cases">
+            <End Role="Case" EntitySet="Cases" />
+            <End Role="EducationDetail" EntitySet="EducationDetails" />
+          </AssociationSet>
+          <EntitySet Name="OtherDetails" EntityType="EasyCaseDBModel.OtherDetail" />
+          <AssociationSet Name="FK_OtherDetails_Cases" Association="EasyCaseDBModel.FK_OtherDetails_Cases">
+            <End Role="Case" EntitySet="Cases" />
+            <End Role="OtherDetail" EntitySet="OtherDetails" />
+          </AssociationSet>
+          <EntitySet Name="LinkCases" EntityType="EasyCaseDBModel.LinkCas" />
+          <AssociationSet Name="FK_LinkCases_Cases" Association="EasyCaseDBModel.FK_LinkCases_Cases">
+            <End Role="Case" EntitySet="Cases" />
+            <End Role="LinkCas" EntitySet="LinkCases" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Supports" Relationship="EasyCaseDBModel.FK_Support_Images" FromRole="Image" ToRole="Support" />
+          <NavigationProperty Name="Clients" Relationship="EasyCaseDBModel.FK_Clients_Images" FromRole="Image" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="MartialStatu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Clients" Relationship="EasyCaseDBModel.FK_Clients_MartialStatus" FromRole="MartialStatu" ToRole="Client" />
+          </EntityType>
+        <EntityType Name="Purpose">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Clients" Relationship="EasyCaseDBModel.FK_Clients_Purpose" FromRole="Purpose" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="CorporatePosition">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CorporateJobDetailId" Type="Int64" />
+          <Property Name="Position" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CorporateJobDetail" Relationship="EasyCaseDBModel.FK_CorporatePositions_CorporateJobDetails" FromRole="CorporatePosition" ToRole="CorporateJobDetail" />
+        </EntityType>
+        <EntityType Name="CorporateProfileInformation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <Property Name="BussinessName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CRA" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Address1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Address3" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Website" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="KeyContactPerson" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="KeyContactPosition" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="Deleted" Type="Boolean" />
+          <NavigationProperty Name="CasesNotes" Relationship="EasyCaseDBModel.FK_CasesNote_CorporateProfileInformation" FromRole="CorporateProfileInformation" ToRole="CasesNote" />
+          <NavigationProperty Name="Tasks" Relationship="EasyCaseDBModel.FK_Task_CorporateProfileInformation" FromRole="CorporateProfileInformation" ToRole="Task" />
+          <NavigationProperty Name="CorporateJobDetails" Relationship="EasyCaseDBModel.FK_CorporateJobDetails_CorporateProfileInformation" FromRole="CorporateProfileInformation" ToRole="CorporateJobDetail" />
+        </EntityType>
+        <EntityType Name="CasesNote">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CorporateProfileId" Type="Int64" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Subject" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CorporateProfileInformation" Relationship="EasyCaseDBModel.FK_CasesNote_CorporateProfileInformation" FromRole="CasesNote" ToRole="CorporateProfileInformation" />
+        </EntityType>
+        <Association Name="FK_CasesNote_CorporateProfileInformation">
+          <End Type="EasyCaseDBModel.CorporateProfileInformation" Role="CorporateProfileInformation" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.CasesNote" Role="CasesNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CorporateProfileInformation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CasesNote">
+              <PropertyRef Name="CorporateProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Assigned">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int64" Nullable="false" />
+          <Property Name="ClientId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Task" Relationship="EasyCaseDBModel.FK_Assigned_Task" FromRole="Assigned" ToRole="Task" />
+          <NavigationProperty Name="Client" Relationship="EasyCaseDBModel.FK_Assigned_Clients" FromRole="Assigned" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="Mention">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int64" Nullable="false" />
+          <Property Name="ClientId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Task" Relationship="EasyCaseDBModel.FK_Mentions_Task" FromRole="Mention" ToRole="Task" />
+          <NavigationProperty Name="Task1" Relationship="EasyCaseDBModel.FK_Mentions_Task1" FromRole="Mention" ToRole="Task" />
+          </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DueDate" Type="DateTime" Precision="0" />
+          <Property Name="TimeDue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Priority" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RelatedCase" Type="Int64" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="Archived" Type="Boolean" />
+          <NavigationProperty Name="Assigneds" Relationship="EasyCaseDBModel.FK_Assigned_Task" FromRole="Task" ToRole="Assigned" />
+          <NavigationProperty Name="CorporateProfileInformation" Relationship="EasyCaseDBModel.FK_Task_CorporateProfileInformation" FromRole="Task" ToRole="CorporateProfileInformation" />
+          <NavigationProperty Name="Mentions" Relationship="EasyCaseDBModel.FK_Mentions_Task" FromRole="Task" ToRole="Mention" />
+          <NavigationProperty Name="Mentions1" Relationship="EasyCaseDBModel.FK_Mentions_Task1" FromRole="Task" ToRole="Mention" />
+          <NavigationProperty Name="TaskNotes" Relationship="EasyCaseDBModel.FK_TaskNote_Task" FromRole="Task" ToRole="TaskNote" />
+        </EntityType>
+        <Association Name="FK_Assigned_Task">
+          <End Type="EasyCaseDBModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="EasyCaseDBModel.Assigned" Role="Assigned" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Assigned">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_CorporateProfileInformation">
+          <End Type="EasyCaseDBModel.CorporateProfileInformation" Role="CorporateProfileInformation" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.Task" Role="Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CorporateProfileInformation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="RelatedCase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mentions_Task">
+          <End Type="EasyCaseDBModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="EasyCaseDBModel.Mention" Role="Mention" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Mention">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mentions_Task1">
+          <End Type="EasyCaseDBModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="EasyCaseDBModel.Mention" Role="Mention" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Mention">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TaskNote">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int64" Nullable="false" />
+          <Property Name="Subject" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="NotifyUser" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Task" Relationship="EasyCaseDBModel.FK_TaskNote_Task" FromRole="TaskNote" ToRole="Task" />
+        </EntityType>
+        <Association Name="FK_TaskNote_Task">
+          <End Type="EasyCaseDBModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="EasyCaseDBModel.TaskNote" Role="TaskNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TaskNote">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ContactType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" />
+          <NavigationProperty Name="Contacts" Relationship="EasyCaseDBModel.FK_Contacts_ContactTypes" FromRole="ContactType" ToRole="Contact" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContactTypeId" Type="Int64" />
+          <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="WorkNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Prefix" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OtherNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FaxNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MailingAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="Deleted" Type="Boolean" />
+          <NavigationProperty Name="ContactType" Relationship="EasyCaseDBModel.FK_Contacts_ContactTypes" FromRole="Contact" ToRole="ContactType" />
+        </EntityType>
+        <Association Name="FK_Contacts_ContactTypes">
+          <End Type="EasyCaseDBModel.ContactType" Role="ContactType" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.Contact" Role="Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContactType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="ContactTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BusinessHour">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConsultingDuration" Type="Int32" />
+          <Property Name="WaitTime" Type="Int32" />
+          <Property Name="LeadDays" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <Property Name="Holidays" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ManageHour">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Day" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="StartTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EndTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LunchStartTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LunchEndTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Holiday">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="HolidayOfYear" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HolidayDates" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="168" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CompanyDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyEmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Province" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MembershipType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MembershipNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Support">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <Property Name="ImageId" Type="Int64" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Greeting" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="FacebookUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Linkdin" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="WebsiteUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Image" Relationship="EasyCaseDBModel.FK_Support_Images" FromRole="Support" ToRole="Image" />
+        </EntityType>
+        <Association Name="FK_Support_Images">
+          <End Type="EasyCaseDBModel.Image" Role="Image" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.Support" Role="Support" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Support">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CaseType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cases" Relationship="EasyCaseDBModel.FK_Cases_CaseTypes" FromRole="CaseType" ToRole="Case" />
+        </EntityType>
+        <EntityType Name="CaseStatu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <Property Name="Show" Type="Boolean" />
+          <NavigationProperty Name="CorporateJobDetails" Relationship="EasyCaseDBModel.FK_CorporateJobDetails_CaseStatus" FromRole="CaseStatu" ToRole="CorporateJobDetail" />
+        </EntityType>
+        <EntityType Name="CorporateJobDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProfileId" Type="Int64" />
+          <Property Name="LMIANo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PositionDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+          <Property Name="PositionAvailable" Type="Int32" />
+          <Property Name="Expiry" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int64" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CaseStatu" Relationship="EasyCaseDBModel.FK_CorporateJobDetails_CaseStatus" FromRole="CorporateJobDetail" ToRole="CaseStatu" />
+          <NavigationProperty Name="CorporateProfileInformation" Relationship="EasyCaseDBModel.FK_CorporateJobDetails_CorporateProfileInformation" FromRole="CorporateJobDetail" ToRole="CorporateProfileInformation" />
+          <NavigationProperty Name="CorporatePositions" Relationship="EasyCaseDBModel.FK_CorporatePositions_CorporateJobDetails" FromRole="CorporateJobDetail" ToRole="CorporatePosition" />
+        </EntityType>
+        <Association Name="FK_CorporateJobDetails_CaseStatus">
+          <End Type="EasyCaseDBModel.CaseStatu" Role="CaseStatu" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.CorporateJobDetail" Role="CorporateJobDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CaseStatu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CorporateJobDetail">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CorporateJobDetails_CorporateProfileInformation">
+          <End Type="EasyCaseDBModel.CorporateProfileInformation" Role="CorporateProfileInformation" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.CorporateJobDetail" Role="CorporateJobDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CorporateProfileInformation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CorporateJobDetail">
+              <PropertyRef Name="ProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CorporatePositions_CorporateJobDetails">
+          <End Type="EasyCaseDBModel.CorporateJobDetail" Role="CorporateJobDetail" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.CorporatePosition" Role="CorporatePosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CorporateJobDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CorporatePosition">
+              <PropertyRef Name="CorporateJobDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ServiceFee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsExpense" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AdditionalInfo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Fee" Type="Double" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Prefix" Type="Int32" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PurposeId" Type="Int64" />
+          <Property Name="Citizenship" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ImageId" Type="Int64" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MartialStatusId" Type="Int64" />
+          <Property Name="Deleted" Type="Boolean" />
+          <NavigationProperty Name="Assigneds" Relationship="EasyCaseDBModel.FK_Assigned_Clients" FromRole="Client" ToRole="Assigned" />
+          <NavigationProperty Name="Image" Relationship="EasyCaseDBModel.FK_Clients_Images" FromRole="Client" ToRole="Image" />
+          <NavigationProperty Name="MartialStatu" Relationship="EasyCaseDBModel.FK_Clients_MartialStatus" FromRole="Client" ToRole="MartialStatu" />
+          <NavigationProperty Name="Purpose" Relationship="EasyCaseDBModel.FK_Clients_Purpose" FromRole="Client" ToRole="Purpose" />
+          <NavigationProperty Name="Cases" Relationship="EasyCaseDBModel.FK_Cases_Clients" FromRole="Client" ToRole="Case" />
+        </EntityType>
+        <Association Name="FK_Assigned_Clients">
+          <End Type="EasyCaseDBModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="EasyCaseDBModel.Assigned" Role="Assigned" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Assigned">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clients_Images">
+          <End Type="EasyCaseDBModel.Image" Role="Image" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.Client" Role="Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clients_MartialStatus">
+          <End Type="EasyCaseDBModel.MartialStatu" Role="MartialStatu" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.Client" Role="Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MartialStatu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="MartialStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clients_Purpose">
+          <End Type="EasyCaseDBModel.Purpose" Role="Purpose" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.Client" Role="Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Purpose">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="PurposeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Case">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientId" Type="Int64" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <Property Name="CaseTypeId" Type="Int64" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CaseNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CaseType" Relationship="EasyCaseDBModel.FK_Cases_CaseTypes" FromRole="Case" ToRole="CaseType" />
+          <NavigationProperty Name="Client" Relationship="EasyCaseDBModel.FK_Cases_Clients" FromRole="Case" ToRole="Client" />
+          <NavigationProperty Name="ProfileInformations" Relationship="EasyCaseDBModel.FK_ProfileInformation_ProfileInformation" FromRole="Case" ToRole="ProfileInformation" />
+          <NavigationProperty Name="EducationDetails" Relationship="EasyCaseDBModel.FK_EducationDetails_Cases" FromRole="Case" ToRole="EducationDetail" />
+          <NavigationProperty Name="OtherDetails" Relationship="EasyCaseDBModel.FK_OtherDetails_Cases" FromRole="Case" ToRole="OtherDetail" />
+          <NavigationProperty Name="LinkCases" Relationship="EasyCaseDBModel.FK_LinkCases_Cases" FromRole="Case" ToRole="LinkCas" />
+        </EntityType>
+        <Association Name="FK_Cases_CaseTypes">
+          <End Type="EasyCaseDBModel.CaseType" Role="CaseType" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.Case" Role="Case" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CaseType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Case">
+              <PropertyRef Name="CaseTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cases_Clients">
+          <End Type="EasyCaseDBModel.Client" Role="Client" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.Case" Role="Case" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Case">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProfileInformation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProfileId" Type="Int64" Nullable="false" />
+          <Property Name="RelationToPrimaryApplicant" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HearFromAboutus" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LikeToDoInCanada" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="HaveYouAcceptedSchoolCollege" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="VisitPrevious" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="HaveVisitorOrStudentVisa" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="HaveYourSpouseVisitorOrStudentVisa" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="SpuseRefusedAnyApplication" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="PreferedDestination" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SpuseAppliedPermanentResidence" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="SpuseAnyIllegalCase" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="SpuseAppliedAnyVisa" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="FurtherInformation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PrimaryLanguage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Case" Relationship="EasyCaseDBModel.FK_ProfileInformation_ProfileInformation" FromRole="ProfileInformation" ToRole="Case" />
+        </EntityType>
+        <Association Name="FK_ProfileInformation_ProfileInformation">
+          <End Type="EasyCaseDBModel.Case" Role="Case" Multiplicity="1" />
+          <End Type="EasyCaseDBModel.ProfileInformation" Role="ProfileInformation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Case">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProfileInformation">
+              <PropertyRef Name="ProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EducationDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CaseId" Type="Int64" Nullable="false" />
+          <Property Name="EducationHistory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ECACompleted" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="CICEnglishExam" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="SpouseEducation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CICEnglishExamSpouse" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Case" Relationship="EasyCaseDBModel.FK_EducationDetails_Cases" FromRole="EducationDetail" ToRole="Case" />
+        </EntityType>
+        <Association Name="FK_EducationDetails_Cases">
+          <End Type="EasyCaseDBModel.Case" Role="Case" Multiplicity="1" />
+          <End Type="EasyCaseDBModel.EducationDetail" Role="EducationDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Case">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EducationDetail">
+              <PropertyRef Name="CaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OtherDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CaseId" Type="Int64" Nullable="false" />
+          <Property Name="TemporaryWorker" Type="Boolean" />
+          <Property Name="SkilledWorker" Type="Boolean" />
+          <Property Name="TradeCertificate" Type="Boolean" />
+          <Property Name="ProvinceNominee" Type="Boolean" />
+          <Property Name="JobOffer" Type="Boolean" />
+          <Property Name="IsBCEmployerOffer" Type="Boolean" />
+          <Property Name="BCDistrict" Type="Int32" />
+          <Property Name="BCJobNOC" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="YearsBCRelatedJobExperience" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BCCurrentEmployer" Type="Boolean" />
+          <Property Name="IsPostSecondaryCredentialBC" Type="Boolean" />
+          <Property Name="Wage" Type="Int32" />
+          <Property Name="CLBLevel" Type="Int32" />
+          <Property Name="IsECAObtained" Type="Boolean" />
+          <Property Name="IsTradesCertificationTrainingAuthority" Type="Boolean" />
+          <Property Name="EmployementHistory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentCycle" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FullTimeEmployees" Type="Int32" />
+          <Property Name="HourlyWage" Type="Int32" />
+          <Property Name="AppliedPNPFromEmployerPast" Type="Boolean" />
+          <Property Name="IsEmployerWillingToSupportPNP" Type="Boolean" />
+          <Property Name="PositionsApplied" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SpouseEmployementHistory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FamilyLivingCanada" Type="Boolean" />
+          <Property Name="Children" Type="Boolean" />
+          <Property Name="ChildrenCount" Type="Int32" />
+          <Property Name="ChildrenAges" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Networth" Type="Int32" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Case" Relationship="EasyCaseDBModel.FK_OtherDetails_Cases" FromRole="OtherDetail" ToRole="Case" />
+        </EntityType>
+        <Association Name="FK_OtherDetails_Cases">
+          <End Type="EasyCaseDBModel.Case" Role="Case" Multiplicity="1" />
+          <End Type="EasyCaseDBModel.OtherDetail" Role="OtherDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Case">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OtherDetail">
+              <PropertyRef Name="CaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LinkCas">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <Property Name="CaseId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Case" Relationship="EasyCaseDBModel.FK_LinkCases_Cases" FromRole="LinkCas" ToRole="Case" />
+        </EntityType>
+        <Association Name="FK_LinkCases_Cases">
+          <End Type="EasyCaseDBModel.Case" Role="Case" Multiplicity="1" />
+          <End Type="EasyCaseDBModel.LinkCas" Role="LinkCas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Case">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LinkCas">
+              <PropertyRef Name="CaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EasyCaseDBModelStoreContainer" CdmEntityContainer="EasyCaseDBEntities" >
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.Image">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="OriginalName" ColumnName="OriginalName" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.Log">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MartialStatus">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.MartialStatu">
+              <MappingFragment StoreEntitySet="MartialStatus">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Purposes">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.Purpose">
+              <MappingFragment StoreEntitySet="Purpose">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CorporatePositions">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.CorporatePosition">
+              <MappingFragment StoreEntitySet="CorporatePositions">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="CorporateJobDetailId" ColumnName="CorporateJobDetailId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CorporateProfileInformations">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.CorporateProfileInformation">
+              <MappingFragment StoreEntitySet="CorporateProfileInformation">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="KeyContactPosition" ColumnName="KeyContactPosition" />
+                <ScalarProperty Name="KeyContactPerson" ColumnName="KeyContactPerson" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Address3" ColumnName="Address3" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="CRA" ColumnName="CRA" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="BussinessName" ColumnName="BussinessName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CasesNotes">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.CasesNote">
+              <MappingFragment StoreEntitySet="CasesNote">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="CorporateProfileId" ColumnName="CorporateProfileId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Assigneds">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.Assigned">
+              <MappingFragment StoreEntitySet="Assigned">
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mentions">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.Mention">
+              <MappingFragment StoreEntitySet="Mentions">
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.Task">
+              <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="Archived" ColumnName="Archived" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="RelatedCase" ColumnName="RelatedCase" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="TimeDue" ColumnName="TimeDue" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskNotes">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.TaskNote">
+              <MappingFragment StoreEntitySet="TaskNote">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="NotifyUser" ColumnName="NotifyUser" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContactTypes">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.ContactType">
+              <MappingFragment StoreEntitySet="ContactTypes">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.Contact">
+              <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="MailingAddress" ColumnName="MailingAddress" />
+                <ScalarProperty Name="FaxNo" ColumnName="FaxNo" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="OtherNo" ColumnName="OtherNo" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WorkNo" ColumnName="WorkNo" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="ContactTypeId" ColumnName="ContactTypeId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BusinessHours">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.BusinessHour">
+              <MappingFragment StoreEntitySet="BusinessHours">
+                <ScalarProperty Name="Holidays" ColumnName="Holidays" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LeadDays" ColumnName="LeadDays" />
+                <ScalarProperty Name="WaitTime" ColumnName="WaitTime" />
+                <ScalarProperty Name="ConsultingDuration" ColumnName="ConsultingDuration" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ManageHours">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.ManageHour">
+              <MappingFragment StoreEntitySet="ManageHours">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LunchEndTime" ColumnName="LunchEndTime" />
+                <ScalarProperty Name="LunchStartTime" ColumnName="LunchStartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Holidays">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.Holiday">
+              <MappingFragment StoreEntitySet="Holidays">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="HolidayDates" ColumnName="HolidayDates" />
+                <ScalarProperty Name="HolidayOfYear" ColumnName="HolidayOfYear" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyDetails">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.CompanyDetail">
+              <MappingFragment StoreEntitySet="CompanyDetails">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="MembershipNumber" ColumnName="MembershipNumber" />
+                <ScalarProperty Name="MembershipType" ColumnName="MembershipType" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="CompanyEmail" ColumnName="CompanyEmail" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supports">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.Support">
+              <MappingFragment StoreEntitySet="Support">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="WebsiteUrl" ColumnName="WebsiteUrl" />
+                <ScalarProperty Name="Linkdin" ColumnName="Linkdin" />
+                <ScalarProperty Name="FacebookUrl" ColumnName="FacebookUrl" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Greeting" ColumnName="Greeting" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CaseTypes">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.CaseType">
+              <MappingFragment StoreEntitySet="CaseTypes">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CaseStatus">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.CaseStatu">
+              <MappingFragment StoreEntitySet="CaseStatus">
+                <ScalarProperty Name="Show" ColumnName="Show" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CorporateJobDetails">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.CorporateJobDetail">
+              <MappingFragment StoreEntitySet="CorporateJobDetails">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Expiry" ColumnName="Expiry" />
+                <ScalarProperty Name="PositionAvailable" ColumnName="PositionAvailable" />
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="PositionDescription" ColumnName="PositionDescription" />
+                <ScalarProperty Name="LMIANo" ColumnName="LMIANo" />
+                <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceFees">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.ServiceFee">
+              <MappingFragment StoreEntitySet="ServiceFee">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Fee" ColumnName="Fee" />
+                <ScalarProperty Name="AdditionalInfo" ColumnName="AdditionalInfo" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsExpense" ColumnName="IsExpense" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.Client">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="MartialStatusId" ColumnName="MartialStatusId" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="Citizenship" ColumnName="Citizenship" />
+                <ScalarProperty Name="PurposeId" ColumnName="PurposeId" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cases">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.Case">
+              <MappingFragment StoreEntitySet="Cases">
+                <ScalarProperty Name="CaseNumber" ColumnName="CaseNumber" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="CaseTypeId" ColumnName="CaseTypeId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProfileInformations">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.ProfileInformation">
+              <MappingFragment StoreEntitySet="ProfileInformation">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="PrimaryLanguage" ColumnName="PrimaryLanguage" />
+                <ScalarProperty Name="FurtherInformation" ColumnName="FurtherInformation" />
+                <ScalarProperty Name="SpuseAppliedAnyVisa" ColumnName="SpuseAppliedAnyVisa" />
+                <ScalarProperty Name="SpuseAnyIllegalCase" ColumnName="SpuseAnyIllegalCase" />
+                <ScalarProperty Name="SpuseAppliedPermanentResidence" ColumnName="SpuseAppliedPermanentResidence" />
+                <ScalarProperty Name="PreferedDestination" ColumnName="PreferedDestination" />
+                <ScalarProperty Name="SpuseRefusedAnyApplication" ColumnName="SpuseRefusedAnyApplication" />
+                <ScalarProperty Name="HaveYourSpouseVisitorOrStudentVisa" ColumnName="HaveYourSpouseVisitorOrStudentVisa" />
+                <ScalarProperty Name="HaveVisitorOrStudentVisa" ColumnName="HaveVisitorOrStudentVisa" />
+                <ScalarProperty Name="VisitPrevious" ColumnName="VisitPrevious" />
+                <ScalarProperty Name="HaveYouAcceptedSchoolCollege" ColumnName="HaveYouAcceptedSchoolCollege" />
+                <ScalarProperty Name="LikeToDoInCanada" ColumnName="LikeToDoInCanada" />
+                <ScalarProperty Name="HearFromAboutus" ColumnName="HearFromAboutus" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="RelationToPrimaryApplicant" ColumnName="RelationToPrimaryApplicant" />
+                <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EducationDetails">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.EducationDetail">
+              <MappingFragment StoreEntitySet="EducationDetails">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CICEnglishExamSpouse" ColumnName="CICEnglishExamSpouse" />
+                <ScalarProperty Name="SpouseEducation" ColumnName="SpouseEducation" />
+                <ScalarProperty Name="CICEnglishExam" ColumnName="CICEnglishExam" />
+                <ScalarProperty Name="ECACompleted" ColumnName="ECACompleted" />
+                <ScalarProperty Name="EducationHistory" ColumnName="EducationHistory" />
+                <ScalarProperty Name="CaseId" ColumnName="CaseId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OtherDetails">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.OtherDetail">
+              <MappingFragment StoreEntitySet="OtherDetails">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="Networth" ColumnName="Networth" />
+                <ScalarProperty Name="ChildrenAges" ColumnName="ChildrenAges" />
+                <ScalarProperty Name="ChildrenCount" ColumnName="ChildrenCount" />
+                <ScalarProperty Name="Children" ColumnName="Children" />
+                <ScalarProperty Name="FamilyLivingCanada" ColumnName="FamilyLivingCanada" />
+                <ScalarProperty Name="SpouseEmployementHistory" ColumnName="SpouseEmployementHistory" />
+                <ScalarProperty Name="PositionsApplied" ColumnName="PositionsApplied" />
+                <ScalarProperty Name="IsEmployerWillingToSupportPNP" ColumnName="IsEmployerWillingToSupportPNP" />
+                <ScalarProperty Name="AppliedPNPFromEmployerPast" ColumnName="AppliedPNPFromEmployerPast" />
+                <ScalarProperty Name="HourlyWage" ColumnName="HourlyWage" />
+                <ScalarProperty Name="FullTimeEmployees" ColumnName="FullTimeEmployees" />
+                <ScalarProperty Name="PaymentCycle" ColumnName="PaymentCycle" />
+                <ScalarProperty Name="EmployementHistory" ColumnName="EmployementHistory" />
+                <ScalarProperty Name="IsTradesCertificationTrainingAuthority" ColumnName="IsTradesCertificationTrainingAuthority" />
+                <ScalarProperty Name="IsECAObtained" ColumnName="IsECAObtained" />
+                <ScalarProperty Name="CLBLevel" ColumnName="CLBLevel" />
+                <ScalarProperty Name="Wage" ColumnName="Wage" />
+                <ScalarProperty Name="IsPostSecondaryCredentialBC" ColumnName="IsPostSecondaryCredentialBC" />
+                <ScalarProperty Name="BCCurrentEmployer" ColumnName="BCCurrentEmployer" />
+                <ScalarProperty Name="YearsBCRelatedJobExperience" ColumnName="YearsBCRelatedJobExperience" />
+                <ScalarProperty Name="BCJobNOC" ColumnName="BCJobNOC" />
+                <ScalarProperty Name="BCDistrict" ColumnName="BCDistrict" />
+                <ScalarProperty Name="IsBCEmployerOffer" ColumnName="IsBCEmployerOffer" />
+                <ScalarProperty Name="JobOffer" ColumnName="JobOffer" />
+                <ScalarProperty Name="ProvinceNominee" ColumnName="ProvinceNominee" />
+                <ScalarProperty Name="TradeCertificate" ColumnName="TradeCertificate" />
+                <ScalarProperty Name="SkilledWorker" ColumnName="SkilledWorker" />
+                <ScalarProperty Name="TemporaryWorker" ColumnName="TemporaryWorker" />
+                <ScalarProperty Name="CaseId" ColumnName="CaseId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LinkCases">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.LinkCas">
+              <MappingFragment StoreEntitySet="LinkCases">
+                <ScalarProperty Name="CaseId" ColumnName="CaseId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

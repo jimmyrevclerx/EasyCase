@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Easycase.Model.Setting.BLServiceFee>
+<table class="table" id="serviceFeesTable">
+    <thead class="thead-light">
+        <tr>
+            @*<th>
+                    <label class="customcheckbox m-b-20">
+                        <input type="checkbox" id="mainCheckbox" />
+                        <span class="checkmark"></span>
+                    </label>
+                </th>*@
+            <th scope="col">Service Name</th>
+            <th scope="col">Is Expense?</th>
+            <th scope="col">Description</th>
+            <th scope="col">Additional Info (optional)</th>
+            <th scope="col">Service Fee</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="customtable" id="serviceFeeBody">
+        @if (Model.Count() > 0)
+        {
+            int i = 0;
+            foreach (var item in Model)
+            {
+                <tr id="@(item.ID)">
+                    @*<th>
+                        <label class="customcheckbox">
+                            <input type="checkbox" class="listCheckbox" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </th>*@
+                    <td><input type="text" value="@item.ServiceName" class="form-control data-servicename" /></td>
+                    <td>
+                        <select id="isExpense@(item.ID)" class="form-control data-isexpense">
+                            <option>-Is Expense?-</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </td>
+                    <td><textarea class="form-control data-description">@item.Description</textarea></td>
+                    <td><textarea class="form-control data-additionalinfo">@item.AdditionalInfo</textarea></td>
+                    <td><input type="number" value="@item.Fee" class="form-control data-servicefee" /></td>
+                    <td class="remove-control" style="width:20px">
+                        @if (i == 0)
+                        {
+                            <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-minus-circle" style="color:red" onclick="RemoveRow(this,@item.ID)" aria-hidden="true"></i>
+                        }
+                    </td>
+                </tr>
+                <script>
+                       $('#isExpense' +@item.ID).val('@item.IsExpense');
+                </script>
+                i++;
+            }
+        }
+        else
+        {
+            <tr><td></td><td></td><td>No Data Available</td><td></td><td></td></tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr><td colspan="5"><span onclick="AddRow(@Model.Count())" style="float:right; color:#0088cc;text-decoration:none; cursor:pointer"><i class="fa fa-plus-circle" style="font-size:1.3em;"></i> Add another row for more information</span></td></tr>
+    </tfoot>
+</table>
+<input type="button" class="btn btn-success btn-small btn-rounded" onclick="AddServiceFee()" value="Save">

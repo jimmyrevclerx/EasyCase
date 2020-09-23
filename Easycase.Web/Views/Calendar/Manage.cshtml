@@ -1,0 +1,232 @@
+﻿@model Easycase.Model.Calendar.BLBusinessHoursModal
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/datatable")
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Manage Business Hours</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Clients</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title m-b-0"></h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" id="manageTable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">
+                                    Consulting Days
+                                </th>
+                                <th scope="col">Start Time</th>
+                                <th scope="col">End Time</th>
+                                <th scope="col">Lunch Start Time</th>
+                                <th scope="col">Lunch End Time</th>
+                            </tr>
+                        </thead>
+                        <tbody class="customtable">
+                            @foreach (var item in Model.bLManageHours)
+                            {
+                                <tr id="@item.ID">
+                                    <td>
+                                        <label class="customcheckbox">
+                                            <input type="checkbox" checked="@item.IsActive" class="listCheckbox" />
+                                            <span class="checkmark"></span>
+                                            <span>@item.Day</span>
+                                        </label>
+                                    </td>
+                                    <td>@Html.DropDownList(item.StartTime, ViewBag.TimeInterval as SelectList, new { @class = "select2 form-control custom-select startime", @id = "_startTime" + item.ID })</td>
+                                    <td>@Html.DropDownList(item.EndTime, ViewBag.TimeInterval as SelectList, new { @class = "select2 form-control custom-select endtime", @id = "_endTime" + item.ID })</td>
+                                    <td>@Html.DropDownList(item.LunchStartTime, ViewBag.TimeInterval as SelectList, new { @class = "select2 form-control custom-select lunchstarttime", @id = "_sLunchStartTime" + item.ID })</td>
+                                    <td>@Html.DropDownList(item.LunchEndTime, ViewBag.TimeInterval as SelectList, new { @class = "select2 form-control custom-select lunchendtime", @id = "_eLunchEndTime" + item.ID })</td>
+                                </tr>
+                                <script>
+                                    $('#_startTime' +@item.ID).val('@item.StartTime');
+                                    $('#_endTime' +@item.ID).val('@item.EndTime');
+                                    $('#_sLunchStartTime' +@item.ID).val('@item.LunchStartTime');
+                                    $('#_eLunchEndTime' +@item.ID).val('@item.LunchEndTime');
+                                </script>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        @Html.HiddenFor(model => model.BusinessHourId)
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Average Consulting Session Duration </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(modal => modal.ConsultingSession, ViewBag.ConsultingSessionList as SelectList, new { @class = "select2 form-control custom-select ConsultingSession" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Average wait time between consulting sessions</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(modal => modal.WaitTime, ViewBag.WaitTimeList as SelectList, new { @class = "select2 form-control custom-select ConsultingSession" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Average lead days required for consulting session</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(modal => modal.LeadDays, ViewBag.LeadHoursList as SelectList, new { @class = "select2 form-control custom-select LeadDays" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-sm-6">
+                            <label class="control-label col-md-6"><i class="fa fa-calendar" aria-hidden="true"></i> Enter all holidays for the year </label>
+                            <div class="col-sm-12">
+                                <input type="text" class="date-inputmask" style="width:300px" id="holidays" />
+                                <button type="button" onclick="UpdateHoliday()" class="btn btn-default">Update</button>
+                            </div>
+                        </div>
+                        <div id="holidayDiv" class="col-sm-12">
+                            @Html.Partial("_partialHolidays", Model.bLHolidays)
+                        </div>
+                    </div>
+                    <div class="border-top">
+                        <div class="card-body">
+                            <button type="button" onclick="AddHours()" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+    <script>
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+            $("#calendarli").addClass("selected");
+            $(".select2").select2();
+             $('#holidays').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+        });
+        $('#manageTable').dataTable(
+            {
+                "bSort": false,
+                "info": false,
+                "paging": false,
+                "searching": false
+            });
+
+
+        function AddHours() {
+            var startimes = [];
+            var endtimes = [];
+            var lunchstarttimes = [];
+            var lunchendtimes = [];
+            var isactive = [];
+            var ids = [];
+            $("#manageTable tbody tr").each(function (index, value) {
+                startimes.push($(value).find(".startime").val());
+                endtimes.push($(value).find(".endtime").val());
+                lunchstarttimes.push($(value).find(".lunchstarttime").val());
+                lunchendtimes.push($(value).find(".lunchendtime").val());
+                ids.push($(value).attr("id"));
+                isactive.push($(value).find(".listCheckbox").prop("checked"));
+            });
+            var data = new Object();
+            data.IsActive = isactive;
+            data.ID = ids;
+            data.StartTime = startimes;
+            data.EndTime = endtimes;
+            data.LunchStartTime = lunchstarttimes;
+            data.LunchEndTime = lunchendtimes;
+            data.ConsultingSession = $("#ConsultingSession").val();
+            data.WaitTime = $("#WaitTime").val();
+            data.LeadDays = $("#LeadDays").val();
+            data.BusinessHourId = $("#BusinessHourId").val();
+            $.ajax({
+                url: "/Calendar/SaveManageHours",
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    toastr.success(response, 'Success');
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+        
+        function UpdateHoliday() {
+            var date = $("#holidays").val();
+            var d = new Date(date);
+            var day = addZero(d.getDate());
+            var month = addZero((d.getMonth() + 1));
+            $.ajax({
+                url: "/Calendar/SaveHolidays",
+                type: "POST",
+                data: { day: day, month: month },
+                success: function (response) {
+                    $.ajax({
+                        url: "/Calendar/HolidayPartial",
+                        type: "GET",
+                        success: function (response) {
+                            $("#holidayDiv").empty().html(response);
+                            $("#holidays").val("");
+                        },
+                        error: function (er) {
+                            toastr.error(er, 'Error');
+                        }
+                    });
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+
+        function RemoveDataEntry(date)
+        {
+            $.ajax({
+                url: "/Calendar/RemoveHolidays",
+                type: "POST",
+                data: { date: date },
+                success: function (response) {
+                    $.ajax({
+                        url: "/Calendar/HolidayPartial",
+                        type: "GET",
+                        success: function (response) {
+                            $("#holidayDiv").empty().html(response);
+                            $("#holidays").val("");
+                        },
+                        error: function (er) {
+                            toastr.error(er, 'Error');
+                        }
+                    });
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,135 @@
+﻿@model Easycase.Model.Case.BLCaseDetails
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Details</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Library</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div onclick="ConvertToClient(this)" class="btn btn-warning btn-rounded" style="margin-right:10px; margin-bottom:2%; vertical-align:middle;"><i class="fa fa-user" style="color:white;"></i> Convert Prospect to Client</div>
+                        </div>
+                        <!-- Nav tabs -->
+                        <div class="" style="margin-left:10%">
+                            @Html.Partial("_partialDetailHeader")
+                        </div>
+                        <div class="span7 marginLEFTZERO" style="display:inline-block; color:#377fea">
+                            @{Html.RenderPartial("_partialDetails");}
+                            <div class="assignedAgentTemp" style="display:none;">
+                                <p class="purpleFont"><b>Team Member(s) Assigned:</b> <span class="assignedAgentInfo"></span></p>
+                            </div>
+                        </div>
+                        <!-- Tab panes -->
+                        <div class="tab-content tabcontent-border" style="border:1px solid black;margin-top:10px">
+                            <img src="@Model.ProfileImage" alt="user" width="80" style="margin-left: 50%;margin-top: -43px;" class="rounded-circle">
+                            <div class="tab-pane active" id="home" role="tabpanel">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6 profile-icon">
+                                        <div class="circle-icon edit-file outer-margin-right-sm" onclick="ShowContextContent(this, 'inmail-info-group')" data-tippy="" data-original-title="Chat">
+                                            <i class="fa fa-comments-o icon-2x edit-launcher" style="margin-left: 28%;"></i>
+                                        </div>
+                                        <div class="circle-icon edit-file outer-margin-right" onclick="ShowContextContent(this, 'message-info-group')" data-tippy="" data-original-title="Email">
+                                            <i class="fa fa-envelope icon-2x edit-launcher" style="margin-left: 28%;"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 profile-icon">
+                                        <div class="circle-icon edit-file outer-margin-right" onclick="ShowContextContent(this, 'message-info-group')" data-tippy="" data-original-title="Email">
+                                            <i class="fa fa-phone icon-2x edit-launcher" style="margin-left: 28%;"></i>
+                                        </div>
+                                        <div class="circle-icon edit-file outer-margin-right" onclick="ShowContextContent(this, 'message-info-group')" data-tippy="" data-original-title="Email">
+                                            <i class="fa fa-mobile-phone icon-2x edit-launcher" style="margin-left: 28%;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="col-sm-4 profile-column">
+                                        <span class="purpleFont"><b>Full Name</b></span><br />
+                                        @Enum.GetName(typeof(Easycase.Extension.Enums.ClientPrefix), Model.Prefix) @Model.FullName <br />
+                                        <span class="purpleFont"><b>Date Of Birth</b></span><br />
+                                        @(Model.DOB.HasValue ? Model.DOB.Value.ToString("MMM dd, yyyy") : "") <button type="button" class="btn btn-info btn-sm">@Model.Age</button><br />
+                                        <span class="purpleFont"><b>Marital Status</b></span><br />
+                                        @Model.MartialStatus <br />
+                                        <span class="purpleFont"><b>Purpose in Canada</b></span><br />
+                                        @Model.PurposeInCanada <br />
+                                        <span class="purpleFont"><b>Relation to Primary Applicant</b></span><br />
+                                        @Model.RelationToPrimaryApplicant <br />
+                                        <span class="purpleFont"><b>Further details</b></span><br />
+                                        @Model.FurtherInformation <br />
+                                        <span class="purpleFont"><b>Assign Team Member(s)</b></span><br />
+                                        Work Permit <br />
+                                    </div>
+                                    <div class="col-sm-4 profile-column">
+                                        <span class="purpleFont"><b>Contact Info</b></span><br />
+                                        @Model.ContactInfo <br />
+                                        @Model.Phone <br />
+                                        <span class="purpleFont"><b>Visitors or Student Visa for Canada?</b></span><br />
+                                        @Model.HaveVisitorOrStudentVisa <br />
+                                        <span class="purpleFont"><b>US, UK or Schengen Area Visa?</b></span><br />
+                                        @Model.OtherTypeVisa  <br />
+                                        <span class="purpleFont"><b>How did you learn about us?</b></span><br />
+                                        @Model.HowLearnAbout  <br />
+
+                                    </div>
+                                    <div class="col-sm-4 profile-column">
+                                        <span class="purpleFont"><b>Address</b></span><br />
+                                        @Model.Address  <br />
+                                        <span class="purpleFont"><b>Country of Citizenship</b></span><br />
+                                        @Model.CountryOfCitizenship  <br />
+                                        <span class="purpleFont"><b>Country of Residence</b></span><br />
+                                        @Model.CountryOfResidence   <br />
+                                        <span class="purpleFont"><b>Spouse/Common-Law Resident/Citizen?</b></span><br />
+                                        @Model.SpuseAppliedPermanentResidence   <br />
+                                        <span class="purpleFont"><b>Spouse/Common-Law Coming Canada?</b></span><br />
+                                        @Model.HaveYourSpouseVisitorOrStudentVisa   <br />
+                                    </div>
+
+                                </div>
+                                <div class="p-20 row">
+                                    <a href="/case/editdetail/@Model.CaseID" type="button" class="btn btn-secondary">Edit Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+            $("#casesli").addClass("selected");
+
+            $(".detailed-header").removeClass("active");
+            $("#profiledetaildli").addClass("active");
+        });
+    </script>
+}

@@ -1,0 +1,160 @@
+﻿@model IEnumerable<Easycase.Model.Case.BLCaseStatus>
+
+@{
+    ViewBag.Title = "CaseStatusList";
+    Layout = "~/Views/Shared/_LayoutSetting.cshtml";
+}
+@Styles.Render("~/Content/datatable")
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Case Status List</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        @*<li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Clients</li>*@
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card hide" id="addnewcarddiv">
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <h4 class="card-title">Add New Case Status</h4>
+                        <div class="form-group row">
+                            <div class="col-sm-9">
+                                <input type="hidden" value="0" id="hdnCaseStatusId" />
+                                <input type="text" class="form-control" id="txtCaseStatus" placeholder="Case Status Name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-top">
+                        <div class="card-body">
+                            <button type="button" onclick="AddNewCaseStatus()" class="btn btn-default">Save</button>
+                            <button type="button" id="btnCancel" onclick="HideCaseStatus()" class="btn btn-danger">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title m-b-0">
+                        <button type="button" onclick="showAddCase()" class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Add New</button>
+                    </h5>
+                </div>
+                <div class="table-responsive" id="caseStatusDiv">
+                    @Html.Partial("_partialCaseStatusList",Model)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteconfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <input type="hidden" id="hdnId" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You want to delete this record.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="deleteCaseStatus()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    
+    <script>
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+            $("#casesinfoli").addClass("selected");
+            $('#caseStatusTable').dataTable(
+            {
+               "bSort": false
+            });
+        });
+        
+
+        function confirmDelete(id) {
+            $("#hdnId").val(id);
+            $("#deleteconfirm").modal("show");
+        }
+        function deleteCaseStatus() {
+            $.ajax({
+                url: "/Setting/DeleteCaseStatus",
+                type: "POST",
+                data: { id: $("#hdnId").val() },
+                success: function (response) {
+                    var id = $("#hdnId").val();
+                    $("#caseStatusTable").find("#tr" + id).remove();
+                    
+                    toastr.success('Record deleted successfully!', 'Success');
+                    $("#deleteconfirm").modal("hide");
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+        function showAddCase() {
+            $("#hdnCaseStatusId").val("0");
+            $("#addnewcarddiv").removeClass("hide");
+        }
+        function HideCaseStatus()
+        {
+            $("#hdnCaseStatusId").val("0");
+             $("#addnewcarddiv").addClass("hide");
+        }
+        function editcaseStatus(id, name) {
+            $("#hdnCaseStatusId").val(id);
+            $("#txtCaseStatus").val(name);
+            $("#addnewcarddiv").removeClass("hide");
+        }
+        function AddNewCaseStatus() {
+            if ($("#txtCaseStatus").val() != "") {
+                $.ajax({
+                    url: "/Setting/AddNewCaseStatus",
+                    type: "POST",
+                    data: { name: $("#txtCaseStatus").val(),id:$("#hdnCaseStatusId").val() },
+                    success: function (response) {
+                        $("#txtCaseStatus").val("");
+                        toastr.success(response, 'Success');
+                        $.ajax({
+                            url: "/Setting/PartialCaseStatusList",
+                            type: "POST",
+                            success: function (response) {
+                                $("#caseStatusDiv").empty().html(response);
+                                $('#caseStatusTable').dataTable(
+                                {
+                                   "bSort": false
+                                });
+                                HideCaseStatus();
+                            },
+                            error: function (er) {
+                                toastr.error(er, 'Error');
+                            }
+                        });
+                    },
+                    error: function (er) {
+                        toastr.error(er, 'Error');
+                    }
+                });
+            }
+
+        }
+    </script>
+}

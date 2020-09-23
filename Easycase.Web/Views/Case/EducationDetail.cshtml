@@ -1,0 +1,322 @@
+﻿@model Easycase.Model.Case.BLAddEducationModal
+@{
+    ViewBag.Title = "EducationDetail";
+}
+
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Education Details</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Library</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="card">
+        <div class="card-body wizard-content">
+            <h4 class="card-title"></h4>
+            <h6 class="card-subtitle"></h6>
+            @using (Html.BeginForm("EducationDetail", "Case", FormMethod.Post, new { @id = "example-form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "form-horizontal" })
+                @Html.HiddenFor(model => model.CaseId)
+                @Html.HiddenFor(model => model.EducationId)
+                <div>
+                    <h3>Profile</h3>
+                    <section>
+                    </section>
+                    <h3>Education</h3>
+                    <section>
+                        <div class="alert alert-info" style="width:20%" role="alert">
+                            Education Details
+                        </div>
+                        <div class="alert alert-secondary" role="alert">
+                            <i class="fa fa-info-circle"></i> Enter your existing education history.
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                @Html.Partial("_partialEducation", Model)
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">Have you completed an Education Credential Assessment ECA for your education outside of Canada?</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownList("isECACompleted", new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "Yes" },
+                                        new SelectListItem{ Text="No", Value = "No" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-info" style="width:20%" role="alert">
+                            Language Exam
+                        </div>
+                        <div class="alert alert-secondary" role="alert">
+                            <i class="fa fa-info-circle"></i> Language exams are CELPIP, IELTS or TEF (Test d'évaluation de français). If you have not yet received your scores, please choose YES to this question and enter your tentative scores. Once scores are finalized, you may edit the results.
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Have you taken a Language Exam, in either English or French, within the last two(2) years?  Language exams are CELPIP, IELTS or TEF (Test d'évaluation de français). If you have not yet received your scores, please choose YES to this question and enter your tentative scores. Once scores are finalized, you may edit the results.
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownList("CICEnglishExam", new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "Yes" },
+                                        new SelectListItem{ Text="No", Value = "No" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-info" style="width:20%" role="alert">
+                            Spouse Language Results
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                @Html.Partial("_partialSpouseEducation", Model)
+                            </div>
+                        </div>
+                        <div class="alert alert-info" style="width:20%" role="alert">
+                            Spouse Education Details
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Did your spouse or common-law partner take a language test?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownList("CICEnglishExamSpouse", new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "Yes" },
+                                        new SelectListItem{ Text="No", Value = "No" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top row">
+                            <div class="row position-right">
+                                <input type="button" onclick="RedirectPrevious(@Model.CaseId)" value="Previous" class="btn btn-dark" style="margin-left:10px" />
+                                <input type="button" value="Next" onclick="Next()" class="btn btn-info" style="margin-left:10px" />
+                            </div>
+                        </div>
+                    </section>
+                    <h3>Other Details</h3>
+                    <section>
+                    </section>
+                </div>
+
+            }
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+            $("#casesli").addClass("selected");
+            $("#steps-uid-0-p-0").remove();
+            $("#steps-uid-0-p-1").css("display", "block");
+            $("#steps-uid-0-t-1").parent().removeClass("disabled last").addClass("current last");
+            $("#steps-uid-0-t-0").parent().removeClass("first current").addClass("disabled first");
+        });
+        var form = $("#example-form");
+        // Basic Example with form
+        form.children("div").steps({
+            headerTag: "h3",
+            bodyTag: "section",
+            enablePagination: false,
+            transitionEffect: "slideLeft",
+            onStepChanging: function (event, currentIndex, newIndex) {
+                alert("Submitted!");
+            },
+            onFinishing: function (event, currentIndex) {
+                alert("Submitted!");
+            },
+            onFinished: function (event, currentIndex) {
+                alert("Submitted!");
+            }
+        });
+
+        function RedirectPrevious(id) {
+            window.location.href = "/case/editdetail/" + id;
+        }
+
+        function AddRowEducation() {
+            var totalTr = $("#educationHistory tbody tr").length;
+            var totalTrplus1 = totalTr + 1;
+            $("#educationHistory tbody").append('<tr class="education-list-item-' + totalTrplus1 + '" data-row-id="' + totalTr + '">' +
+                '<td><select class="form-control data-education">' +
+                '<option value="">Select</option>' +
+                '<option value="Ph.D./ Doctoral Certificate">Ph.D./ Doctoral Certificate</option>' +
+                '<option value="Post Graduate Certificate or Post Graduate Diploma">Post Graduate Certificate or Post Graduate Diploma</option>' +
+                '<option value="Master or Professional Degree to Practice">Master or Professional Degree to Practice</option>' +
+                '<option value="Bachelor Degree">Bachelor Degree</option>' +
+                '<option value="Trade Certificate">Trade Certificate</option>' +
+                '<option value="Associate Degree">Associate Degree</option>' +
+                '<option value="Non-trades certificate or Diploma">Non-trades certificate or Diploma</option>' +
+                '<option value="High School">High School</option>' +
+                '<option value="Below High School">Below High School</option>' +
+                '</select></td>' +
+                '<td><input type="text" class="form-control data-field"></td>' +
+                '<td><input type="text" class="form-control data-school"></td>' +
+                '<td><select class="form-control data-duration">' +
+                '<option value="">Select</option>' +
+                '<option value="Less than 12 months">Less than 12 months</option>' +
+                '<option value="1">1</option>' +
+                '<option value="2">2</option>' +
+                '<option value="3">3</option>' +
+                '<option value="4">4</option>' +
+                '<option value="5">5</option>' +
+                '<option value="6">6</option>' +
+                '<option value="7">7</option>' +
+                '<option value="8">8</option>' +
+                '<option value="9">9</option>' +
+                '<option value="10+">10+</option>' +
+                '</select></td>' +
+                '<td><input type="text" class="form-control data-country"></td>' +
+                '<td class="remove-control" style="width:20px">' +
+                '<i class="fa fa-minus-circle" style="color:red" onclick="RemoveRow(this)" aria-hidden="true"></i>' +
+                '</td>' +
+                '</tr>');
+        }
+        function RemoveRow(currentrow)
+        {
+            $(currentrow).parent().parent().remove();
+        }
+        function AddRowSpouse()
+        {
+var totalTr = $("#spouseEducation tbody tr").length;
+            var totalTrplus1 = totalTr + 1;
+            $("#spouseEducation tbody").append('<tr class="education-list-item-' + totalTrplus1 + '" data-row-id="' + totalTr + '">' +
+                '<td><select class="form-control data-spouse-education">' +
+                '<option value="">Select</option>' +
+                '<option value="Ph.D./ Doctoral Certificate">Ph.D./ Doctoral Certificate</option>' +
+                '<option value="Post Graduate Certificate or Post Graduate Diploma">Post Graduate Certificate or Post Graduate Diploma</option>' +
+                '<option value="Master or Professional Degree to Practice">Master or Professional Degree to Practice</option>' +
+                '<option value="Bachelor Degree">Bachelor Degree</option>' +
+                '<option value="Trade Certificate">Trade Certificate</option>' +
+                '<option value="Associate Degree">Associate Degree</option>' +
+                '<option value="Non-trades certificate or Diploma">Non-trades certificate or Diploma</option>' +
+                '<option value="High School">High School</option>' +
+                '<option value="Below High School">Below High School</option>' +
+                '</select></td>' +
+                '<td><input type="text" class="form-control data-spouse-study"></td>' +
+                '<td><input type="text" class="form-control data-spouse-school"></td>' +
+                '<td><select class="form-control data-spouse-duration">' +
+                '<option value="">Select</option>' +
+                '<option value="Less than 12 months">Less than 12 months</option>' +
+                '<option value="1">1</option>' +
+                '<option value="2">2</option>' +
+                '<option value="3">3</option>' +
+                '<option value="4">4</option>' +
+                '<option value="5">5</option>' +
+                '<option value="6">6</option>' +
+                '<option value="7">7</option>' +
+                '<option value="8">8</option>' +
+                '<option value="9">9</option>' +
+                '<option value="10+">10+</option>' +
+                '</select></td>' +
+                '<td><input type="text" class="form-control data-spouse-country"></td>' +
+                '<td class="remove-control" style="width:20px">' +
+                '<i class="fa fa-minus-circle" style="color:red" onclick="RemoveRowSpouse(this)" aria-hidden="true"></i>' +
+                '</td>' +
+                '</tr>');
+        }
+        function RemoveRowSpouse(currentrow)
+        {
+            $(currentrow).parent().parent().remove();
+        }
+
+        function Next() {
+            var obj = new Object();
+            obj.ECACompleted = $("#isECACompleted option:selected").val();
+            obj.CICEnglishExam = $("#CICEnglishExam option:selected").val();
+            obj.CICEnglishExamSpouse = $("#CICEnglishExamSpouse option:selected").val();
+            obj.CaseId =@(Model.CaseId);
+            obj.EducationId =@(Model.EducationId);
+            //education history
+            var dataLevels = [];
+            var datafields = [];
+            var dataschools = [];
+            var datadurations = [];
+            var datacountries = [];
+            $("#educationHistory tbody tr").each(function (index, value) {
+                if ($(value).find(".data-education").val() != "") {
+                    dataLevels.push($(value).find(".data-education").val());
+                    datafields.push($(value).find(".data-field").val());
+                    dataschools.push($(value).find(".data-school").val());
+                    datadurations.push($(value).find(".data-duration").val());
+                    datacountries.push($(value).find(".data-country").val());
+                }
+            });
+            var eduObject = new Object();
+            eduObject.Level=dataLevels;
+                eduObject.FieldOfStudy=datafields;
+                eduObject.Institution=dataschools;
+                eduObject.Duration=datadurations;
+                eduObject.Country=datacountries;
+            obj.EducationHistory = eduObject;
+            //
+
+            //education spouse
+            var dataSpouseLevels = [];
+            var dataSpousefields = [];
+            var dataSpouseschools = [];
+            var dataSpousedurations = [];
+            var dataSpousecountries = [];
+            $("#spouseEducation tbody tr").each(function (index, value) {
+                if ($(value).find(".data-spouse-education").val() != "") {
+                    dataSpouseLevels.push($(value).find(".data-spouse-education").val());
+                    dataSpousefields.push($(value).find(".data-spouse-study").val());
+                    dataSpouseschools.push($(value).find(".data-spouse-school").val());
+                    dataSpousedurations.push($(value).find(".data-spouse-duration").val());
+                    dataSpousecountries.push($(value).find(".data-spouse-country").val());
+                }
+            });
+            var spouseEduObject = new Object();
+            spouseEduObject.Level=dataSpouseLevels;
+                spouseEduObject.FieldOfStudy=dataSpousefields;
+                spouseEduObject.Institution=dataSpouseschools;
+                spouseEduObject.Duration=dataSpousedurations;
+                spouseEduObject.Country=dataSpousecountries;
+            obj.SpouseEducation = spouseEduObject;
+            //
+
+            $.ajax({
+                url: "/Case/EducationDetail",
+                type: "POST",
+                data: obj,
+                success: function (response) {
+                    window.location.href = "/case/otherdetails/@(Model.CaseId)";
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+    </script>
+}

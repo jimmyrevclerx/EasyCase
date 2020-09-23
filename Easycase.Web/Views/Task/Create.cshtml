@@ -1,0 +1,183 @@
+﻿@model Easycase.Model.Task.BLTask
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Add Task</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/task/index">Task</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Create</li>
+                    </ol>
+                </nav>
+                <a href="/task/index" class="btn btn-dark btn-sm">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                @using (Html.BeginForm("Create", "Task", FormMethod.Post, new { @id = "form-horizontal" }))
+                {
+                        @Html.HiddenFor(model => model.ID)
+                        <div class="card-body">
+                            <h4 class="card-title"></h4>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <label class="control-label col-md-2">Task Name <span class="required">*</span></label>
+                                    <div class="col-sm-12">
+                                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Task Name", maxlength = "200" } })
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="control-label col-md-2">Due Date</label>
+                                    <div class="col-sm-12">
+                                        @Html.EditorFor(model => model.DueDate, new { htmlAttributes = new { @class = "form-control date-inputmask", placeholder = "Due Date" } })
+                                        @Html.ValidationMessageFor(model => model.DueDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="control-label col-md-2">Time Due</label>
+                                    <div class="col-sm-12">
+                                        @Html.DropDownListFor(model => model.TimeDue, ViewBag.TimeInterval as SelectList, new { @class = "select2 form-control custom-select" })
+                                        @Html.ValidationMessageFor(model => model.TimeDue, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-sm-12">
+                                        @Html.DropDownListFor(model => model.Priority, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="High", Value = "High" },
+                                            new SelectListItem{ Text="Medium", Value = "Medium" },
+                                            new SelectListItem{ Text="Low", Value = "Low" },
+                                         }, new { @class = "select2 form-control custom-select" })
+                                        @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-12">
+                                        @Html.DropDownListFor(model => model.Status, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Not Started", Value = "Not Started" },
+                                            new SelectListItem{ Text="In Progress", Value = "In Progress" },
+                                            new SelectListItem{ Text="Completed", Value = "Completed" },
+                                         }, new { @class = "select2 form-control custom-select" })
+                                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label class="control-label col-md-2">Mentions</label>
+                                    <div class="col-sm-12">
+                                        @Html.DropDownList("Mentions", ViewBag.Clients as SelectList, new { @class = "form-control", @multiple = "multiple" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="control-label col-md-2">Assignee(s)</label>
+                                    <div class="col-sm-12">
+                                        @Html.DropDownList("Assigned", ViewBag.Clients as SelectList, new { @class = "form-control", @multiple = "multiple" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-sm-12">
+                                        @Html.TextAreaFor(model => model.Notes, new { @class = "form-control", cols = "20", rows = "5", placeholder = "Enter any notes you may have for this client" })
+                                        @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body">
+                                <input type="button" value="Save Task" onclick="SaveTask()" class="btn btn-default" />
+                            </div>
+                        </div>
+                }
+                </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+            $("#taskli").addClass("selected");
+            $(".select2").select2();
+            $('#DueDate').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+            $('#Mentions').multiselect({
+                includeSelectAllOption: true,
+                buttonWidth: '300px'
+            });
+            $('#Assigned').multiselect({
+                includeSelectAllOption: true,
+                buttonWidth: '300px'
+            });
+        });
+
+        function SaveTask() {
+            var data = new Object();
+            data.Name = $("#Name").val();
+            data.DueDate = $("#DueDate").val();
+            data.TimeDue = $("#TimeDue option:selected").val();
+            data.Priority = $("#Priority option:selected").val();
+            data.Status = $("#Status option:selected").val();
+            data.Notes = $("#Notes").val();
+            if (data.Name == "") {
+                toastr.warning("The Name field is required", 'Error');
+                return;
+            }
+            data.Mentions = $('#Mentions').val();
+            data.Assigned = $('#Assigned').val();
+            $.ajax({
+                url: "/Task/Create",
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    toastr.success(response, 'Success');
+                    $("#Name").val("");
+                    $("#DueDate").val("");
+                    $("#TimeDue").val("");
+                    $("#Priority").val("High");
+                    $("#Status").val("Not Started");
+                    $("#Notes").val("");
+                    $(".select2").select2();
+                    $('#Mentions').multiselect("deselectAll", false).multiselect("refresh");
+                     $('#Assigned').multiselect("deselectAll", false).multiselect("refresh");
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+    </script>
+}

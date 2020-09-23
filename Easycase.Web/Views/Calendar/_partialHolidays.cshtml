@@ -1,0 +1,12 @@
+﻿@model Easycase.Model.Calendar.BLHolidays
+
+<div class="row">
+    @if (Model.HolidayList != null)
+    {
+        foreach (var item in Model.HolidayList)
+        {
+            string holiday = item.Replace(" ", "");
+            <div id="@holiday" style="width:180px;margin-left:10px;margin-top:10px" class="span3 alert alert-info"> <button type="button" class="close" onclick="RemoveDataEntry('@item')" data-dismiss="alert">×</button>@item</div>
+        }
+    }
+</div>

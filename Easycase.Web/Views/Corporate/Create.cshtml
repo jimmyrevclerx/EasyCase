@@ -1,0 +1,189 @@
+﻿@model Easycase.Model.Corporate.BLCorporateProfile
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Profile Information</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/home/index">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">corporate</li>
+                    </ol>
+                </nav>
+                <a href="/corporate/index" class="btn btn-dark btn-sm">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="card">
+        <div class="card-body wizard-content">
+            <h4 class="card-title"></h4>
+            <h6 class="card-subtitle"></h6>
+            @using (Html.BeginForm("Create", "Corporate", FormMethod.Post,new { @id = "example-form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "form-horizontal" })
+                <div>
+                    <h3>Profile</h3>
+                    <section>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Business Name <span class="required">*</span></label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.BussinessName, new { htmlAttributes = new { @class = "form-control", placeholder = "Business Name" } })
+                                    @Html.ValidationMessageFor(model => model.BussinessName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-2">Email <span class="required">*</span></label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">CRA # </label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.CRA, new { htmlAttributes = new { @class = "form-control", placeholder = "CRA No." } })
+                                    @Html.ValidationMessageFor(model => model.CRA, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Phone # <span class="required">*</span></label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control phone-inputmask", placeholder = "Phone No" } })
+                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Address Line 1</label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Address1, new { htmlAttributes = new { @class = "form-control", placeholder = "Address Line 1" } })
+                                    @Html.ValidationMessageFor(model => model.Address1, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Fax # </label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Fax, new { htmlAttributes = new { @class = "form-control", placeholder = "Fax No" } })
+                                    @Html.ValidationMessageFor(model => model.Fax, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Address Line 2</label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", placeholder = "Address Line 2" } })
+                                    @Html.ValidationMessageFor(model => model.Address2, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Website </label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Website, new { htmlAttributes = new { @class = "form-control", placeholder = "Website" } })
+                                    @Html.ValidationMessageFor(model => model.Website, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Address Line 3</label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Address3, new { htmlAttributes = new { @class = "form-control", placeholder = "Address Line 3" } })
+                                    @Html.ValidationMessageFor(model => model.Address3, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Key Contact Person </label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.KeyContactPerson, new { htmlAttributes = new { @class = "form-control", placeholder = "Key Contact Person" } })
+                                    @Html.ValidationMessageFor(model => model.KeyContactPerson, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Key Contact Position </label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.KeyContactPosition, new { htmlAttributes = new { @class = "form-control", placeholder = "Key Contact Position" } })
+                                    @Html.ValidationMessageFor(model => model.KeyContactPosition, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label class="control-label col-md-6">Notes: </label>
+                                <div class="col-sm-12">
+                                    @Html.TextAreaFor(model => model.Notes, new { @class = "form-control", cols = "20", rows = "5", placeholder = "" })
+                                    @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="row position-right">
+                                <input type="submit" value="Next" class="btn btn-info" style="margin-left:10px" />
+                            </div>
+                        </div>
+                    </section>
+                    <h3>LMIA Details</h3>
+                    <section>
+                        
+                    </section>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+        $("#casesli").addClass("selected");
+        });
+
+        function OnSuccess(response) {
+        toastr.success('Data Submitted successfully!', 'Success');
+    }
+    function OnFailure(response) {
+     toastr.error("Error occured.", 'Error');
+        }
+
+        var form = $("#example-form");
+        // Basic Example with form
+        form.children("div").steps({
+            headerTag: "h3",
+            bodyTag: "section",
+            enablePagination: false,
+            transitionEffect: "slideLeft",
+            onStepChanging: function (event, currentIndex, newIndex) {
+                alert("Submitted!");
+            },
+            onFinishing: function (event, currentIndex) {
+                alert("Submitted!");
+            },
+            onFinished: function (event, currentIndex) {
+                alert("Submitted!");
+            }
+        });
+
+
+    </script>
+}

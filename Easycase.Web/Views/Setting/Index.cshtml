@@ -1,0 +1,207 @@
+﻿@model Easycase.Model.Company.BLCompanyDetail
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSetting.cshtml";
+}
+
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title"></h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    @*<ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/client/index">Client</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Create</li>
+                    </ol>*@
+                </nav>
+                @*<a href="/client/index" class="btn btn-dark btn-sm">Back</a>*@
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                @using (Ajax.BeginForm("Index", "Setting",
+new AjaxOptions
+{
+OnSuccess = "OnSuccess",
+OnFailure = "OnFailure"
+}))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "form-horizontal" })
+                    @Html.HiddenFor(model => model.ID)
+                <div class="card-body">
+                    <h4 class="card-title">Company Contact Details</h4>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label class="control-label col-md-6">First Name <span class="required">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name", maxlength = "200" } })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="control-label col-md-6">Last Name <span class="required">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name", maxlength = "200" } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label class="control-label col-md-6">Company Name <span class="required">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.EditorFor(model => model.CompanyName, new { htmlAttributes = new { @class = "form-control", placeholder = "Company name", maxlength = "200" } })
+                                @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="control-label col-md-6">Company Email <span class="required">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.EditorFor(model => model.CompanyEmail, new { htmlAttributes = new { @class = "form-control", placeholder = "Email", maxlength = "200" } })
+                                @Html.ValidationMessageFor(model => model.CompanyEmail, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label class="control-label col-md-6">Address Line 1 <span class="required">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.TextBoxFor(model => model.AddressLine1, new { @class = "form-control", placeholder = "Address Line 1", maxlength = "500" })
+                                @Html.ValidationMessageFor(model => model.AddressLine1, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="control-label col-md-6">Address Line 2 <span class="required">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.EditorFor(model => model.AddressLine2, new { htmlAttributes = new { @class = "form-control", placeholder = "Address Line 2", maxlength = "500" } })
+                                @Html.ValidationMessageFor(model => model.AddressLine2, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label class="control-label col-md-6">City<span class="required">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", placeholder = "City", maxlength = "100" } })
+                                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="control-label col-md-6">Province<span class="required">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.EditorFor(model => model.Province, new { htmlAttributes = new { @class = "form-control", placeholder = "Province", maxlength = "100" } })
+                                @Html.ValidationMessageFor(model => model.Province, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label class="control-label col-md-6">Country<span class="required">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", placeholder = "Country", maxlength = "100" } })
+                                @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="control-label col-md-6">Postal Code<span class="required">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control", placeholder = "Postal Code", maxlength = "30" } })
+                                @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label class="control-label col-md-6">Telephone<span class="required">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control phone-inputmask", placeholder = "Telephone", maxlength = "30" } })
+                                @Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Fax, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-sm-12">
+                                @Html.EditorFor(model => model.Fax, new { htmlAttributes = new { @class = "form-control", placeholder = "Fax", maxlength = "30" } })
+                                @Html.ValidationMessageFor(model => model.Fax, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label class="control-label col-md-6">Membership Type<span class="required">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.DropDownListFor(model => model.MembershipType, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select Status", Value = "" },
+                                        new SelectListItem{ Text="Immigration Consultants of Canada Regulatory Council (ICCRC)", Value = "ICCRC" },
+                                        new SelectListItem{ Text="Canadian Provincial or Teritorial Law Society", Value = "LAWSOCIETY" },
+                                        new SelectListItem{ Text="Chambre des notaires du Quebec", Value = "QUEBEC" },
+                                        new SelectListItem{ Text="Student/Pending Membership", Value = "PENDING" },
+                                     }, new { @class = "select2 form-control custom-select" })
+                                @Html.ValidationMessageFor(model => model.MembershipType, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="control-label col-md-6">Membership Number<span class="required">*</span></label>
+                            <div class="col-sm-12">
+                                @Html.EditorFor(model => model.MembershipNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Membership Number", maxlength = "30" } })
+                                @Html.ValidationMessageFor(model => model.MembershipNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="border-top">
+                        <div class="card-body">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="card">
+                @Html.Partial("_partialSupportCard",Model.bLSupport)
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+    $(document).ready(function () {
+        $(".navigationli").removeClass("selected");
+        $("#contactInfoli").addClass("selected");
+         $(".select2").select2();
+        if ('@ViewData["SuccessCompany"]' != null&&'@ViewData["SuccessCompany"]' != '') {
+            toastr.success('@ViewData["SuccessCompany"]', 'Success');
+        }
+        if ('@ViewData["FailedCompany"]' != null&&'@ViewData["FailedCompany"]' != '') {
+            toastr.error('@ViewData["FailedCompany"]', 'Error');
+        }
+        $('#DOB').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
+
+    function OnSuccess(response) {
+        toastr.success('Data Submitted successfully!', 'Success');
+    }
+    function OnFailure(response) {
+     toastr.error("Error occured.", 'Error');
+    }
+    </script>
+}

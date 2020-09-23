@@ -1,0 +1,137 @@
+﻿@model Easycase.Model.Company.BLSupport
+<style>
+    input[type="file"] {
+        display: none;
+    }
+
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+</style>
+@using (Ajax.BeginForm("Support", "Setting",
+new AjaxOptions
+{
+    OnSuccess = "OnSuccess",
+    OnFailure = "OnFailure"
+}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "form-horizontal" })
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.ImageId)
+    <div class="card-body">
+        <h4 class="card-title">Client Support Card</h4>
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label for="clientimage" style="margin-top:10px" class="custom-file-upload btn btn-success btn-sm">
+                    <i class="fa fa-picture-o" aria-hidden="true"></i> Choose Photo
+                </label>
+                <input id="clientimage" name="Attachments" multiple="multiple" type="file" />
+                <button type="button" onclick="UploadProfile()" class="btn btn-warning"><i class="fa fa-cloud-upload"></i> Upload</button>
+                <div class="col-md-6">
+                    <div class="p-2"><img src="@Model.ImagePath" id="thumbProfile" alt="user" width="100" class="rounded-circle"></div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <label class="control-label col-md-6">Enter greeting to clients below <span class="required">*</span></label>
+                <div class="col-sm-12">
+                    @Html.TextAreaFor(model => model.Greeting, new { @class = "form-control", cols = "20", rows = "5", placeholder = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." })
+                    @Html.ValidationMessageFor(model => model.Greeting, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-6">
+                <label class="control-label col-md-6">Support Email <span class="required">*</span></label>
+                <div class="col-sm-12">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email", maxlength = "200" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="control-label col-md-6">Support Phone No. <span class="required">*</span></label>
+                <div class="col-sm-12">
+                    @Html.EditorFor(model => model.PhoneNo, new { htmlAttributes = new { @class = "form-control phone-inputmask", placeholder = "Phone No", maxlength = "30" } })
+                    @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label class="control-label col-md-6">Facebook Account URL</label>
+                <div class="col-sm-12">
+                    @Html.EditorFor(model => model.FacebookUrl, new { htmlAttributes = new { @class = "form-control", placeholder = "Facebook Url", maxlength = "500" } })
+                    @Html.ValidationMessageFor(model => model.FacebookUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label class="control-label col-md-6">	LinkedIn Account URL</label>
+                <div class="col-sm-12">
+                    @Html.EditorFor(model => model.Linkdin, new { htmlAttributes = new { @class = "form-control", placeholder = "Linkdin Url", maxlength = "500" } })
+                    @Html.ValidationMessageFor(model => model.Linkdin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label class="control-label col-md-6">Website URL <span class="required">*</span></label>
+                <div class="col-sm-12">
+                    @Html.EditorFor(model => model.WebsiteUrl, new { htmlAttributes = new { @class = "form-control", placeholder = "Website Url", maxlength = "500" } })
+                    @Html.ValidationMessageFor(model => model.WebsiteUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="border-top">
+        <div class="card-body">
+            <input type="submit" value="Save Changes" class="btn btn-default" />
+        </div>
+    </div>
+}
+<script>
+    //$("#clientimage").change(function () {
+    //    var data = new FormData();
+    //    var files = $("#clientimage").get(0).files;
+    //    if (files.length > 0) {
+    //        data.append("clientimage", files[0]);
+    //    }
+
+    //    $.ajax({
+    //        url: "/Client/UploadFile",
+    //        type: "POST",
+    //        processData: false,
+    //        contentType: false,
+    //        data: data,
+    //        success: function (response) {
+    //            $("#thumbProfile").attr("src",response.path);
+    //            $("#ImageId").val(response.id);
+    //        },
+    //        error: function (er) {
+    //            toastr.error(er, 'Error');
+    //        }
+    //    });
+    //});
+    function UploadProfile() {
+        var data = new FormData();
+        var files = $("#clientimage").get(0).files;
+        if (files.length > 0) {
+            data.append("clientimage", files[0]);
+        }
+
+        $.ajax({
+            url: "/Client/UploadFile",
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (response) {
+                $("#thumbProfile").attr("src",response.path);
+                $("#ImageId").val(response.id);
+            },
+            error: function (er) {
+                toastr.error(er, 'Error');
+            }
+        });
+    }
+</script>

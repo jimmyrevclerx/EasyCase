@@ -1,0 +1,61 @@
+﻿<div class="scroll-sidebar">
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+        <ul id="sidebarnav" class="p-t-30">
+            <li class="sidebar-item navigationli" id="dashboard"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/home/index" aria-expanded="false"><i class="fa fa-home" aria-hidden="true"></i><span class="hide-menu">Home</span></a></li>
+            <li class="sidebar-item navigationli" id="clients"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/client/index" aria-expanded="false"><i class="fa fa-users"></i><span class="hide-menu">Clients/Prospects</span></a></li>
+            <li class="sidebar-item navigationli" id="casesli">
+                <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-folder-open"></i><span class="hide-menu">Cases </span></a>
+                <ul aria-expanded="false" class="collapse  first-level">
+                    <li class="sidebar-item"><a href="/case/index" class="sidebar-link"><i class="fa fa-user"></i><span class="hide-menu"> Individual </span></a></li>
+                    <li class="sidebar-item"><a href="/corporate/index" class="sidebar-link"><i class="fa fa-building-o"></i><span class="hide-menu"> Corporate </span></a></li>
+                </ul>
+            </li>
+            <li class="sidebar-item navigationli" id="emailviewerli"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/email/compose" aria-expanded="false"><i class="fa fa-envelope" aria-hidden="true"></i><span class="hide-menu">Email Viewer</span></a></li>
+            <li class="sidebar-item navigationli" id="taskli"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="\task\index" aria-expanded="false"><i class="fa fa-list" aria-hidden="true"></i><span class="hide-menu">Task Manager</span></a></li>
+            <li class="sidebar-item navigationli" id="calendarli">
+                <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hide-menu">Calendar </span></a>
+                <ul aria-expanded="false" class="collapse  first-level">
+                    <li class="sidebar-item"><a href="/calendar/index" class="sidebar-link"><i class="fa fa-calendar-check-o" aria-hidden="true"></i><span class="hide-menu"> Appointments </span></a></li>
+                    <li class="sidebar-item"><a href="icon-fontawesome.html" class="sidebar-link"><i class="fa fa-check" aria-hidden="true"></i><span class="hide-menu"> Available Slots </span></a></li>
+                    <li class="sidebar-item"><a href="/calendar/manage" class="sidebar-link"><i class="fa fa-wrench" aria-hidden="true"></i><span class="hide-menu"> Configure </span></a></li>
+                </ul>
+            </li>
+
+            <li class="sidebar-item navigationli" id="contactli"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="\contact\index" aria-expanded="false"><i class="fa fa-book" aria-hidden="true"></i><span class="hide-menu">Contacts</span></a></li>
+            <li class="sidebar-item navigationli" id="reportingli">
+                <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hide-menu">Reporting </span></a>
+                <ul aria-expanded="false" class="collapse  first-level">
+                    <li class="sidebar-item"><a href="/calendar/index" class="sidebar-link"><i class="fa fa-usd" aria-hidden="true"></i><span class="hide-menu"> Invoice </span></a></li>
+                    <li class="sidebar-item"><a href="icon-fontawesome.html" class="sidebar-link"><i class="fa fa-random" aria-hidden="true"></i><span class="hide-menu"> Reconciler </span></a></li>
+                    <li class="sidebar-item"><a href="icon-fontawesome.html" class="sidebar-link"><i class="fa fa-align-right" aria-hidden="true"></i><span class="hide-menu"> Run Reports </span></a></li>
+                </ul>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-wrench" aria-hidden="true"></i><span class="hide-menu">Settings </span></a>
+                <ul aria-expanded="false" class="collapse  first-level">
+                    <li class="sidebar-item"><a href="/setting/index" class="sidebar-link"><i class="fa fa-desktop"></i><span class="hide-menu"> System </span></a></li>
+                    <li class="sidebar-item"><a href="pages-gallery.html" class="sidebar-link"><i class="fa fa-user"></i><span class="hide-menu"> Users </span></a></li>
+                    <li class="sidebar-item"><a href="pages-calendar.html" class="sidebar-link"><i class="fa fa-picture-o"></i><span class="hide-menu"> Upload Logo </span></a></li>
+                    <li class="sidebar-item"><a href="pages-invoice.html" class="sidebar-link"><i class="fa fa-comments"></i><span class="hide-menu"> SMS </span></a></li>
+                    <li class="sidebar-item"><a href="pages-chat.html" class="sidebar-link"><i class="fa fa-plus-circle"></i><span class="hide-menu"> Plugin Credits </span></a></li>
+                </ul>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-key"></i><span class="hide-menu">My Account </span></a>
+                <ul aria-expanded="false" class="collapse  first-level">
+                    @*<li class="sidebar-item"><a href="authentication-login.html" class="sidebar-link"><i class="fa fa-user"></i><span class="hide-menu"> Edit Profile </span></a></li>*@
+                    <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="fa fa-ellipsis-h"></i><span class="hide-menu"> Change Password </span></a></li>
+                    <li class="sidebar-item"><a href="authentication-register.html" class="sidebar-link"><i class="fa fa-credit-card"></i><span class="hide-menu"> Subscription </span></a></li>
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <li class="sidebar-item"><a href="javascript:document.getElementById('logoutForm').submit()" class="sidebar-link"><i class="fa fa-sign-out"></i><span class="hide-menu"> Sign Out </span></a></li>
+                    }
+
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <!-- End Sidebar navigation -->
+</div>

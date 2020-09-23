@@ -1,0 +1,188 @@
+﻿@model Easycase.Model.Case.BLLinkDetail
+@{
+    ViewBag.Title = "RelatedCase";
+}
+<style>
+    .related-case-details {
+        background: #fff;
+        border: solid 2px #b5afaf;
+        padding: 1%;
+        border-radius: 6px;
+        margin-bottom: 1%;
+    }
+    .related-name {
+        color: #113d52;
+        font-size: 1.5em;
+    }
+    .label {
+        font-weight: normal !important;
+        text-shadow: none !important;
+    }
+    .label-dark-blue {
+        background-color: #113d52;
+    }
+    a:visited, a:hover, a:active, a:focus, a {
+        border: none;
+        text-decoration: none;
+        outline: 0;
+    }
+    .btn-dark-theme {
+        background: #113d52;
+        text-shadow: none !important;
+        color: #fff;
+    }
+</style>
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Related Cases</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Library</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div onclick="ConvertToClient(this)" class="btn btn-warning btn-rounded" style="margin-right:10px; margin-bottom:2%; vertical-align:middle;"><i class="fa fa-user" style="color:white;"></i> Convert Prospect to Client</div>
+                        </div>
+                        <!-- Nav tabs -->
+                        <div class="" style="margin-left:10%">
+                            @Html.Partial("_partialDetailHeader")
+                        </div>
+                        <div class="span7 marginLEFTZERO" style="display:inline-block; color:#377fea">
+                            @Html.Partial("_partialDetails", new Easycase.Model.Case.BLCaseDetails {
+                        CaseID=Model.CaseId,
+                        CaseNumber=Model.CaseNumber
+                            })
+                            <div class="assignedAgentTemp" style="display:none;">
+                                <p class="purpleFont"><b>Team Member(s) Assigned:</b> <span class="assignedAgentInfo"></span></p>
+                            </div>
+                        </div>
+                        <!-- Tab panes -->
+                        <div id="related-cases-info-group_listview" style="max-height: 30vh; overflow-y: auto; display: block;">
+                            @Html.Partial("_partialRelatedCase",Model)
+                        </div>
+
+                        <p class="my-text" style="color:#113d52"> If you already have an existing case for the relative being added, click <b>Link Existing Case</b>, if you are adding a brand new case for the relative, click <b>Add New Case</b>.</p>
+                        <button type="button" class="btn btn-info btn-lg" onclick="showCaseListDropdown()"><i class="fa fa-link"></i> Link Existing Case</button>
+                        <a href="/case/create" class="btn btn-info btn-lg" style="color:#fff"><i class="fa fa-folder-open"></i> Add New Case</a>
+
+                        <div id="caserelateddropdown" style="display:none">
+                            <label class="control-label col-md-12">
+                                Search for an existing case
+                            </label>
+                            <div class="col-sm-6 ">
+                                @Html.DropDownList("CaseLink", ViewBag.CaseList as SelectList, "", new { @class = "select2 form-control custom-select", @style = "width:400px" })
+                                <button type="button" class="btn btn-info btn-sm" onclick="LinkNewCase()"><i class="fa fa-save"></i> Save</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteconfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <input type="hidden" id="hdnId" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You want to delete this record.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="DeleteCaseRelated()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+            $("#casesli").addClass("selected");
+
+            $(".detailed-header").removeClass("active");
+            $("#relatedcaseli").addClass("active");
+            $(".select2").select2();
+        });
+        function showCaseListDropdown() {
+            $("#caserelateddropdown").css("display","block");
+        }
+        function RefreshPartialView() {
+            $.ajax({
+                        url: "/Case/PartialRelatedCase",
+                        type: "POST",
+                        data: { id: @Model.CaseId },
+                        success: function (response) {
+                            $("#related-cases-info-group_listview").html(response);
+                        },
+                        error: function (er) {
+                            toastr.error(er, 'Error');
+                        }
+                    });
+        }
+        function LinkNewCase() {
+            var caseid = $("#CaseLink option:selected").val();
+            $.ajax({
+                url: "/Case/LinkCase",
+                type: "POST",
+                data: { caseid: caseid },
+                success: function (response) {
+                    $("#caserelateddropdown").css("display", "none");
+                    RefreshPartialView();
+                    toastr.success('Case linked successfully!', 'Success');
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+
+        function DeleteRelatedCase(id) {
+            $("#hdnId").val(id);
+            $("#deleteconfirm").modal("show");
+        }
+        function DeleteCaseRelated() {
+            $.ajax({
+                url: "/Case/DeleteRelatedCase",
+                type: "POST",
+                data: { caseid: $("#hdnId").val() },
+                success: function (response) {
+                    $("#deleteconfirm").modal("hide");
+                    RefreshPartialView();
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+    </script>
+}

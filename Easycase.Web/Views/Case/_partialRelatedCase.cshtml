@@ -1,0 +1,42 @@
+﻿@model Easycase.Model.Case.BLLinkDetail
+
+@if (Model.bLCases.Count > 0)
+{
+    foreach (var item in Model.bLCases)
+    {
+
+        <div class="related-case-details col-sm-12 row">
+            <div class="col-sm-5 marginLEFTZERO">
+                <b class="related-name">@(item.Name+" "+item.FamilyName)</b>
+                <br><span class="related-relation label label-dark-blue">Primary Applicant</span>
+                <p>
+                    @item.CaseNumber
+                </p>
+            </div>
+
+            <div class="col-sm-2 marginLEFTZERO">
+                <span class="label label-dark-blue">Provincial Nominees</span>
+            </div>
+            <div class="col-sm-5 marginLEFTZERO position-right">
+
+                <a class="btn btn-dark-theme btn-rounded" href="/case/details/@Model.CaseId" style="margin-right:2%;color:#fff">View Case</a>
+
+                <div class="position-right">
+                    <i style="color:#d9534f;cursor:pointer" class="fa fa-remove" onclick="DeleteRelatedCase(@item.CaseID)" title="Remove related case link"></i>
+                </div>
+            </div>
+
+        </div>
+    }
+}
+else
+{
+    <div class="center-text">
+        <span class="my-text">
+            <b style="color:#377fea">No related cases found</b>
+        </span>
+        <br>
+        <span id="icon-link-zoom" class="fa fa-link" style="font-size:10em; color:#377fea "></span>
+    </div>
+}
+

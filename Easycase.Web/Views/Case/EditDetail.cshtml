@@ -1,0 +1,429 @@
+﻿@model Easycase.Model.Case.BLAddCaseDetailModal
+@{
+    ViewBag.Title = "EditDetail";
+}
+
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Profile Information</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Library</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="card">
+        <div class="card-body wizard-content">
+            <h4 class="card-title"></h4>
+            <h6 class="card-subtitle"></h6>
+            @using (Html.BeginForm("EditDetail", "Case", FormMethod.Post, new { @id = "example-form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "form-horizontal" })
+                @Html.HiddenFor(model => model.ProfileInformationID)
+                @Html.HiddenFor(model => model.CaseID)
+                @Html.HiddenFor(model => model.ClientId)
+                <div>
+                    <h3>Profile</h3>
+                    <section>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Email <span class="required">*</span></label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Country of Citizenship</label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.CountryOfCitizenship, new { htmlAttributes = new { @class = "form-control", placeholder = "Citizenship" } })
+                                    @Html.ValidationMessageFor(model => model.CountryOfCitizenship, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Salutation</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.Prefix, ViewBag.Prefix as SelectList, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Prefix, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Country of Residence</label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.CountryOfResidence, new { htmlAttributes = new { @class = "form-control", placeholder = "Residence" } })
+                                    @Html.ValidationMessageFor(model => model.CountryOfResidence, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Given Name(s) <span class="required">*</span></label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name" } })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Primary Language Spoken</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.PrimaryLanguage, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Select", Value = "" },
+                                            new SelectListItem{ Text="English", Value = "English" },
+                                            new SelectListItem{ Text="French", Value = "French" },
+                                         }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PrimaryLanguage, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Family Name <span class="required">*</span></label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Address</label>
+                                <div class="col-sm-12">
+                                    @Html.TextAreaFor(model => model.Address, new { @class = "form-control", cols = "20", rows = "5", placeholder = "Enter Address" })
+                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control date-inputmask", placeholder = "Date of birth" } })
+                                    @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control phone-inputmask", placeholder = "Phone" } })
+                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">Relation to Primary Applicant</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.RelationToPrimaryApplicant, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Select", Value = "" },
+                                            new SelectListItem{ Text="Primary Applicant", Value = "Primary Applicant" },
+                                            new SelectListItem{ Text="Spouse", Value = "Spouse" },
+                                            new SelectListItem{ Text="Son", Value = "Son" },
+                                            new SelectListItem{ Text="Daughter", Value = "Daughter" },
+                                            new SelectListItem{ Text="Common Law Partner", Value = "Common Law Partner" },
+                                            new SelectListItem{ Text="Sponsor", Value = "Sponsor" },
+                                            new SelectListItem{ Text="Father", Value = "Father" },
+                                            new SelectListItem{ Text="Mother", Value = "Mother" },
+                                            new SelectListItem{ Text="Grandfather", Value = "Grandfather" },
+                                            new SelectListItem{ Text="Grandmother", Value = "Grandmother" },
+                                            new SelectListItem{ Text="Brother", Value = "Brother" },
+                                            new SelectListItem{ Text="Sister", Value = "Sister" },
+                                            new SelectListItem{ Text="Grandson", Value = "Grandson" },
+                                            new SelectListItem{ Text="Granddaughter", Value = "Granddaughter" },
+                                            new SelectListItem{ Text="Nephew", Value = "Nephew" },
+                                            new SelectListItem{ Text="Niece", Value = "Niece" },
+                                            new SelectListItem{ Text="Uncle", Value = "Uncle" },
+                                            new SelectListItem{ Text="Aunt", Value = "Aunt" },
+                                         }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.RelationToPrimaryApplicant, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    How did you hear about us?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.HearFromAboutus, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Select", Value = "" },
+                                            new SelectListItem{ Text="Agent", Value = "Agent" },
+                                            new SelectListItem{ Text="Client", Value = "Client" },
+                                            new SelectListItem{ Text="Google", Value = "Google" },
+                                            new SelectListItem{ Text="Yahoo", Value = "Yahoo" },
+                                            new SelectListItem{ Text="Facebook", Value = "Facebook" },
+                                            new SelectListItem{ Text="Friend", Value = "Friend" },
+                                            new SelectListItem{ Text="LinkedIn", Value = "LinkedIn" },
+                                            new SelectListItem{ Text="Other", Value = "Other" },
+                                         }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.HearFromAboutus, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Marital Status
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.MartialStatusId, ViewBag.MartialStatus as SelectList, "Select", new { @class = "select2 form-control custom-select" })
+                                    @Html.ValidationMessageFor(model => model.MartialStatusId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    What would you like to do in Canada?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.LikeToDoInCanada, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Select", Value = "" },
+                                            new SelectListItem{ Text="Express Entry", Value = "Express Entry" },
+                                            new SelectListItem{ Text="Study Permit", Value = "Study Permit" },
+                                            new SelectListItem{ Text="Work Permit", Value = "Work Permit" },
+                                            new SelectListItem{ Text="Visitor Visa", Value = "Visitor Visa" },
+                                            new SelectListItem{ Text="Apply Permanent Resident", Value = "Apply Permanent Resident" },
+                                            new SelectListItem{ Text="Renewal Permanent Resident", Value = "Renewal Permanent Resident" },
+                                            new SelectListItem{ Text="Citizenship", Value = "Citizenship" },
+                                            new SelectListItem{ Text="Post-Graduation Work Permit", Value = "Post-Graduation Work Permit" },
+                                            new SelectListItem{ Text="Family Sponsorship", Value = "Family Sponsorship" },
+                                            new SelectListItem{ Text="Investor/Business", Value = "Investor/Business" },
+                                            new SelectListItem{ Text="Not Sure", Value = "Not Sure" },
+                                         }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.LikeToDoInCanada, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Have you been accepted to a school, college or university in Canada?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.HaveYouAcceptedSchoolCollege, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Select", Value = "" },
+                                            new SelectListItem{ Text="Yes", Value = "Yes" },
+                                            new SelectListItem{ Text="No", Value = "No" },
+                                         }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.HaveYouAcceptedSchoolCollege, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Have you or your spouse previously visited Canada for work, travel, or study?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.VisitPrevious, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Select", Value = "" },
+                                            new SelectListItem{ Text="Yes", Value = "Yes" },
+                                            new SelectListItem{ Text="No", Value = "No" },
+                                         }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.VisitPrevious, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Do you have a Visitors or Student Visa for Canada?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.HaveVisitorOrStudentVisa, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Select", Value = "" },
+                                            new SelectListItem{ Text="Yes", Value = "Yes" },
+                                            new SelectListItem{ Text="No", Value = "No" },
+                                         }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.HaveVisitorOrStudentVisa, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Do you or your spouse currently have a Visitor Visa to either the United States, United Kingdom or Schengen Area?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.HaveYourSpouseVisitorOrStudentVisa, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Select", Value = "" },
+                                            new SelectListItem{ Text="Yes", Value = "Yes" },
+                                            new SelectListItem{ Text="No", Value = "No" },
+                                         }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.HaveYourSpouseVisitorOrStudentVisa, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-info" style="width:20%" role="alert">
+                            Previous and Future Visit(s)
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Have you or your spouse ever been refused for any type of application for any country or any province?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.SpuseRefusedAnyApplication, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Select", Value = "" },
+                                            new SelectListItem{ Text="Yes", Value = "Yes" },
+                                            new SelectListItem{ Text="No", Value = "No" },
+                                         }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.SpuseRefusedAnyApplication, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Where is your preferred destination in Canada?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.PreferedDestination, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Select", Value = "" },
+                                            new SelectListItem{ Text="Alberta (AB)", Value = "AB" },
+                                            new SelectListItem{ Text="British Columbia (BC)", Value = "BC" },
+                                            new SelectListItem{ Text="Manitoba (MB)", Value = "MB" },
+                                            new SelectListItem{ Text="New Brunswick (NB)", Value = "NB" },
+                                            new SelectListItem{ Text="Newfoundland and Labrador (NL)", Value = "NL" },
+                                            new SelectListItem{ Text="Northwest Territories (NT)", Value = "NT" },
+                                            new SelectListItem{ Text="Nova Scotia (NS)", Value = "NS" },
+                                            new SelectListItem{ Text="Nunavut (NU)", Value = "NU" },
+                                            new SelectListItem{ Text="Ontario (ON)", Value = "ON" },
+                                            new SelectListItem{ Text="Prince Edward Island (PE)", Value = "PE" },
+                                            new SelectListItem{ Text="Quebec (QC)", Value = "QC" },
+                                            new SelectListItem{ Text="Saskatchewan (SK)", Value = "SK" },
+                                            new SelectListItem{ Text="Yukon (YT)", Value = "YT" },
+                                         }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PreferedDestination, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Have you or your spouse previously applied for Provincial Nominee Program or Permanent Residence?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.SpuseAppliedPermanentResidence, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Select", Value = "" },
+                                            new SelectListItem{ Text="Yes", Value = "Yes" },
+                                            new SelectListItem{ Text="No", Value = "No" },
+                                         }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.SpuseAppliedPermanentResidence, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Have you or your spouse ever been arrested, detained, charged or convicted in any country in past ?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.SpuseAnyIllegalCase, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Select", Value = "" },
+                                            new SelectListItem{ Text="Yes", Value = "Yes" },
+                                            new SelectListItem{ Text="No", Value = "No" },
+                                         }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.SpuseAnyIllegalCase, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Have you or your spouse previously applied for immigration or visa to Canada?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.SpuseAppliedAnyVisa, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Select", Value = "" },
+                                            new SelectListItem{ Text="Yes", Value = "Yes" },
+                                            new SelectListItem{ Text="No", Value = "No" },
+                                         }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.SpuseAppliedAnyVisa, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Any further information?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.TextAreaFor(model => model.FurtherInformation, new { @class = "form-control", cols = "20", rows = "5", placeholder = "" })
+                                    @Html.ValidationMessageFor(model => model.FurtherInformation, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top row">
+                            <div class="row position-right">
+                                <input type="button" value="Previous" disabled class="btn btn-dark" style="margin-left:10px" />
+                                <input type="submit" value="Next" class="btn btn-info" style="margin-left:10px" />
+                            </div>
+                        </div>
+                    </section>
+                    <h3>Education</h3>
+                    <section>
+                    </section>
+                    <h3>Other Details</h3>
+                    <section>
+                    </section>
+                </div>
+
+            }
+        </div>
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+         $("#casesli").addClass("selected");
+        });
+        var form = $("#example-form");
+        // Basic Example with form
+        form.children("div").steps({
+            headerTag: "h3",
+            bodyTag: "section",
+            enablePagination: false,
+            transitionEffect: "slideLeft",
+            onStepChanging: function (event, currentIndex, newIndex) {
+                alert("Submitted!");
+            },
+            onFinishing: function (event, currentIndex) {
+                alert("Submitted!");
+            },
+            onFinished: function (event, currentIndex) {
+                alert("Submitted!");
+            }
+        });
+    </script>
+}

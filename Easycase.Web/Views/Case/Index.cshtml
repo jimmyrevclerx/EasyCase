@@ -1,0 +1,128 @@
+﻿@model IEnumerable<Easycase.Model.Case.BLCaseviewModal>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@Styles.Render("~/Content/datatable")
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Client List</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Clients</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title m-b-0"><a href="/case/create" class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> New Case</a></h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" id="caseTable">
+                        <thead class="thead-light">
+                            <tr>
+                                @*<th>
+                                    <label class="customcheckbox m-b-20">
+                                        <input type="checkbox" id="mainCheckbox" />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </th>*@
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">DOB</th>
+                                <th scope="col">Case Type</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="customtable">
+                            @foreach (var item in Model)
+                            {
+                            <tr id="tr@(item.CaseID)">
+                                @*<th>
+                                    <label class="customcheckbox">
+                                        <input type="checkbox" class="listCheckbox" />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </th>*@
+                                <td>
+                                    <a href="/case/details/@item.CaseID" class="">@item.Name</a>
+                                </td>
+                                <td>@item.Email</td>
+                                <td>@(item.DOB.HasValue ? item.DOB.Value.ToString("dd-MM-yyyy") : "")</td>
+                                <td>@item.CaseTypeName</td>
+                                <td>
+                                    <a href="/case/details/@item.CaseID" class="btn btn-facebook btn-sm">View</a>
+                                    <a href="/case/edit/@item.CaseID" class="btn btn-cyan btn-sm">Edit</a>
+                                    <button type="button" onclick="confirmDelete(@item.CaseID)" class="btn btn-danger btn-sm">Delete</button>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteconfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <input type="hidden" id="hdnId" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You want to delete this record.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="deleteCase()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+    <script>
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+        $("#casesli").addClass("selected");
+        });
+        $('#caseTable').DataTable();
+
+        function confirmDelete(id) {
+            $("#hdnId").val(id);
+            $("#deleteconfirm").modal("show");
+        }
+        function deleteCase() {
+            $.ajax({
+                url: "/Case/Delete",
+                type: "POST",
+                data: { id: $("#hdnId").val() },
+                success: function (response) {
+                    var id = $("#hdnId").val();
+                    $("#caseTable").find("#tr" + id).remove();
+                    toastr.success('Record deleted successfully!', 'Success');
+                    $("#deleteconfirm").modal("hide");
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+    </script>
+}

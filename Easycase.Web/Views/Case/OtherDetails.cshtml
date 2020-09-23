@@ -1,0 +1,628 @@
+﻿@model Easycase.Model.Case.BLOtherDetail
+@{
+    ViewBag.Title = "OtherDetails";
+}
+
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Employment and Other Details</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Library</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="card">
+        <div class="card-body wizard-content">
+            <h4 class="card-title"></h4>
+            <h6 class="card-subtitle"></h6>
+            @using (Html.BeginForm("OtherDetails", "Case", FormMethod.Post, new { @id = "example-form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "form-horizontal" })
+                <div>
+                    <h3>Profile</h3>
+                    <section>
+                    </section>
+                    <h3>Education</h3>
+                    <section>
+                    </section>
+                    <h3>Other Details</h3>
+                    <section>
+                        <div class="alert alert-info" style="width:30%" role="alert">
+                            Work Details
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Have you been in Canada as a temporary foreign worker?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.TemporaryWorker, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">Are you a Skilled Worker based on Canada's definition?</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.SkilledWorker, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Do you have a certificate of qualification from a Canadian province, territory or federal body (Trade Workers Only)?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.TradeCertificate, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">Do you have a nomination certificate from a Canadian province?</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.ProvinceNominee, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Do you have an official offer of employment from a Canadian Employer (LMIA or approved LMIA-exempt occupation)?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.JobOffer, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-info" style="width:30%" role="alert">
+                            British Columbia Assessment Details
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Do you have an offer of indeterminate, full-time employment from an employer in British Columbia?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.isBCEmployerOffer, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">In what region of British Columbia is this job located?</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.BCDistrict, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Stikine, Central Coast, Northern Rockies, Mount Waddington, Skeena-Queen Charlotte, Powell River, Sunshine Coast, Kootenay-Boundary, Alberni-Clayoquot", Value = "1" },
+                                        new SelectListItem{ Text="Kitimat-Stikine, Bulkley-Nechako, Squamish-Lillooet, Strathcona, Columbia-Shushwap, East Kootenay", Value = "2" },
+                                        new SelectListItem{ Text="Peace River, Comox Valley, Cariboo, Central Kootenay", Value = "3" },
+                                        new SelectListItem{ Text="Okanagan-Similkameen, Cowichan Valley, North Okanagan, Fraser-Fort George", Value = "4" },
+                                        new SelectListItem{ Text="Thompson-Nicola, Nanaimo, Central Okanagan", Value = "5" },
+                                        new SelectListItem{ Text="Capital, Fraser Valley", Value = "6" },
+                                        new SelectListItem{ Text="Greater Vancouver", Value = "7" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    In what occupation has this job offer been made?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.BCJobNOC, new { htmlAttributes = new { @class = "form-control", placeholder = "Job Title", maxlength = "500" } })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">How many years of related work experience do you have in the last 10 years?</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.YearsBCRelatedJobExperience, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="None", Value = "None" },
+                                        new SelectListItem{ Text="Less than 12 months", Value = "Less than 12 months" },
+                                        new SelectListItem{ Text="12 months to 23 months", Value = "12 months to 23 months" },
+                                        new SelectListItem{ Text="24 to 35 months", Value = "24 to 35 months" },
+                                        new SelectListItem{ Text="36 to 47 months", Value = "36 to 47 months" },
+                                        new SelectListItem{ Text="48 to 59 months", Value = "48 to 59 months" },
+                                        new SelectListItem{ Text="60+ months", Value = "60+ months" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Are you currently working in this job?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.BCCurrentEmployer, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">Have you completed a post-secondary level of education in B.C.?</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.IsPostSecondaryCredentialBC, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    What is the annual gross wage of the job offer?(This amount is in Canadian Dollars)
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.Wage, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="$100,000 and above", Value = "50" },
+                                        new SelectListItem{ Text="$97,500 to $99,999", Value = "38" },
+                                        new SelectListItem{ Text="$95,000 to $97,499", Value = "37" },
+                                        new SelectListItem{ Text="$92,500 to $94,999", Value = "36" },
+                                        new SelectListItem{ Text="$90,000 to $92,499", Value = "35" },
+                                        new SelectListItem{ Text="$87,500 to $89,999", Value = "34" },
+                                        new SelectListItem{ Text="$85,000 to $87,499", Value = "33" },
+                                        new SelectListItem{ Text="$82,500 to $84,999", Value = "32" },
+                                        new SelectListItem{ Text="$80,000 to $82,499", Value = "31" },
+                                        new SelectListItem{ Text="$77,500 to $79,999", Value = "30" },
+                                        new SelectListItem{ Text="$75,000 to $77,499", Value = "29" },
+                                        new SelectListItem{ Text="$72,500 to $74,999", Value = "28" },
+                                        new SelectListItem{ Text="$70,000 to $72,499", Value = "27" },
+                                        new SelectListItem{ Text="$67,500 to $69,999", Value = "26" },
+                                        new SelectListItem{ Text="$65,000 to $67,499", Value = "25" },
+                                        new SelectListItem{ Text="$62,500 to $64,999", Value = "24" },
+                                        new SelectListItem{ Text="$60,000 to $62,499", Value = "23" },
+                                        new SelectListItem{ Text="$57,500 to $59,999", Value = "22" },
+                                        new SelectListItem{ Text="$55,000 to $57,499", Value = "21" },
+                                        new SelectListItem{ Text="$52,500 to $54,999", Value = "20" },
+                                        new SelectListItem{ Text="$50,000 to $52,499", Value = "19" },
+                                        new SelectListItem{ Text="$47,500 to $49,999", Value = "18" },
+                                        new SelectListItem{ Text="$45,000 to $47,499", Value = "17" },
+                                        new SelectListItem{ Text="$42,500 to $44,999", Value = "16" },
+                                        new SelectListItem{ Text="$40,000 to $42,499", Value = "15" },
+                                        new SelectListItem{ Text="$38,750 to $39,999", Value = "14" },
+                                        new SelectListItem{ Text="$37,500 to $38,749", Value = "13" },
+                                        new SelectListItem{ Text="$36,250 to $37,499", Value = "12" },
+                                        new SelectListItem{ Text="$35,000 to $36,249", Value = "11" },
+                                        new SelectListItem{ Text="$33,750 to $34,999", Value = "10" },
+                                        new SelectListItem{ Text="$32,500 to $33,749", Value = "9" },
+                                        new SelectListItem{ Text="$31,250 to $32,499", Value = "8" },
+                                        new SelectListItem{ Text="$30,000 to $31,249", Value = "7" },
+                                        new SelectListItem{ Text="$28,750 to $29,999", Value = "6" },
+                                        new SelectListItem{ Text="$27,500 to $28,749", Value = "5" },
+                                        new SelectListItem{ Text="$26,250 to $27,499", Value = "4" },
+                                        new SelectListItem{ Text="$25,000 to $26,249", Value = "3" },
+                                        new SelectListItem{ Text="Less than $25,000", Value = "0" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">Candidates may be awarded points for ability in English or French. Please choose the Canadian Language Benchmark (CLB) that corresponds to your overall language ability.</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.CLBLevel, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="CLB 10+", Value = "10" },
+                                        new SelectListItem{ Text="CLB 9", Value = "9" },
+                                        new SelectListItem{ Text="CLB 8", Value = "8" },
+                                        new SelectListItem{ Text="CLB 7", Value = "7" },
+                                        new SelectListItem{ Text="CLB 6", Value = "6" },
+                                        new SelectListItem{ Text="CLB 5", Value = "5" },
+                                        new SelectListItem{ Text="CLB 4", Value = "4" },
+                                        new SelectListItem{ Text="Below 4", Value = "1" },
+                                        new SelectListItem{ Text="No test", Value = "0" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Have you obtained an Education Credential Assessment (ECA) from an identified qualified supplier?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.IsECAObtained, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">Have you obtained a Trades certification assessment from the Industry Training Authority?</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.IsTradesCertificationTrainingAuthority, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-info" style="width:30%" role="alert">
+                            Employment History
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                @Html.Partial("_partialOtherEmployementHistory", Model)
+                            </div>
+                        </div>
+                        <div class="alert alert-info" style="width:30%" role="alert">
+                            Current Employer Details
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    What is your payment frequency?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.PaymentCycle, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Bi-weekly", Value = "Bi-weekly" },
+                                        new SelectListItem{ Text="Semi-monthly", Value = "Semi-monthly" },
+                                        new SelectListItem{ Text="Monthly", Value = "Monthly" },
+                                        new SelectListItem{ Text="Contract", Value = "Contract" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">How many full-time equivalent employees does your employer have i.e. full time, part-time?</label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.FullTimeEmployees, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">What is your per hour wage (Canadian Dollars Equivalent)?</label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.HourlyWage, new { htmlAttributes = new { @class = "form-control", placeholder = "e.g. 28" } })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Has anyone applied for PNP from that business in past ?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.AppliedPNPFromEmployerPast, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    If required, is the current employer willing to support your Provincial Nominee Program (PNP) application?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.IsEmployerWillingToSupportPNP, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">What were their positions when they applied for PNP?</label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.PositionsApplied, new { htmlAttributes = new { @class = "form-control", placeholder = "e.g. Supervisor, Clerk etc." } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-info" style="width:30%" role="alert">
+                            Spouse Employment History
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                @Html.Partial("_partialSpouseEmployementHistory", Model)
+                            </div>
+                        </div>
+                        <div class="alert alert-info" style="width:30%" role="alert">
+                            Family Relations in Canada
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Do you or your spouse or common law partner (if they will come with you to Canada) have at least one brother or sister living in Canada who is a citizen or permanent resident?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.FamilyLivingCanada, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">Number of Children?</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.ChildrenCount, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="1", Value = "1" },
+                                        new SelectListItem{ Text="2", Value = "2" },
+                                        new SelectListItem{ Text="3", Value = "3" },
+                                        new SelectListItem{ Text="4", Value = "4" },
+                                        new SelectListItem{ Text="5", Value = "5" },
+                                        new SelectListItem{ Text="6", Value = "6" },
+                                        new SelectListItem{ Text="7", Value = "7" },
+                                        new SelectListItem{ Text="8", Value = "8" },
+                                        new SelectListItem{ Text="9", Value = "9" },
+                                        new SelectListItem{ Text="10+", Value = "10" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">
+                                    Do you have children?
+                                </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.Children, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-12">List their ages (e.g. 3, 10, 18)</label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.ChildrenAges, new { htmlAttributes = new { @class = "form-control", placeholder = "e.g. Supervisor, Clerk etc." } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top row">
+                            <div class="row position-right">
+                                <input type="button" onclick="RedirectPrevious(@Model.CaseId)" value="Previous" class="btn btn-dark" style="margin-left:10px" />
+                                <input type="button" value="Complete" onclick="Complete()" class="btn btn-info" style="margin-left:10px" />
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+            $("#casesli").addClass("selected");
+            $("#steps-uid-0-p-1").remove();
+            $("#steps-uid-0-p-2").css("display", "block");
+             $("#steps-uid-0-p-0").css("display", "none");
+            $("#steps-uid-0-t-2").parent().removeClass("disabled last").addClass("current last");
+            $("#steps-uid-0-t-0").parent().removeClass("first current").addClass("disabled first");
+            $("#steps-uid-0-t-1").parent().removeClass("second current").addClass("disabled second");
+        });
+        var form = $("#example-form");
+        // Basic Example with form
+        form.children("div").steps({
+            headerTag: "h3",
+            bodyTag: "section",
+            enablePagination: false,
+            transitionEffect: "slideLeft",
+            onStepChanging: function (event, currentIndex, newIndex) {
+                alert("Submitted!");
+            },
+            onFinishing: function (event, currentIndex) {
+                alert("Submitted!");
+            },
+            onFinished: function (event, currentIndex) {
+                alert("Submitted!");
+            }
+        });
+
+        function RedirectPrevious(id) {
+            window.location.href = "/case/educationdetail/" + id;
+        }
+
+        function AddRowEducation(id) {
+            var totalTr = $(id+" tbody tr").length;
+            var totalTrplus1 = totalTr + 1;
+            $(id+" tbody").append('<tr class="education-list-item-' + totalTrplus1 + '" data-row-id="' + totalTr + '">' +
+                '<td><select class="form-control data-type">' +
+                '<option value="">Select</option>' +
+                '<option value="Current">Current</option>' +
+                '<option value="Previous">Previous</option>' +
+                '<option value="No Work Experience">No Work Experience</option>' +
+                '</select></td>' +
+                '<td><input type="text" value="" class="form-control data-jobtitle" /></td>' +
+                '<td><input type="text" value="" class="form-control data-duties" /></td>' +
+                '<td><input type="text" value="" class="form-control data-employeer" /></td>' +
+                '<td><select class="form-control data-duration">' +
+                '<option value="">Select</option>' +
+                '<option value="Less than 12 months">Less than 12 months</option>' +
+                '<option value="1">1</option>' +
+                '<option value="2">2</option>' +
+                '<option value="3">3</option>' +
+                '<option value="4">4</option>' +
+                '<option value="5">5</option>' +
+                '<option value="6">6</option>' +
+                '<option value="7">7</option>' +
+                '<option value="8">8</option>' +
+                '<option value="9">9</option>' +
+                '<option value="10+">10+</option>' +
+                '</select></td>' +
+                '<td><input type="number" value="" class="form-control data-hoursweek" /></td>' +
+                '<td><input type="text" value="" class="form-control data-country" /></td>'+
+                '<td class="remove-control" style="width:20px">' +
+                '<i class="fa fa-minus-circle" style="color:red" onclick="RemoveRow(this)" aria-hidden="true"></i>' +
+                '</td>' +
+                '</tr>');
+        }
+        function RemoveRow(currentrow)
+        {
+            $(currentrow).parent().parent().remove();
+        }
+        function Complete() {
+            var obj = new Object();
+            obj.TemporaryWorker = $("#TemporaryWorker option:selected").val();
+            obj.SkilledWorker = $("#SkilledWorker option:selected").val();
+            obj.TradeCertificate = $("#TradeCertificate option:selected").val();
+            obj.ProvinceNominee = $("#ProvinceNominee option:selected").val();
+            obj.JobOffer = $("#JobOffer option:selected").val();
+            obj.isBCEmployerOffer = $("#isBCEmployerOffer option:selected").val();
+            obj.BCDistrict = $("#BCDistrict option:selected").val();
+            obj.BCJobNOC = $("#BCJobNOC").val();
+            obj.YearsBCRelatedJobExperience = $("#YearsBCRelatedJobExperience option:selected").val();
+            obj.BCCurrentEmployer = $("#BCCurrentEmployer option:selected").val();
+            obj.YearsBCRelatedJobExperience = $("#YearsBCRelatedJobExperience option:selected").val();
+            obj.Wage = $("#Wage option:selected").val();
+            obj.CLBLevel = $("#CLBLevel option:selected").val();
+            obj.IsECAObtained = $("#IsECAObtained option:selected").val();
+            obj.IsTradesCertificationTrainingAuthority = $("#IsTradesCertificationTrainingAuthority option:selected").val();
+            obj.PaymentCycle = $("#PaymentCycle option:selected").val();
+            obj.FullTimeEmployees = $("#FullTimeEmployees").val();
+            obj.HourlyWage = $("#HourlyWage").val();
+            obj.AppliedPNPFromEmployerPast = $("#AppliedPNPFromEmployerPast option:selected").val();
+            obj.PositionsApplied = $("#PositionsApplied").val();
+            obj.IsEmployerWillingToSupportPNP = $("#IsEmployerWillingToSupportPNP option:selected").val();
+            obj.ChildrenAges = $("#ChildrenAges").val();
+            obj.FamilyLivingCanada = $("#FamilyLivingCanada option:selected").val();
+            obj.ChildrenCount = $("#ChildrenCount option:selected").val();
+            obj.Children = $("#Children option:selected").val();
+            obj.CaseId =@(Model.CaseId);
+            obj.OtherID =@(Model.OtherID);
+            //education history
+            var datatypes = [];
+            var datajobtitle = [];
+            var dataduties = [];
+            var dataemployers = [];
+            var datadurations = [];
+            var datahoursweek = [];
+            var datacountries = [];
+            $("#educationHistory tbody tr").each(function (index, value) {
+                if ($(value).find(".data-type").val() != "") {
+                    datatypes.push($(value).find(".data-type").val());
+                    datajobtitle.push($(value).find(".data-jobtitle").val());
+                    dataduties.push($(value).find(".data-duties").val());
+                    dataemployers.push($(value).find(".data-employeer").val());
+                    datadurations.push($(value).find(".data-duration").val());
+                    datahoursweek.push($(value).find(".data-hoursweek").val());
+                    datacountries.push($(value).find(".data-country").val());
+                }
+            });
+            var eduObject = new Object();
+            eduObject.Type=datatypes;
+                eduObject.JobTitle=datajobtitle;
+                eduObject.JobDuties=dataduties;
+                eduObject.CompanyEmployer=dataemployers;
+            eduObject.Duration = datadurations;
+            eduObject.HourWeek = datahoursweek;
+            eduObject.Country=datacountries;
+            obj.OtherEmployementHistory = eduObject;
+            //
+
+            //education spouse
+            var dataSpousetypes = [];
+            var dataSpousejobtitle = [];
+            var dataSpouseduties = [];
+            var dataSpouseemployers = [];
+            var dataSpousedurations = [];
+            var dataSpousehoursweek = [];
+            var dataSpousecountries = [];
+            $("#spouseEducationHistory tbody tr").each(function (index, value) {
+                if ($(value).find(".data-type").val() != "") {
+                    dataSpousetypes.push($(value).find(".data-type").val());
+                    dataSpousejobtitle.push($(value).find(".data-jobtitle").val());
+                    dataSpouseduties.push($(value).find(".data-duties").val());
+                    dataSpouseemployers.push($(value).find(".data-employeer").val());
+                    dataSpousedurations.push($(value).find(".data-duration").val());
+                    dataSpousehoursweek.push($(value).find(".data-hoursweek").val());
+                    dataSpousecountries.push($(value).find(".data-country").val());
+                }
+            });
+            var eduSpouseObject = new Object();
+            eduSpouseObject.Type=dataSpousetypes;
+                eduSpouseObject.JobTitle=dataSpousejobtitle;
+                eduSpouseObject.JobDuties=dataSpouseduties;
+                eduSpouseObject.CompanyEmployer=dataSpouseemployers;
+            eduSpouseObject.Duration = dataSpousedurations;
+            eduSpouseObject.HourWeek = dataSpousehoursweek;
+            eduSpouseObject.Country=dataSpousecountries;
+            obj.SpouseEmployementHistoryModal = eduSpouseObject;
+            //
+            debugger
+            $.ajax({
+                url: "/Case/OtherDetails",
+                type: "POST",
+                data: obj,
+                success: function (response) {
+                    window.location.href = "/case/details/" + obj.CaseId;
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+    </script>
+}

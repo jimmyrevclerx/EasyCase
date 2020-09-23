@@ -1,0 +1,322 @@
+﻿@model Easycase.Model.Corporate.BLCorporateJobDetail
+
+@{
+    ViewBag.Title = "JobDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Job Details</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Library</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="card">
+        <div class="card-body wizard-content">
+            <h4 class="card-title"></h4>
+            <h6 class="card-subtitle"></h6>
+
+            @using (Html.BeginForm("JobDetail", "Corporate", FormMethod.Post, new { @id = "example-form" }))
+            {
+                @Html.HiddenFor(model => model.ProfileId)
+                @Html.HiddenFor(model => model.ID)
+                <div>
+                    <h3>Profile</h3>
+                    <section>
+                    </section>
+                    <h3>LMIA Details</h3>
+                    <section>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">LMIA No</label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.LMIANo, new { htmlAttributes = new { @class = "form-control", placeholder = "LMIA No." } })
+                                    @Html.ValidationMessageFor(model => model.LMIANo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Position Description</label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.PositionDescription, new { htmlAttributes = new { @class = "form-control", placeholder = "Position Description" } })
+                                    @Html.ValidationMessageFor(model => model.PositionDescription, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Approved Date </label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.ApprovedDate, new { htmlAttributes = new { @class = "form-control date-inputmask", placeholder = "Approved Date" } })
+                                    @Html.ValidationMessageFor(model => model.ApprovedDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Total Positions Available <span class="required">*</span></label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.PositionAvailable, new { htmlAttributes = new { @class = "form-control phone-inputmask", placeholder = "Total Positions" } })
+                                    @Html.ValidationMessageFor(model => model.PositionAvailable, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Expiry</label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Expiry, new { htmlAttributes = new { @class = "form-control date-inputmask", placeholder = "Expiry" } })
+                                    @Html.ValidationMessageFor(model => model.Expiry, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Status </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.Status, ViewBag.CaseStatus as SelectList, "Select Status", new { @class = "select2 form-control custom-select" })
+                                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label class="control-label col-md-6"></label>
+                                <div class="col-sm-12">
+                                    <button type="button" class="btn btn-info btn-lg">
+                                        Positions Filled
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="parentpositiondiv">
+                            <div class="form-group row" id="positiondiv">
+                                <table style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <td>Position</td>
+                                            <td>Last Name</td>
+                                            <td>First Name</td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="parent-list-table-1">
+                                        <tr class="education-list-item-1" data-row-id="0">
+                                            <td><input id="PositionDetails_0__Position" placeholder="Position" type="text" value="" class="form-control data-position">  </td>
+                                            <td><input id="PositionDetails_0__LastName" placeholder="Last Name" type="text" value="" class="form-control data-fname">  </td>
+                                            <td><input id="PositionDetails_0__FirstName" placeholder="First Name" type="text" value="" class="form-control data-lname">  </td>
+                                            <td class="remove-control" style="width:20px">
+                                                <i class="fa fa-minus-circle" disabled="disabled" aria-hidden="true"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5">
+                                                <span onclick="AddRow()" style="float:right; color:#0088cc;text-decoration:none; cursor:pointer"><i class="fa fa-plus-square" aria-hidden="true"></i> Add another row for more information</span>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <input type="button" value="Save Position" onclick="SavePosition()" class="btn btn-success" />
+                        </div>
+                        <div class="card row">
+                            <div class="card-body">
+                                <h5 class="card-title">LMIA Entries</h5>
+                                <div class="table-responsive" id="tablePositions">
+                                    @Html.Action("PartialPositions", "Corporate", new { id = Model.ProfileId })
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="border-top">
+
+                            <div class="row position-right">
+                                <input type="button" value="Previous" class="btn btn-dark" style="margin-left:10px" />
+                                <input type="button" onclick="fnFinish()" value="Finish" class="btn btn-info" style="margin-left:10px" />
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+            $("#casesli").addClass("selected");
+            $("#steps-uid-0-p-0").remove();
+            $("#steps-uid-0-p-1").css("display", "block");
+            $("#steps-uid-0-t-1").parent().removeClass("disabled last").addClass("current last");
+            $("#steps-uid-0-t-0").parent().removeClass("first current").addClass("disabled first");
+            $(".select2").select2();
+            $('#ApprovedDate,#Expiry').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        });
+
+        var form = $("#example-form");
+        // Basic Example with form
+        form.children("div").steps({
+            headerTag: "h3",
+            bodyTag: "section",
+            enablePagination: false,
+            transitionEffect: "slideLeft",
+            onStepChanging: function (event, currentIndex, newIndex) {
+                alert("Submitted!");
+            },
+            onFinishing: function (event, currentIndex) {
+                alert("Submitted!");
+            },
+            onFinished: function (event, currentIndex) {
+                alert("Submitted!");
+            }
+        });
+
+        function AddRow()
+        {
+            var totalTr = $("#parent-list-table-1 tr").length;
+            var totalTrplus1 = totalTr + 1;
+            $("#parent-list-table-1").append('<tr class="education-list-item-'+totalTrplus1+'" data-row-id="'+totalTr+'">'+
+                                            '<td><input id="PositionDetails_'+totalTr+'__Position" placeholder="Position" type="text" value="" class="form-control data-position">  </td>'+
+                                            '<td><input id="PositionDetails_'+totalTr+'__LastName" placeholder="Last Name" type="text" value="" class="form-control data-lname">  </td>'+
+                                            '<td><input id="PositionDetails_'+totalTr+'__FirstName" placeholder="First Name" type="text" value="" class="form-control data-fname">  </td>'+
+                                            '<td class="remove-control" style="width:20px">'+
+                                                '<i class="fa fa-minus-circle" style="color:red" onclick="RemoveRow(this)" aria-hidden="true"></i>'+
+                                            '</td>'+
+                                        '</tr>');
+        }
+
+        function RemoveRow(currentrow)
+        {
+            $(currentrow).parent().parent().remove();
+        }
+
+        function SavePosition() {
+            var data = new Object();
+            data.ProfileId = $("#ProfileId").val();
+            data.ID=$("#ID").val();
+            data.LMIANo = $("#LMIANo").val();
+            data.PositionDescription = $("#PositionDescription").val();
+            data.ApprovedDate = $("#ApprovedDate").val();
+            data.PositionAvailable = $("#PositionAvailable").val();
+            data.Expiry = $("#Expiry").val();
+            data.Status = $("#Status option:selected").val();
+            var positions = [];
+            var firstname = [];
+            var lastname = [];
+            $("#parent-list-table-1 tr").each(function (index, value) {
+                positions.push($(value).find(".data-position").val());
+                firstname.push($(value).find(".data-fname").val());
+                lastname.push($(value).find(".data-lname").val());
+            });
+            data.FirstNameArray = firstname;
+            data.PositionArray = positions;
+            data.LastNameArray = lastname;
+            $.ajax({
+                url: "/Corporate/JobDetail",
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    toastr.success(response.Message, 'Success');
+                    $.ajax({
+                        url: "/Corporate/PartialPositions",
+                        type: "POST",
+                        data: {id:response.ProfileId},
+                        success: function (response_par) {
+                            $("#tablePositions").empty().html(response_par);
+                            $("#LMIANo").val("");
+                            $("#PositionDescription").val("");
+                            $("#ApprovedDate").val("");
+                            $("#PositionAvailable").val("");
+                            $("#Expiry").val("");
+                            $("#Status").val("0");
+                            $("#ID").val("");
+                            $(".select2").select2();
+                            $("#parent-list-table-1").empty();
+                            $("#parent-list-table-1").append('<tr class="education-list-item-1" data-row-id="1">'+
+                                            '<td><input id="PositionDetails_0__Position" placeholder="Position" type="text" value="" class="form-control data-position">  </td>'+
+                                            '<td><input id="PositionDetails_0__LastName" placeholder="Last Name" type="text" value="" class="form-control data-lname">  </td>'+
+                                            '<td><input id="PositionDetails_0__FirstName" placeholder="First Name" type="text" value="" class="form-control data-fname">  </td>'+
+                                            '<td class="remove-control" style="width:20px">'+
+                                                '<i class="fa fa-minus-circle" onclick="RemoveRow(this)" aria-hidden="true"></i>'+
+                                            '</td>'+
+                                        '</tr>');
+                        },
+                        error: function (er) {
+                            toastr.error(er, 'Error');
+                        }
+
+                     });
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+
+             });
+        }
+
+        function editCorporatePosition(currentRow)
+        {
+            $.ajax({
+                url: "/Corporate/GetJobDetail",
+                type: "POST",
+                data: {Id:@Html.Raw(Json.Encode(Model.ProfileId))},
+                success: function (response) {
+                    $("#LMIANo").val(response.LMIANo);
+                    $("#PositionDescription").val(response.PositionDescription);
+                    $("#ApprovedDate").val(response.ApprovedDate);
+                    $("#PositionAvailable").val(response.PositionAvailable);
+                    $("#Expiry").val(response.Expiry);
+                    $("#Status").val(response.Status);
+                    $("#ID").val(response.ID);
+                    $("#ProfileId").val(response.ProfileId);
+                    $(".select2").select2();
+
+                    $(currentRow).parents("tr").remove();
+                    var positions = response.CorporatePositions;
+                    $("#parent-list-table-1").empty();
+                    $(positions).each(function (index, value) {
+                        var totalTrplus1 = index + 1;
+                        var colorRed = "color:red";
+                        if (index == 0) {
+                            colorRed = "";
+                        }
+                        $("#parent-list-table-1").append('<tr class="education-list-item-'+totalTrplus1+'" data-row-id="'+index+'">'+
+                            '<td><input id="PositionDetails_' + index + '__Position" placeholder="Position" type="text" value="' + value.Position + '" class="form-control data-position">  </td>' +
+                            '<td><input id="PositionDetails_' + index + '__LastName" placeholder="Last Name" type="text" value="' + value.LastName + '" class="form-control data-lname">  </td>' +
+                                                    '<td><input id="PositionDetails_'+index+'__FirstName" placeholder="First Name" type="text" value="'+value.FirstName+'" class="form-control data-fname">  </td>'+
+                                                    '<td class="remove-control" style="width:20px">'+
+                                                        '<i class="fa fa-minus-circle" style="'+colorRed+'" onclick="RemoveRow(this)" aria-hidden="true"></i>'+
+                                                    '</td>'+
+                                                '</tr>');
+                    });
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+
+           });
+            
+        }
+
+        function fnFinish() {
+            window.location.href = "/corporate/index";
+        }
+    </script>
+}

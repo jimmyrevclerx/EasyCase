@@ -1,0 +1,176 @@
+﻿@using System.Configuration;
+@model Easycase.Model.Contact.BLContact
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Add Contact</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/contact/index">Contact</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Create</li>
+                    </ol>
+                </nav>
+                <a href="/contact/index" class="btn btn-dark btn-sm">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                @using (Ajax.BeginForm("Create", "Contact",
+new AjaxOptions
+{
+OnSuccess = "OnSuccess",
+OnFailure = "OnFailure"
+}))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "form-horizontal" })
+                    @Html.HiddenFor(model => model.ID)
+                    @Html.HiddenFor(model => model.Status)
+                    <div class="card-body">
+                        <h4 class="card-title"></h4>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-2">Contact Type <span class="required">*</span></label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.ContactTypeId, ViewBag.ContactTypes as SelectList, "Select Contact Type", new { @class = "select2 form-control custom-select" })
+                                    @Html.ValidationMessageFor(model => model.ContactTypeId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-2">Mobile No</label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control phone-inputmask", placeholder = "Mobile No", maxlength = "30" } })
+                                    @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-2">Email <span class="required">*</span></label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email", maxlength = "200" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.WorkNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.WorkNo, new { htmlAttributes = new { @class = "form-control", placeholder = "Work No", maxlength = "30" } })
+                                    @Html.ValidationMessageFor(model => model.WorkNo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.Prefix, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Prefix, new { htmlAttributes = new { @class = "form-control", placeholder = "Prefix", maxlength = "100" } })
+                                    @Html.ValidationMessageFor(model => model.Prefix, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.OtherNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.OtherNo, new { htmlAttributes = new { @class = "form-control", placeholder = "Other No", maxlength = "30" } })
+                                    @Html.ValidationMessageFor(model => model.OtherNo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name", maxlength = "50" } })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.FaxNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.FaxNo, new { htmlAttributes = new { @class = "form-control", placeholder = "Fax No", maxlength = "50" } })
+                                    @Html.ValidationMessageFor(model => model.FaxNo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name", maxlength = "50" } })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.MailingAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.TextAreaFor(model => model.MailingAddress, new { @class = "form-control", cols = "20", rows = "5", placeholder = "Enter mailing adderess", maxlength = "500" })
+                                    @Html.ValidationMessageFor(model => model.MailingAddress, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.TextAreaFor(model => model.Notes, new { @class = "form-control", cols = "20", rows = "5", placeholder = "Enter any notes you may have for this contact" })
+                                    @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-top">
+                        <div class="card-body">
+                            <input type="submit" value="Save Contact" class="btn btn-default" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+    $(document).ready(function () {
+        $(".navigationli").removeClass("selected");
+        $("#contactli").addClass("selected");
+         $(".select2").select2();
+        if ('@ViewData["SuccessContact"]' != null&&'@ViewData["SuccessContact"]' != '') {
+            toastr.success('@ViewData["SuccessContact"]', 'Success');
+        }
+        if ('@ViewData["FailedContact"]' != null&&'@ViewData["FailedContact"]' != '') {
+            toastr.error('@ViewData["FailedContact"]', 'Error');
+        }
+        $('#DOB').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
+
+    function OnSuccess(response) {
+        toastr.success('Data Submitted successfully!', 'Success');
+    }
+    function OnFailure(response) {
+     toastr.error("Error occured.", 'Error');
+    }
+    </script>
+}

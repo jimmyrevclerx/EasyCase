@@ -1,0 +1,220 @@
+﻿@using System.Configuration;
+@model Easycase.Model.Client.BLClientModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (string.IsNullOrEmpty(Model.ImagePath))
+    {
+        Model.ImagePath = ConfigurationManager.AppSettings["DefaultProfile"];
+    }
+}
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Add Client</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/client/index">Client</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Create</li>
+                    </ol>
+                </nav>
+                <a href="/client/index" class="btn btn-dark btn-sm">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                @using (Ajax.BeginForm("Create", "Client",
+new AjaxOptions
+{
+OnSuccess = "OnSuccess",
+OnFailure = "OnFailure"
+}))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "form-horizontal" })
+                    @Html.HiddenFor(model => model.ID)
+                    <div class="card-body">
+                        <h4 class="card-title"></h4>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-2">First Name <span class="required">*</span></label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name" } })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-2">Last Name <span class="required">*</span></label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.PhoneNo, new { htmlAttributes = new { @class = "form-control phone-inputmask", placeholder = "Mobile No" } })
+                                    @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.Prefix, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.Prefix, ViewBag.Prefix as SelectList, new { @class = "select2 form-control custom-select" })
+                                    @Html.ValidationMessageFor(model => model.Prefix, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control date-inputmask", placeholder = "Date of birth" } })
+                                    @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.MartialStatusId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.MartialStatusId, ViewBag.MartialStatus as SelectList, "Select", new { @class = "select2 form-control custom-select" })
+                                    @Html.ValidationMessageFor(model => model.MartialStatusId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.PurposeId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-12">
+                                    @Html.DropDownListFor(model => model.PurposeId, ViewBag.Purpose as SelectList, "Select", new { @class = "select2 form-control custom-select" })
+                                    @Html.ValidationMessageFor(model => model.PurposeId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.Citizenship, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.Citizenship, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Citizenship, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label class="control-label col-md-2">Client Photo (*.png, *.jpg file format)</label>
+                                <div class="col-md-6">
+                                    <div class="custom-file">
+                                        <input type="file" class="" id="clientimage">
+                                        @Html.HiddenFor(model => model.ImageId)
+                                        @Html.ValidationMessageFor(model => model.ImageId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-2"><img src="@Model.ImagePath" id="thumbProfile" alt="user" width="100" class="rounded-circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-12">
+                                    @Html.TextAreaFor(model => model.Notes, new { @class = "form-control", cols = "20", rows = "5", placeholder = "Enter any notes you may have for this client" })
+                                    @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-top">
+                        <div class="card-body">
+                            <input type="submit" value="Save Client" class="btn btn-default" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+    $(document).ready(function () {
+        $(".navigationli").removeClass("selected");
+        $("#clients").addClass("selected");
+        $("#MartialStatus").val(@Model.MartialStatusId)
+        $("#Prefix").val(@Model.Prefix)
+        $("#Purpose").val(@Model.PurposeId)
+         $(".select2").select2();
+        if ('@ViewData["SuccessClient"]' != null&&'@ViewData["SuccessClient"]' != '') {
+            toastr.success('@ViewData["SuccessClient"]', 'Success');
+        }
+        if ('@ViewData["FailedClient"]' != null&&'@ViewData["FailedClient"]' != '') {
+            toastr.error('@ViewData["FailedClient"]', 'Error');
+        }
+        $('#DOB').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd/mm/yyyy'
+        });
+    });
+
+    function OnSuccess(response) {
+        toastr.success('Data Submitted successfully!', 'Success');
+    }
+    function OnFailure(response) {
+     toastr.error("Error occured.", 'Error');
+    }
+    $("#clientimage").change(function () {
+        var data = new FormData();
+        var files = $("#clientimage").get(0).files;
+        if (files.length > 0) {
+            data.append("clientimage", files[0]);
+        }
+
+        $.ajax({
+            url: "/Client/UploadFile",
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (response) {
+                $("#thumbProfile").attr("src",response.path);
+                $("#ImageId").val(response.id);
+            },
+            error: function (er) {
+                toastr.error(er, 'Error');
+            }
+        });
+    });
+    </script>
+}

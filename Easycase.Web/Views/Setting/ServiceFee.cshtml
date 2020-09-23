@@ -1,0 +1,142 @@
+﻿@model IEnumerable<Easycase.Model.Setting.BLServiceFee>
+
+@{
+    ViewBag.Title = "ServiceFee";
+    Layout = "~/Views/Shared/_LayoutSetting.cshtml";
+}
+@Styles.Render("~/Content/datatable")
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Service Fees</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        @*<li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Clients</li>*@
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title m-b-0">
+                    </h5>
+                </div>
+                <div class="table-responsive" id="servicefeesDiv">
+                    @Html.Partial("_partialServiceFeeList", Model)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteconfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <input type="hidden" id="hdnId" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You want to delete this record.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="deleteCaseType()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+    <script>
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+            $("#serviceInfoli").addClass("selected");
+        });
+
+        function AddRow(total) {
+            var isfirstDiv = 'style="color:red" onclick="RemoveRow(this,0)"';
+            if (total == 0) {
+                isfirstDiv = '';
+                $("#serviceFeeBody").empty();
+            }
+            var totalTr = $("#serviceFeeBody tr").length;
+            $("#serviceFeeBody").append('<tr data-row-id="' + totalTr + '" id="0">' +
+                '<td><input id="ServiceFee_' + totalTr + '__Name" placeholder="Service Name" type="text" value="" class="form-control data-servicename">  </td>' +
+                '<td><select id="ServiceFee_' + totalTr + '__IsExpense" class="form-control data-isexpense"><option value="0">-Is Expense?-</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
+                '<td><textarea id="ServiceFee_' + totalTr + '__Description" placeholder="e.g. Initial consultation package" class="form-control data-description"></textarea>  </td>' +
+                '<td><textarea id="ServiceFee_' + totalTr + '__AdditionalInfo" placeholder="e.g. payment plan available" class="form-control data-additionalinfo"></textarea>  </td>' +
+                '<td><input id="ServiceFee_' + totalTr + '__Fee" placeholder="Service Fee" type="number" min="1" value="" class="form-control data-servicefee">  </td>' +
+                '<td class="remove-control" style="width:20px">' +
+                '<i class="fa fa-minus-circle" ' + isfirstDiv + ' aria-hidden="true"></i>' +
+                '</td>' +
+                '</tr>');
+        }
+
+        function RemoveRow(currentrow, id) {
+            $(currentrow).parent().parent().remove();
+            if (id != 0) {
+                $.ajax({
+                    url: "/Setting/DeleteServiceFee",
+                    type: "POST",
+                    data: { id: id },
+                    success: function (response) {
+                        
+                    },
+                    error: function (er) {
+                        toastr.error(er, 'Error');
+                    }
+                });
+            }
+        }
+
+        function AddServiceFee() {
+            var data = new Object();
+            data.ServiceName = [];
+            data.IsExpense = [];
+            data.Description = [];
+            data.AdditionalInfo = [];
+            data.Fee = [];
+            data.ID = [];
+            $("#serviceFeeBody tr").each(function (index, value) {
+                data.ServiceName.push($(value).find(".data-servicename").val());
+                data.IsExpense.push($(value).find(".data-isexpense").val());
+                data.Description.push($(value).find(".data-description").val());
+                data.AdditionalInfo.push($(value).find(".data-additionalinfo").val());
+                data.Fee.push($(value).find(".data-servicefee").val());
+                data.ID.push($(value).attr("id"));
+            });
+            $.ajax({
+                url: "/Setting/AddServiceFee",
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    toastr.success(response, 'Success');
+                    $.ajax({
+                        url: "/Setting/PartialServiceFee",
+                        type: "POST",
+                        success: function (response) {
+                            $("#servicefeesDiv").empty().html(response);
+                        },
+                        error: function (er) {
+                            toastr.error(er, 'Error');
+                        }
+                    });
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,41 @@
+﻿@model Easycase.Model.Case.BLCaseDetails
+<span>
+    <b class="purpleFont">Case Number:</b>
+    <span><b style="color:#464242" id="lblCaseNumber">@Model.CaseNumber</b></span>
+</span>
+
+<div class="printexmpt" style="display:inline">
+    <a id="save-case-no-toggle" class="remove-underline" onclick="ShowEditCaseNumber()" title="Edit Case Number"><i class="fa fa-pencil"></i></a>
+    <p id="edit-case-no" class="hide">
+        <input id="CaseNumber" name="CaseNumber" placeholder="Enter new case number" type="text" value="@Model.CaseNumber">
+        <span id="btn-submit-caseno" onclick="UpdateCaseNumber(@Model.CaseID)" class="btn btn-linkedin btn-sm"><i class="fa fa-save"></i> Save</span>
+        <span id="btn-cancel-caseno" onclick="HideTextBox()" class="btn btn-danger btn-sm"><i class="fa fa-times"></i> Cancel</span>
+    </p>
+</div>
+<script>
+    function ShowEditCaseNumber() {
+        $("#edit-case-no").removeClass("hide");
+    }
+    function HideTextBox() {
+        $("#edit-case-no").addClass("hide");
+    }
+    function UpdateCaseNumber(id) {
+        var casenumber = $("#CaseNumber").val();
+        if (casenumber == "") {
+            toastr.warning("Please add case number", 'Warning');
+            return;
+        }
+        $.ajax({
+            url: "/Case/UpdateCaseNumber",
+            type: "POST",
+            data: { id: id, casenumber: casenumber },
+            success: function (response) {
+                $("#edit-case-no").addClass("hide");
+                $("#lblCaseNumber").html(casenumber);
+            },
+            error: function (er) {
+                toastr.error(er, 'Error');
+            }
+        });
+    }
+</script>

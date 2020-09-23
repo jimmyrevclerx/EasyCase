@@ -1,0 +1,334 @@
+﻿@model IEnumerable<Easycase.Model.Task.BLTaskViewModal>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/datatable")
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Task List</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Clients</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <input type="hidden" id="hdnTaskId" />
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title m-b-0"><a href="/task/create" class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Add New</a></h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" id="taskTable">
+                        <thead class="thead-light">
+                            <tr>
+                                @*<th>
+                                        <label class="customcheckbox m-b-20">
+                                            <input type="checkbox" id="mainCheckbox" />
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </th>*@
+                                <th scope="col">Task(s)</th>
+                                <th scope="col">Assignee(s)</th>
+                                <th scope="col">Priority</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Due</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="customtable">
+                            @foreach (var item in Model)
+                            {
+                                var assignIds = item.Assigned.Select(s => s.ClientId.Value).ToArray();
+                                <tr id="tr@(item.ID)">
+                                    @*<th>
+                                            <label class="customcheckbox">
+                                                <input type="checkbox" class="listCheckbox" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </th>*@
+                                    <td>
+                                        <input type="text" class="form-control hide" onblur="HideTextBox(@item.ID)" value="@item.Name" id="_txtName@(item.ID)" />
+                                        <label id="lblName@(item.ID)"><span>@(item.Name)</span> <i class="fa fa-pencil" onclick="ShowTextBox(@item.ID)" aria-hidden="true"></i></label>
+                                    </td>
+                                    <td>@Html.DropDownList("Assignees", ViewBag.Clients as SelectList, new { @class = "form-control Assignees", @multiple = "multiple", @id = "_assignee" + item.ID })</td>
+                                    <td>
+                                        @Html.DropDownList(item.Priority, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="High", Value = "High" },
+                                            new SelectListItem{ Text="Medium", Value = "Medium" },
+                                            new SelectListItem{ Text="Low", Value = "Low" },
+                                         }, new { @class = "select2 form-control custom-select priority", @id = "_priority" + item.ID })
+                                    </td>
+                                    <td>
+                                        @Html.DropDownList(item.Status, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Not Started", Value = "Not Started" },
+                                            new SelectListItem{ Text="In Progress", Value = "In Progress" },
+                                            new SelectListItem{ Text="Completed", Value = "Completed" },
+                                         }, new { @class = "select2 form-control custom-select status", @id = "_status" + item.ID })
+                                    </td>
+                                    <td>@(item.DueDate.HasValue ? item.DueDate.Value.ToShortDateString() : "")</td>
+                                    <td>
+                                        <button type="button" class="btn btn-light" onclick="OpenNoteModal(@item.ID)"><i class="fa fa-file-text" style="color: blue;font-size: 25px;" aria-hidden="true"></i></button>
+                                        <button type="button" onclick="confirmDelete(@item.ID,'A')" class="btn btn-warning btn-sm">Archived</button>
+                                        <button type="button" onclick="confirmDelete(@item.ID,'D')" class="btn btn-danger btn-sm">Delete</button>
+                                    </td>
+                                </tr>
+                                <script>
+                                    $('#_assignee' +@item.ID).val([@String.Join(",", assignIds)]);
+                                    $('#_priority' +@item.ID).val('@item.Priority');
+                                    $('#_status' +@item.ID).val('@item.Status');
+                                </script>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteconfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <input type="hidden" id="hdnId" />
+            <input type="hidden" id="actiontype" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="delmodalbody">
+                You want to delete this record.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="deleteClient()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="notemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+    <script>
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+            $("#taskli").addClass("selected");
+            $('.Assignees').multiselect({
+                includeSelectAllOption: true,
+                buttonWidth: '300px'
+            });
+            
+            $(".Assignees").change(function () {
+                var tid = $(this).attr("id");
+                var itemId = tid.substring(9, tid.length);
+                $.ajax({
+                    url: "/Task/ChangeAssignee",
+                    type: "POST",
+                    data: { mentionIds: $(this).val(),taskId:itemId },
+                    success: function (response) {
+                        $('.Assignees').multiselect("refresh");
+                    },
+                    error: function (er) {
+                        toastr.error(er, 'Error');
+                    }
+                });
+            });
+            $(".priority").change(function () {
+                var tid = $(this).attr("id");
+                var itemId = tid.substring(9, tid.length);
+                $.ajax({
+                    url: "/Task/ChangePriority",
+                    type: "POST",
+                    data: { priority: $(this).val(), taskId: itemId },
+                    success: function (response) {
+
+                    },
+                    error: function (er) {
+                        toastr.error(er, 'Error');
+                    }
+                });
+            });
+            $(".status").change(function () {
+                var tid = $(this).attr("id");
+                var itemId = tid.substring(7, tid.length);
+                $.ajax({
+                    url: "/Task/ChangeStatus",
+                    type: "POST",
+                    data: { status: $(this).val(), taskId: itemId },
+                    success: function (response) {
+
+                    },
+                    error: function (er) {
+                        toastr.error(er, 'Error');
+                    }
+                });
+            });
+            $(".select2").select2();
+        });
+        $('#taskTable').dataTable(
+        {
+           "bSort": false
+        });
+
+        function confirmDelete(id,action) {
+            $("#hdnId").val(id);
+            $("#actiontype").val(action);
+            if (action == "D") {
+                action = "delete";
+            }
+            else {
+                action = "archived";
+            }
+            $("#delmodalbody").html("You want to "+action+" this record.");
+            $("#deleteconfirm").modal("show");
+        }
+        function deleteClient() {
+            $.ajax({
+                url: "/Task/Delete",
+                type: "POST",
+                data: { id: $("#hdnId").val(),action:$("#actiontype").val() },
+                success: function (response) {
+                    var id = $("#hdnId").val();
+                    $("#taskTable").find("#tr" + id).remove();
+                    toastr.success('Record deleted successfully!', 'Success');
+                    $("#deleteconfirm").modal("hide");
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+        function ShowTextBox(id)
+        {
+            $("#_txtName" + id).removeClass("hide");
+            $("#_txtName" + id).focus();
+            $("#lblName" + id).addClass("hide");
+        }
+        function HideTextBox(id)
+        {
+            $("#_txtName" + id).addClass("hide");
+            $("#lblName" + id).removeClass("hide");
+            $.ajax({
+                url: "/Task/ChangeTaskName",
+                type: "POST",
+                data: { name: $("#_txtName" + id).val(), taskId: id },
+                success: function (response) {
+                    $("#lblName" + id).find("span").html($("#_txtName" + id).val());
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+        function OpenNoteModal(id)
+        {
+            $.ajax({
+                url: "/Task/OpenCaseNote",
+                type: "GET",
+                data: { id: id },
+                success: function (response) {
+                     $("#notemodal").html(response);
+                    $("#notemodal").modal("show");
+                    $("#hdnTaskId").val(id);
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+            
+        }
+        function ShowNotes()
+        {
+            $("#plus-circle").css("display", "none");
+            $("#minus-circle").css("display", "block");
+            $("#note-edit").css("display", "block");
+        }
+        function HideNotes()
+        {
+            $("#plus-circle").css("display", "block");
+            $("#minus-circle").css("display", "none");
+            $("#note-edit").css("display", "none");
+        }
+        function TaskNoteList(id)
+        {
+            $.ajax({
+                url: "/Task/OpenCaseNote",
+                type: "GET",
+                data: { id: id },
+                success: function (response) {
+                    $("#notemodal").html(response);
+                    $("#hdnTaskId").val(id);
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+        function EditNote(noteId,subject,notes,date,notifyuser)
+        {
+            $("#date").val(date);
+            $("#subject").val(subject);
+            $("#notes").val(notes);
+            $("#currentNoteId").val(noteId);
+            $("#_notifyUser").val([notifyuser]);
+            $("#plus-circle").css("display", "none");
+            $("#minus-circle").css("display", "block");
+            $("#note-edit").css("display", "block");
+            
+        }
+         function SaveNotes()
+        {
+            var data = new Object();
+            data.Date = $("#date").val();
+            data.Subject = $("#subject").val();
+            data.Notes = $("#notes").val();
+             data.TaskId = $("#hdnTaskId").val();
+             data.NotifyUser = $("#_notifyUser").val();
+             data.ID = $("#currentNoteId").val();
+             data.NotifyUser = data.NotifyUser.join(",");
+            if (data.Notes != ""&&data.Date != "") {
+                $.ajax({
+                    url: "/Task/SaveCaseNote",
+                    type: "POST",
+                    data: data,
+                    success: function (response) {
+                        $("#currentNoteId").val(0);
+                        TaskNoteList($("#hdnTaskId").val());
+                    },
+                    error: function (er) {
+                        toastr.error(er, 'Error');
+                    }
+                });
+            } 
+        }
+        function deleteTaskNote(id) {
+            $.ajax({
+                url: "/Task/DeleteTaskNotes",
+                type: "POST",
+                data: { id: id },
+                success: function (response) {
+                    TaskNoteList($("#hdnTaskId").val());
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+    </script>
+}

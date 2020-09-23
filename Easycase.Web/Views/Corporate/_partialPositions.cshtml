@@ -1,0 +1,49 @@
+﻿@model Easycase.Model.Corporate.BLCorporateProfile
+
+<table id="zero_config" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>LMIA #</th>
+            <th>Status</th>
+            <th>Description</th>
+            <th>Positions</th>
+            <th>Positions Filled	</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CorporateJobDetails)
+        {
+            string statuscolor = "";
+            if (item.StatusName == "Approved")
+            {
+                statuscolor = "label-success";
+            }
+            else if (item.StatusName == "In Progress")
+            {
+                statuscolor = "label-warning";
+            }
+            else if (item.StatusName == "Submitted")
+            {
+                statuscolor = "label-info";
+            }
+            else if (item.StatusName == "Rejected")
+            {
+                statuscolor = "label-danger";
+            }
+            <tr>
+                <td>@item.LMIANo</td>
+                <td><span class="label @statuscolor lmiastatus">@item.StatusName</span></td>
+                <td>@item.PositionDescription</td>
+                <td>@item.PositionAvailable</td>
+                <td>
+                    @foreach (var position in item.CorporatePositions)
+                    {
+                        <span>@(position.FirstName + " " + position.LastName)</span><span> -<b>@(position.Position)</b></span ><br />
+                     }
+                </td>
+                <td><button type="button" onclick="editCorporatePosition(this)" class="btn btn-cyan btn-sm">Edit</button></td>
+            </tr>
+        }
+    </tbody>
+</table>

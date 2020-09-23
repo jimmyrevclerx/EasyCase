@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="84ad60ffbbe549219b5d2876efa570ee" Name="Diagram1" ZoomLevel="83" >
+        <EntityTypeShape EntityType="EasyCaseDBModel.Image" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.Log" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.MartialStatu" Width="1.5" PointX="3.375" PointY="12" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.Purpose" Width="1.5" PointX="3.375" PointY="6.375" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.CorporatePosition" Width="1.5" PointX="12.875" PointY="8.875" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.CorporateProfileInformation" Width="1.5" PointX="8.375" PointY="7.875" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.CasesNote" Width="1.5" PointX="10.625" PointY="12.875" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_CasesNote_CorporateProfileInformation" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.Assigned" Width="1.5" PointX="15.875" PointY="5.625" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.Mention" Width="1.5" PointX="12.875" PointY="4.375" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.Task" Width="1.5" PointX="10.625" PointY="3.125" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_Assigned_Task" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_Task_CorporateProfileInformation" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_Mentions_Task" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_Mentions_Task1" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.TaskNote" Width="1.5" PointX="12.875" PointY="1" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_TaskNote_Task" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.ContactType" Width="1.5" PointX="13.375" PointY="14.125" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.Contact" Width="1.5" PointX="15.625" PointY="12.875" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_Contacts_ContactTypes" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.BusinessHour" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.ManageHour" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.Holiday" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.CompanyDetail" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.Support" Width="1.5" PointX="5.625" PointY="10.5" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_Support_Images" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.CaseType" Width="1.5" PointX="0.75" PointY="13.875" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.CaseStatu" Width="1.5" PointX="3.375" PointY="14.75" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.CorporateJobDetail" Width="1.5" PointX="10.625" PointY="8.75" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_CorporateJobDetails_CaseStatus" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_CorporateJobDetails_CorporateProfileInformation" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_CorporatePositions_CorporateJobDetails" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.ServiceFee" Width="1.5" PointX="5.375" PointY="14.75" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.Client" Width="1.5" PointX="5.625" PointY="4.75" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_Assigned_Clients" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_Clients_Images" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_Clients_MartialStatus" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_Clients_Purpose" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.Case" Width="1.5" PointX="7.875" PointY="13.875" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_Cases_CaseTypes" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_Cases_Clients" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.ProfileInformation" Width="1.5" PointX="10.125" PointY="17" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_ProfileInformation_ProfileInformation" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.EducationDetail" Width="1.5" PointX="10.125" PointY="23.125" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_EducationDetails_Cases" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.OtherDetail" Width="1.5" PointX="10.125" PointY="27" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_OtherDetails_Cases" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.LinkCas" Width="1.5" PointX="10.125" PointY="0.75" />
+        <AssociationConnector Association="EasyCaseDBModel.FK_LinkCases_Cases" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
