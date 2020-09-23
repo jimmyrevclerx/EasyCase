@@ -185,6 +185,22 @@
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="Deleted" Type="bit" />
         </EntityType>
+        <EntityType Name="Documents">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LinkId" Type="bigint" />
+          <Property Name="LinkTable" Type="nvarchar" MaxLength="50" />
+          <Property Name="OriginalName" Type="nvarchar" MaxLength="500" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="100" />
+          <Property Name="DocPath" Type="nvarchar" MaxLength="500" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CretedBy" Type="nvarchar" MaxLength="168" />
+          <Property Name="Deleted" Type="bit" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="EducationDetails">
           <Key>
             <PropertyRef Name="ID" />
@@ -677,6 +693,7 @@
           <EntitySet Name="CorporateJobDetails" EntityType="Self.CorporateJobDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CorporatePositions" EntityType="Self.CorporatePositions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CorporateProfileInformation" EntityType="Self.CorporateProfileInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EducationDetails" EntityType="Self.EducationDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Holidays" EntityType="Self.Holidays" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
@@ -910,6 +927,7 @@
             <End Role="Case" EntitySet="Cases" />
             <End Role="TaskNote" EntitySet="TaskNotes" />
           </AssociationSet>
+          <EntitySet Name="Documents" EntityType="EasyCaseDBModel.Document" />
           </EntityContainer>
         <EntityType Name="Image">
           <Key>
@@ -1615,6 +1633,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LinkId" Type="Int64" />
+          <Property Name="LinkTable" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DocPath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CretedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2027,6 +2061,23 @@
               <MappingFragment StoreEntitySet="LinkCases">
                 <ScalarProperty Name="CaseId" ColumnName="CaseId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documents">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.Document">
+              <MappingFragment StoreEntitySet="Documents">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="CretedBy" ColumnName="CretedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="DocPath" ColumnName="DocPath" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="OriginalName" ColumnName="OriginalName" />
+                <ScalarProperty Name="LinkTable" ColumnName="LinkTable" />
+                <ScalarProperty Name="LinkId" ColumnName="LinkId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

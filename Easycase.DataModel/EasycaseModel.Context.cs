@@ -53,5 +53,6 @@ namespace Easycase.DataModel
         public virtual DbSet<EducationDetail> EducationDetails { get; set; }
         public virtual DbSet<OtherDetail> OtherDetails { get; set; }
         public virtual DbSet<LinkCas> LinkCases { get; set; }
+        public virtual DbSet<Document> Documents { get; set; }
     }
 }

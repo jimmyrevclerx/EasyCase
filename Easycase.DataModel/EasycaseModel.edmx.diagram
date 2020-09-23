@@ -56,6 +56,7 @@
         <AssociationConnector Association="EasyCaseDBModel.FK_LinkCases_Cases" />
         <AssociationConnector Association="EasyCaseDBModel.FK_CasesNote_Cases" />
         <AssociationConnector Association="EasyCaseDBModel.FK_TaskNote_Cases" />
+        <EntityTypeShape EntityType="EasyCaseDBModel.Document" Width="1.5" PointX="15.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

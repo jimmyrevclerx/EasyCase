@@ -89,6 +89,9 @@
     <Compile Include="CorporateProfileInformation.cs">
       <DependentUpon>EasycaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Document.cs">
+      <DependentUpon>EasycaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EasycaseModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -1,0 +1,207 @@
+﻿@model Easycase.Model.Document.BLDocumentViewModal
+@{
+    ViewBag.Title = "Details";
+}
+@Styles.Render("~/Content/datatable")
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Documents</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Library</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div onclick="ConvertToClient(this)" class="btn btn-warning btn-rounded" style="margin-right:10px; margin-bottom:2%; vertical-align:middle;"><i class="fa fa-user" style="color:white;"></i> Convert Prospect to Client</div>
+                        </div>
+                        <!-- Nav tabs -->
+                        <div class="" style="margin-left:10%">
+                            @Html.Partial("_partialDetailHeader")
+                        </div>
+                        <div class="span7 marginLEFTZERO" style="display:inline-block; color:#377fea">
+                            @Html.Partial("_partialDetails", new Easycase.Model.Case.BLCaseDetails
+                            {
+                                CaseID = Model.CaseID,
+                                CaseNumber = Model.CaseNumber
+                            })
+                            <div class="assignedAgentTemp" style="display:none;">
+                                <p class="purpleFont"><b>Team Member(s) Assigned:</b> <span class="assignedAgentInfo"></span></p>
+                            </div>
+                        </div>
+                        <!-- Tab panes -->
+                        <div class="tab-content tabcontent-border" style="border:1px solid black;margin-top:10px">
+                            <label class="control-label col-md-12">Choose location below to upload file(s)</label>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <div class="col-sm-12">
+                                        @Html.DropDownList("libraryfolders", new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Select Folder", Value = "" },
+                                            new SelectListItem{ Text="Create New Folder", Value = "cretenew" },
+                                            new SelectListItem{ Text="Documents", Value = "documents" },
+                                         }, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 hide" id="folderName">
+                                    <div class="col-sm-12">
+                                        @Html.Editor("FolderName", new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Folder Name", maxlength = "50" } })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="col-sm-12">
+                                        <input type="file" id="uploadDocument" />
+                                        <button type="button" onclick="UploadProfile()" class="btn btn-warning btn-sm"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="accordian-4">
+                                <div class="card m-t-30">
+                                    <a class="card-header link border-top collapsed" data-toggle="collapse" data-parent="#accordian-4" href="#Toggle-2" aria-expanded="false" aria-controls="Toggle-2">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                        <span>Click on the section(s) below to expand</span>
+                                    </a>
+                                    <div id="Toggle-2" class="multi-collapse collapse" style="">
+                                        <div class="table-responsive" id="documentsDiv">
+                                            @Html.Partial("_partialDocuments",Model)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteconfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <input type="hidden" id="hdnId" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You want to delete this record.
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="deleteRecord()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+    <script>
+        $(document).ready(function () {
+            $(".navigationli").removeClass("selected");
+            $("#casesli").addClass("selected");
+
+            $(".detailed-header").removeClass("active");
+            $("#documentdetaildli").addClass("active");
+            $('#documentTable').DataTable();
+        });
+
+        $("#libraryfolders").on("change", function () {
+            if ($(this).val() == "cretenew") {
+                $("#folderName").removeClass("hide");
+            } else {
+                $("#folderName").addClass("hide");
+                $("#FolderName").val("");
+            }
+        });
+        function DocumentList()
+        {
+            $.ajax({
+                url: "/Document/PartialDocument",
+                type: "GET",
+                success: function (response) {
+                    $("#documentsDiv").html(response);
+                    $('#documentTable').DataTable();
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+        function UploadProfile()
+        {
+            var data = new FormData();
+            var files = $("#uploadDocument").get(0).files;
+            if (files.length > 0) {
+                data.append("uploadDocument", files[0]);
+                data.append("LinkId", @Model.CaseID);
+                data.append("LinkTable", "Cases");
+                data.append("FolderName", $("#FolderName").val());
+            }
+
+            $.ajax({
+                url: "/Document/UploadFile",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (response) {
+                    $("#uploadDocument").val("");
+                    DocumentList();
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+
+        function confirmDelete(id) {
+            $("#hdnId").val(id);
+            $("#deleteconfirm").modal("show");
+        }
+        function deleteRecord() {
+            $.ajax({
+                url: "/Document/Delete",
+                type: "POST",
+                data: { id: $("#hdnId").val() },
+                success: function (response) {
+                    var id = $("#hdnId").val();
+                    $("#documentTable").find("#tr" + id).remove();
+                    toastr.success('Record deleted successfully!', 'Success');
+                    $("#deleteconfirm").modal("hide");
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+    </script>
+}

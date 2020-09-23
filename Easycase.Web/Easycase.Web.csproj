@@ -188,6 +188,7 @@
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\CorporateController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -1248,21 +1249,24 @@
     <Content Include="Views\Setting\_partialServiceFeeList.cshtml" />
     <Content Include="Views\Case\Details.cshtml" />
     <Content Include="Views\Case\EditDetail.cshtml" />
-    <Content Include="Views\Case\_partialDetails.cshtml" />
     <Content Include="Views\Case\EducationDetail.cshtml" />
     <Content Include="Views\Case\_partialEducation.cshtml" />
     <Content Include="Views\Case\_partialSpouseEducation.cshtml" />
     <Content Include="Views\Case\OtherDetails.cshtml" />
     <Content Include="Views\Case\_partialOtherEmployementHistory.cshtml" />
     <Content Include="Views\Case\_partialSpouseEmployementHistory.cshtml" />
-    <Content Include="Views\Case\_partialDetailHeader.cshtml" />
     <Content Include="Views\Case\RelatedCase.cshtml" />
     <Content Include="Views\Case\_partialRelatedCase.cshtml" />
     <Content Include="Views\Case\_partialCaseNote.cshtml" />
     <Content Include="Views\Case\_partialTaskNote.cshtml" />
+    <Content Include="Views\Document\Index.cshtml" />
+    <Content Include="Views\Shared\_partialDetailHeader.cshtml" />
+    <Content Include="Views\Shared\_partialDetails.cshtml" />
+    <Content Include="Views\Document\_partialDocuments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Documents\" />
     <Folder Include="Content\images\" />
   </ItemGroup>
   <ItemGroup>
