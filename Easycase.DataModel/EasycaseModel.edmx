@@ -42,6 +42,7 @@
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CorporateProfileId" Type="bigint" />
+          <Property Name="CaseId" Type="bigint" />
           <Property Name="Date" Type="datetime" />
           <Property Name="Subject" Type="nvarchar" MaxLength="200" />
           <Property Name="Notes" Type="nvarchar(max)" />
@@ -222,8 +223,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="168" />
           <Property Name="CaseId" Type="bigint" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="168" />
         </EntityType>
         <EntityType Name="Logs">
           <Key>
@@ -379,6 +380,7 @@
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TaskId" Type="bigint" Nullable="false" />
+          <Property Name="CaseId" Type="bigint" />
           <Property Name="Subject" Type="nvarchar" MaxLength="200" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="Date" Type="date" />
@@ -430,6 +432,18 @@
             </Principal>
             <Dependent Role="Cases">
               <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CasesNote_Cases">
+          <End Role="Cases" Type="Self.Cases" Multiplicity="0..1" />
+          <End Role="CasesNote" Type="Self.CasesNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cases">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CasesNote">
+              <PropertyRef Name="CaseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -625,6 +639,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TaskNote_Cases">
+          <End Role="Cases" Type="Self.Cases" Multiplicity="0..1" />
+          <End Role="TaskNote" Type="Self.TaskNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cases">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TaskNote">
+              <PropertyRef Name="CaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TaskNote_Task">
           <End Role="Task" Type="Self.Task" Multiplicity="1" />
           <End Role="TaskNote" Type="Self.TaskNote" Multiplicity="*" />
@@ -681,6 +707,10 @@
           <AssociationSet Name="FK_Cases_Clients" Association="Self.FK_Cases_Clients">
             <End Role="Clients" EntitySet="Clients" />
             <End Role="Cases" EntitySet="Cases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CasesNote_Cases" Association="Self.FK_CasesNote_Cases">
+            <End Role="Cases" EntitySet="Cases" />
+            <End Role="CasesNote" EntitySet="CasesNote" />
           </AssociationSet>
           <AssociationSet Name="FK_CasesNote_CorporateProfileInformation" Association="Self.FK_CasesNote_CorporateProfileInformation">
             <End Role="CorporateProfileInformation" EntitySet="CorporateProfileInformation" />
@@ -745,6 +775,10 @@
           <AssociationSet Name="FK_Task_CorporateProfileInformation" Association="Self.FK_Task_CorporateProfileInformation">
             <End Role="CorporateProfileInformation" EntitySet="CorporateProfileInformation" />
             <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskNote_Cases" Association="Self.FK_TaskNote_Cases">
+            <End Role="Cases" EntitySet="Cases" />
+            <End Role="TaskNote" EntitySet="TaskNote" />
           </AssociationSet>
           <AssociationSet Name="FK_TaskNote_Task" Association="Self.FK_TaskNote_Task">
             <End Role="Task" EntitySet="Task" />
@@ -868,6 +902,14 @@
             <End Role="Case" EntitySet="Cases" />
             <End Role="LinkCas" EntitySet="LinkCases" />
           </AssociationSet>
+          <AssociationSet Name="FK_CasesNote_Cases" Association="EasyCaseDBModel.FK_CasesNote_Cases">
+            <End Role="Case" EntitySet="Cases" />
+            <End Role="CasesNote" EntitySet="CasesNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskNote_Cases" Association="EasyCaseDBModel.FK_TaskNote_Cases">
+            <End Role="Case" EntitySet="Cases" />
+            <End Role="TaskNote" EntitySet="TaskNotes" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Image">
           <Key>
@@ -953,6 +995,8 @@
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CorporateProfileInformation" Relationship="EasyCaseDBModel.FK_CasesNote_CorporateProfileInformation" FromRole="CasesNote" ToRole="CorporateProfileInformation" />
+          <Property Name="CaseId" Type="Int64" />
+          <NavigationProperty Name="Case" Relationship="EasyCaseDBModel.FK_CasesNote_Cases" FromRole="CasesNote" ToRole="Case" />
         </EntityType>
         <Association Name="FK_CasesNote_CorporateProfileInformation">
           <End Type="EasyCaseDBModel.CorporateProfileInformation" Role="CorporateProfileInformation" Multiplicity="0..1" />
@@ -1068,6 +1112,8 @@
           <Property Name="NotifyUser" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Task" Relationship="EasyCaseDBModel.FK_TaskNote_Task" FromRole="TaskNote" ToRole="Task" />
+          <Property Name="CaseId" Type="Int64" />
+          <NavigationProperty Name="Case" Relationship="EasyCaseDBModel.FK_TaskNote_Cases" FromRole="TaskNote" ToRole="Case" />
         </EntityType>
         <Association Name="FK_TaskNote_Task">
           <End Type="EasyCaseDBModel.Task" Role="Task" Multiplicity="1" />
@@ -1386,6 +1432,8 @@
           <NavigationProperty Name="EducationDetails" Relationship="EasyCaseDBModel.FK_EducationDetails_Cases" FromRole="Case" ToRole="EducationDetail" />
           <NavigationProperty Name="OtherDetails" Relationship="EasyCaseDBModel.FK_OtherDetails_Cases" FromRole="Case" ToRole="OtherDetail" />
           <NavigationProperty Name="LinkCases" Relationship="EasyCaseDBModel.FK_LinkCases_Cases" FromRole="Case" ToRole="LinkCas" />
+          <NavigationProperty Name="CasesNotes" Relationship="EasyCaseDBModel.FK_CasesNote_Cases" FromRole="Case" ToRole="CasesNote" />
+          <NavigationProperty Name="TaskNotes" Relationship="EasyCaseDBModel.FK_TaskNote_Cases" FromRole="Case" ToRole="TaskNote" />
         </EntityType>
         <Association Name="FK_Cases_CaseTypes">
           <End Type="EasyCaseDBModel.CaseType" Role="CaseType" Multiplicity="0..1" />
@@ -1543,6 +1591,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CasesNote_Cases">
+          <End Type="EasyCaseDBModel.Case" Role="Case" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.CasesNote" Role="CasesNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Case">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CasesNote">
+              <PropertyRef Name="CaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskNote_Cases">
+          <End Type="EasyCaseDBModel.Case" Role="Case" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.TaskNote" Role="TaskNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Case">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TaskNote">
+              <PropertyRef Name="CaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1622,6 +1694,7 @@
           <EntitySetMapping Name="CasesNotes">
             <EntityTypeMapping TypeName="EasyCaseDBModel.CasesNote">
               <MappingFragment StoreEntitySet="CasesNote">
+                <ScalarProperty Name="CaseId" ColumnName="CaseId" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
@@ -1671,6 +1744,7 @@
           <EntitySetMapping Name="TaskNotes">
             <EntityTypeMapping TypeName="EasyCaseDBModel.TaskNote">
               <MappingFragment StoreEntitySet="TaskNote">
+                <ScalarProperty Name="CaseId" ColumnName="CaseId" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="NotifyUser" ColumnName="NotifyUser" />
                 <ScalarProperty Name="Date" ColumnName="Date" />

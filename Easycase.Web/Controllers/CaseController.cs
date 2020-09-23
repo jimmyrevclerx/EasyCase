@@ -2,6 +2,8 @@
 using Easycase.Extension.Enums;
 using Easycase.Model.Case;
 using Easycase.Model.Client;
+using Easycase.Model.Corporate;
+using Easycase.Model.Task;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
@@ -22,6 +24,7 @@ namespace Easycase.Web.Controllers
         BLCaseDetails bLCaseDetails = new BLCaseDetails();
         BLMartialStatus bLMartialStatus = new BLMartialStatus();
         BLAddCaseDetailModal addCaseDetailModal = new BLAddCaseDetailModal();
+        BLCasesNote db_CasesNote = new BLCasesNote();
         // GET: Case
         public ActionResult Index()
         {
@@ -333,6 +336,20 @@ namespace Easycase.Web.Controllers
             bLLinkDetail.CaseNumber = result.CaseNumber;
             bLLinkDetail.bLCases = linkcase;
             return PartialView("_partialRelatedCase", bLLinkDetail);
+        }
+
+        public ActionResult OpenCaseNote(long id)
+        {
+            var casenote = db_CasesNote.GetByCaseId(id);
+            return PartialView("_partialCaseNote", casenote);
+        }
+        public ActionResult OpenTaskNote(long id)
+        {
+            BLTaskNote taskNote = new BLTaskNote();
+            var Clients = clientModel.GetAll();
+            ViewBag.Clients = new SelectList(Clients, "ID", "Name");
+            var casenote = taskNote.GetByCaseId(id);
+            return PartialView("_partialTaskNote", casenote);
         }
     }
 }

@@ -21,7 +21,9 @@ namespace Easycase.DataModel
         public string Notes { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public string CreatedBy { get; set; }
+        public Nullable<long> CaseId { get; set; }
     
         public virtual CorporateProfileInformation CorporateProfileInformation { get; set; }
+        public virtual Case Case { get; set; }
     }
 }

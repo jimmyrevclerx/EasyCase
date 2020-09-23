@@ -12,6 +12,7 @@ namespace Easycase.Model.Task
     {
         public long ID { get; set; }
         public long TaskId { get; set; }
+        public long CaseId { get; set; }
         public string Subject { get; set; }
         public string Notes { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
@@ -32,7 +33,8 @@ namespace Easycase.Model.Task
                         Date = this.Date,
                         Subject = this.Subject,
                         TaskId = this.TaskId,
-                        NotifyUser=this.NotifyUser
+                        NotifyUser=this.NotifyUser,
+                        CaseId=this.CaseId
                     };
                     DB.TaskNotes.Add(tasknote);
                     DB.SaveChanges();
@@ -62,7 +64,8 @@ namespace Easycase.Model.Task
                         Subject = this.Subject,
                         TaskId = this.TaskId,
                         ID = this.ID,
-                        NotifyUser=this.NotifyUser
+                        NotifyUser=this.NotifyUser,
+                        CaseId=this.CaseId
                     };
                     DB.Entry(tasknote).State = System.Data.Entity.EntityState.Modified;
                     DB.SaveChanges();
@@ -91,6 +94,31 @@ namespace Easycase.Model.Task
                         Date = c.Date==null?DateTime.Now: c.Date,
                         CreatedOn = c.CreatedOn,
                         NotifyUser=c.NotifyUser
+                    }).ToList();
+                    return casenote;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logs.SaveLog(ex.Message);
+                return new List<BLTaskNote>();
+            }
+        }
+        public List<BLTaskNote> GetByCaseId(long id)
+        {
+            try
+            {
+                using (Easycase.DataModel.EasyCaseDBEntities DB = new DataModel.EasyCaseDBEntities())
+                {
+                    var casenote = DB.TaskNotes.Where(d => d.CaseId == id).Select(c => new BLTaskNote
+                    {
+                        ID = c.ID,
+                        Notes = c.Notes,
+                        TaskId = c.TaskId,
+                        Subject = c.Subject,
+                        Date = c.Date == null ? DateTime.Now : c.Date,
+                        CreatedOn = c.CreatedOn,
+                        NotifyUser = c.NotifyUser
                     }).ToList();
                     return casenote;
                 }

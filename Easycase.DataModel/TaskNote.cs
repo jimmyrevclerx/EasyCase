@@ -21,7 +21,9 @@ namespace Easycase.DataModel
         public Nullable<System.DateTime> Date { get; set; }
         public string NotifyUser { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
+        public Nullable<long> CaseId { get; set; }
     
         public virtual Task Task { get; set; }
+        public virtual Case Case { get; set; }
     }
 }

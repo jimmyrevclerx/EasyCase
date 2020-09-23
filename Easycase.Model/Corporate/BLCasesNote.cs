@@ -12,6 +12,7 @@ namespace Easycase.Model.Corporate
     {
         public long ID { get; set; }
         public Nullable<long> CorporateProfileId { get; set; }
+        public Nullable<long> CaseId { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public string Subject { get; set; }
         public string Notes { get; set; }
@@ -36,7 +37,8 @@ namespace Easycase.Model.Corporate
                         CreatedOn = DateTime.Now,
                         Date=this.Date,
                         Subject=this.Subject,
-                        CorporateProfileId=this.CorporateProfileId
+                        CorporateProfileId=this.CorporateProfileId,
+                        CaseId=this.CaseId
                     };
                     DB.CasesNotes.Add(casenote);
                     DB.SaveChanges();
@@ -66,7 +68,8 @@ namespace Easycase.Model.Corporate
                         Date = this.Date,
                         Subject = this.Subject,
                         CorporateProfileId = this.CorporateProfileId,
-                        ID=this.ID
+                        ID=this.ID,
+                        CaseId=this.CaseId
                     };
                     DB.Entry(casenote).State = System.Data.Entity.EntityState.Modified;
                     DB.SaveChanges();
@@ -100,6 +103,32 @@ namespace Easycase.Model.Corporate
                         Subject=c.Subject,
                         Date=c.Date,
                         CreatedOn=c.CreatedOn,
+                        CreatedBy = c.CreatedBy,
+                    }).ToList();
+                    return casenote;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logs.SaveLog(ex.Message);
+                return new List<BLCasesNote>();
+            }
+        }
+
+        public List<BLCasesNote> GetByCaseId(long id)
+        {
+            try
+            {
+                using (Easycase.DataModel.EasyCaseDBEntities DB = new DataModel.EasyCaseDBEntities())
+                {
+                    var casenote = DB.CasesNotes.Where(d => d.CaseId == id).Select(c => new BLCasesNote
+                    {
+                        ID = c.ID,
+                        Notes = c.Notes,
+                        CaseId = c.CaseId,
+                        Subject = c.Subject,
+                        Date = c.Date,
+                        CreatedOn = c.CreatedOn,
                         CreatedBy = c.CreatedBy,
                     }).ToList();
                     return casenote;

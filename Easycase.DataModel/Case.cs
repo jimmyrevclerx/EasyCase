@@ -21,6 +21,8 @@ namespace Easycase.DataModel
             this.EducationDetails = new HashSet<EducationDetail>();
             this.OtherDetails = new HashSet<OtherDetail>();
             this.LinkCases = new HashSet<LinkCas>();
+            this.CasesNotes = new HashSet<CasesNote>();
+            this.TaskNotes = new HashSet<TaskNote>();
         }
     
         public long ID { get; set; }
@@ -41,5 +43,9 @@ namespace Easycase.DataModel
         public virtual ICollection<OtherDetail> OtherDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LinkCas> LinkCases { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CasesNote> CasesNotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaskNote> TaskNotes { get; set; }
     }
 }

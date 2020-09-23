@@ -12,12 +12,167 @@
         <a class="nav-link " href="#"><i class="fa fa-file"></i> Forms</a>
     </li>
     <li class="nav-item detailed-header">
-        <a class="nav-link " href="#"><i class="fa fa-file-text"></i> Notes</a>
+        <a class="nav-link " href="javascript:void(0)" onclick="OpenNoteModal(@ViewBag.CaseId)"><i class="fa fa-file-text"></i> Notes</a>
     </li>
     <li class="nav-item detailed-header">
-        <a class="nav-link " href="#"><i class="fa fa-bell"></i> Tasks</a>
+        <a class="nav-link " href="javascript:void(0)" onclick="OpenTaskNoteModal(@ViewBag.CaseId)"><i class="fa fa-bell"></i> Tasks</a>
     </li>
     <li class="nav-item last-li detailed-header">
         <a class="nav-link " href="#"><i class="fa fa-money"></i> Accounting</a>
     </li>
 </ul>
+<div class="modal fade" id="notemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+</div>
+<script>
+    function OpenNoteModal(id)
+    {
+            $.ajax({
+                url: "/Case/OpenCaseNote",
+                type: "GET",
+                data: { id: id },
+                success: function (response) {
+                     $("#notemodal").html(response);
+                    $("#notemodal").modal("show");
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+            
+        }
+
+        function ShowNotes()
+        {
+            $("#plus-circle").css("display", "none");
+            $("#minus-circle").css("display", "block");
+            $("#note-edit").css("display", "block");
+        }
+        function HideNotes()
+        {
+            $("#plus-circle").css("display", "block");
+            $("#minus-circle").css("display", "none");
+            $("#note-edit").css("display", "none");
+        }
+        function CaseNoteList(id)
+        {
+            $.ajax({
+                url: "/Case/OpenCaseNote",
+                type: "GET",
+                data: { id: id },
+                success: function (response) {
+                    $("#notemodal").html(response);
+                    $("#clientname").html("");
+                    $("#hdnBusinessName").val(businessname);
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+        function EditNote(noteId,subject,notes,date)
+        {
+            $("#date").val(date);
+            $("#subject").val(subject);
+            $("#notes").val(notes);
+            $("#currentNoteId").val(noteId);
+            $("#plus-circle").css("display", "none");
+            $("#minus-circle").css("display", "block");
+            $("#note-edit").css("display", "block");
+        }
+        function SaveNotes()
+        {
+            var data = new Object();
+            data.Date = $("#date").val();
+            data.Subject = $("#subject").val();
+            data.Notes = $("#notes").val();
+            data.CaseId = @ViewBag.CaseId;
+            data.ID = $("#currentNoteId").val();
+            if (data.Notes != ""&&data.Date != "") {
+                $.ajax({
+                    url: "/Corporate/SaveCaseNote",
+                    type: "POST",
+                    data: data,
+                    success: function (response) {
+                        $("#currentNoteId").val(0);
+                        CaseNoteList(@ViewBag.CaseId);
+                    },
+                    error: function (er) {
+                        toastr.error(er, 'Error');
+                    }
+                });
+            } 
+        }
+
+        function deleteCaseNote(id) {
+            $.ajax({
+                url: "/Corporate/DeleteCaseNotes",
+                type: "POST",
+                data: { id: id },
+                success: function (response) {
+                    CaseNoteList(@ViewBag.CaseId);
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+    }
+
+    function OpenTaskNoteModal(id)
+        {
+            $.ajax({
+                url: "/Case/OpenTaskNote",
+                type: "GET",
+                data: { id: id },
+                success: function (response) {
+                     $("#notemodal").html(response);
+                    $("#notemodal").modal("show");
+                    $("#hdnTaskId").val(id);
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+            
+    }
+
+    function SaveTaskNotes()
+        {
+            var data = new Object();
+            data.Date = $("#date").val();
+            data.Subject = $("#subject").val();
+            data.Notes = $("#notes").val();
+             data.CaseId = @ViewBag.CaseId;
+             data.NotifyUser = $("#_notifyUser").val();
+             data.ID = $("#currentNoteId").val();
+             data.NotifyUser = data.NotifyUser.join(",");
+            if (data.Notes != ""&&data.Date != "") {
+                $.ajax({
+                    url: "/Task/SaveCaseNote",
+                    type: "POST",
+                    data: data,
+                    success: function (response) {
+                        $("#currentNoteId").val(0);
+                        TaskNoteList(@ViewBag.CaseId);
+                    },
+                    error: function (er) {
+                        toastr.error(er, 'Error');
+                    }
+                });
+            } 
+    }
+    function TaskNoteList(id)
+        {
+            $.ajax({
+                url: "/Case/OpenCaseNote",
+                type: "GET",
+                data: { id: id },
+                success: function (response) {
+                    $("#notemodal").html(response);
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+</script>
