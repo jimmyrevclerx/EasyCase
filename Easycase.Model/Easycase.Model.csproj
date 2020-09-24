@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Easycase.Extension">
-      <HintPath>..\Easycase.Extension\bin\Debug\Easycase.Extension.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\EntityFramework.dll</HintPath>
@@ -107,6 +104,10 @@
     <ProjectReference Include="..\Easycase.DataModel\Easycase.DataModel.csproj">
       <Project>{39d0dbf6-58c6-42f0-8347-894017ca80a6}</Project>
       <Name>Easycase.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Easycase.Extension\Easycase.Extension.csproj">
+      <Project>{6b6a3c85-681a-40b7-b902-d9bf04e5cbd1}</Project>
+      <Name>Easycase.Extension</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
