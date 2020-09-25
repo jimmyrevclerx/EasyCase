@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'F:\Jimmy\caseeasy\23Sep2020\EasyCase\Easycase.DataModel\EasycaseModel.edmx'. 
+﻿// T4 code generation is enabled for model 'E:\2020\Work\github\EasyCase\Easycase.DataModel\EasycaseModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -9,7 +9,9 @@ using System.Web.Mvc;
 
 namespace Easycase.Web.Controllers
 {
-    public class TaskController : Controller
+    [Authorize]
+    [HandleError]
+    public class TaskController : BaseController
     {
         BLClientModel clientModel = new BLClientModel();
         BLTask bLTask = new BLTask();

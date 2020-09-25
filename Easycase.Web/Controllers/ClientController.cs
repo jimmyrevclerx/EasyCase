@@ -17,8 +17,9 @@ using Microsoft.AspNet.Identity;
 
 namespace Easycase.Web.Controllers
 {
+    [HandleError]
     [Authorize]
-    public class ClientController : Controller
+    public class ClientController : BaseController
     {
         BLClientModel db = new BLClientModel();
         BLPurpose BLPurpose = new BLPurpose();

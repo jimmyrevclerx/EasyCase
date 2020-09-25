@@ -15,7 +15,8 @@ using System.Web.Mvc;
 namespace Easycase.Web.Controllers
 {
     [Authorize]
-    public class EmailController : Controller
+    [HandleError]
+    public class EmailController : BaseController
     {
         // GET: Email
         public ActionResult Inbox()

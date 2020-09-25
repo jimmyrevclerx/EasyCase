@@ -11,10 +11,12 @@ using System.Web.Mvc;
 namespace Easycase.Web.Controllers
 {
     [Authorize]
-    public class DocumentController : Controller
+    [HandleError]
+    public class DocumentController : BaseController
     {
         BLCaseDetails bLCaseDetails = new BLCaseDetails();
         BLDocument documents = new BLDocument();
+        BLDocumentNote documentNote = new BLDocumentNote();
         // GET: Document
         public ActionResult Index(long id)
         {
@@ -100,6 +102,29 @@ namespace Easycase.Web.Controllers
         {
             var updateName = documents.UpdateDeleteStatus(id);
             return Json(updateName, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult OpenDocumentNote(long id)
+        {
+            var docnote = documentNote.GetByDocumentId(id);
+            return PartialView("_partialDocumentNote", docnote);
+        }
+
+        [HttpPost]
+        public ActionResult SaveDocumentNote(BLDocumentNote bLDocumentNote)
+        {
+            bool status = false;
+            if (bLDocumentNote.ID > 0)
+            {
+                var result = bLDocumentNote.Update();
+                status = result.Item1;
+            }
+            else
+            {
+                var result = bLDocumentNote.Save();
+                status = result.Item1;
+            }
+            return Json(status, JsonRequestBehavior.AllowGet);
         }
     }
 }

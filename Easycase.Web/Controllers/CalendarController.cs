@@ -12,7 +12,8 @@ using System.Web.Mvc;
 namespace Easycase.Web.Controllers
 {
     [Authorize]
-    public class CalendarController : Controller
+    [HandleError]
+    public class CalendarController : BaseController
     {
         BLManageHours manageHours = new BLManageHours();
         BLBusinessHours businessHours = new BLBusinessHours();

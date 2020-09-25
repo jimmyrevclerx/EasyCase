@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Easycase.Model.Document.BLDocumentNote>
+
+<script src="~/Content/assets/libs/inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+<script src="~/Content/dist/js/pages/mask/mask.init.js"></script>
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <input type="hidden" id="hdnId" />
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-file-text" style="color: black;font-size: 25px;" aria-hidden="true"></i> Document Notes</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <label><b>Client:</b><span id="clientname"></span></label>
+            <div class="row">
+                <div class="col-sm-5">
+
+                </div>
+                <div class="col-sm-6">
+                    <i class="fa fa-plus-circle" id="plus-circle" onclick="ShowNotes()" style="font-size: 30px;color:#28b779" aria-hidden="true"></i>
+                    <i class="fa fa-minus-circle" id="minus-circle" onclick="HideNotes()" style="font-size: 30px;color:rgb(218, 79, 73);display:none" aria-hidden="true"></i>
+                </div>
+                <div class="floatRight printexmpt textRight" onclick="window.print()" style="cursor:pointer; color:#377fea; margin-top:1%">
+                    <i class="fa fa-print" aria-hidden="true" style="font-size: 30px;"></i>
+                </div>
+                <div id="note-edit" style="display: none;width:100%" class="printexmpt">
+                    <div class="card-body">
+                        <input type="hidden" id="currentNoteId" />
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="fname" class="text-right control-label col-form-label">
+                                    Subject (optional):
+                                </label>
+                                <input type="text" class="form-control" maxlength="500" id="subject" placeholder="Subject">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="fname" class="text-right control-label col-form-label">
+                                    Notes:
+                                </label>
+                                <textarea cols="10" rows="5" class="form-control" id="notes" placeholder="Enter Notes"></textarea>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success" onclick="SaveDocNotes()"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save Note</button>
+                    </div>
+                </div>
+                @if (Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <div id="list-view" style="overflow: auto;width:100%; background-color: rgb(246, 247, 247); padding: 10px; max-height: 421.8px;">
+
+                            <div class="alert alert-info">
+                                <button type="button" class="close" onclick="deleteCaseNote(@item.ID)">×</button>
+                                <p class="subject-line"><b>Subject:</b> <span id="subject_1" class="subject-info">@item.Subject</span> </p>
+                                <span id="note_1">@item.Notes </span>
+                                <div style="float:right"><i class="fa fa-pencil" onclick="EditNote(@item.ID,'@item.Subject','@item.Notes'" aria-hidden="true"></i></div>
+                                <br><span><sub>Created by: <b></b><span style="margin-left:1%" id="notedate_1" notedate="2020-09-04"> @item.CreatedOn.Value.ToString("MMM dd, yyyy @ hh:mm tt")</span></sub></span>
+                            </div>
+
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="" id="emptydiv" style="margin-top: 2%;width:100%">
+                        <h2 style="text-align:center; color: #009f76;">No Document Notes</h2>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

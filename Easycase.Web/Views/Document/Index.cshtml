@@ -25,6 +25,7 @@
 <!-- Container fluid  -->
 <!-- ============================================================== -->
 <div class="container-fluid">
+    <input type="hidden" id="hdnDocumentId" />
     <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
@@ -84,7 +85,7 @@
                                     </a>
                                     <div id="Toggle-2" class="multi-collapse collapse" style="">
                                         <div class="table-responsive" id="documentsDiv">
-                                            @Html.Partial("_partialDocuments",Model)
+                                            @Html.Partial("_partialDocuments", Model)
                                         </div>
                                     </div>
                                 </div>
@@ -121,6 +122,9 @@
             </div>
         </div>
     </div>
+</div>
+<div class="modal fade" id="documentnotemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/datatables")
@@ -197,6 +201,78 @@
                     $("#documentTable").find("#tr" + id).remove();
                     toastr.success('Record deleted successfully!', 'Success');
                     $("#deleteconfirm").modal("hide");
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+
+        function OpenDocumentNoteModal(id) {
+            $.ajax({
+                url: "/Document/OpenDocumentNote",
+                type: "GET",
+                data: { id: id },
+                success: function (response) {
+                    $("#documentnotemodal").html(response);
+                    $("#documentnotemodal").modal("show");
+                    $("#hdnDocumentId").val(id);
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+
+        }
+
+        function ShowNotes() {
+            $("#plus-circle").css("display", "none");
+            $("#minus-circle").css("display", "block");
+            $("#note-edit").css("display", "block");
+        }
+        function HideNotes() {
+            $("#plus-circle").css("display", "block");
+            $("#minus-circle").css("display", "none");
+            $("#note-edit").css("display", "none");
+        }
+        function EditNote(noteId, subject, notes, date) {
+            $("#subject").val(subject);
+            $("#notes").val(notes);
+            $("#currentNoteId").val(noteId);
+            $("#plus-circle").css("display", "none");
+            $("#minus-circle").css("display", "block");
+            $("#note-edit").css("display", "block");
+        }
+        function SaveDocNotes() {
+            var data = new Object();
+            data.Subject = $("#subject").val();
+            data.Notes = $("#notes").val();
+            data.DocumentId = $("#hdnDocumentId").val();
+            data.ID = $("#currentNoteId").val();
+            if (data.Notes != "" && data.Date != "") {
+                $.ajax({
+                    url: "/Document/SaveDocumentNote",
+                    type: "POST",
+                    data: data,
+                    success: function (response) {
+                        $("#documentnotemodal").modal("hide");
+                        $("#currentNoteId").val(0);
+                        DocumentList();
+                    },
+                    error: function (er) {
+                        toastr.error(er, 'Error');
+                    }
+                });
+            }
+        }
+
+        function deleteCaseNote(id) {
+            $.ajax({
+                url: "/Corporate/DeleteCaseNotes",
+                type: "POST",
+                data: { id: id },
+                success: function (response) {
+                    DocumentList();
                 },
                 error: function (er) {
                     toastr.error(er, 'Error');

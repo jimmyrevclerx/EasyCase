@@ -12,10 +12,10 @@
         <a class="nav-link " href="#"><i class="fa fa-file"></i> Forms</a>
     </li>
     <li class="nav-item detailed-header">
-        <a class="nav-link " href="javascript:void(0)" onclick="OpenNoteModal(@ViewBag.CaseId)"><i class="fa fa-file-text"></i> Notes</a>
+        <a class="nav-link " href="javascript:void(0)" onclick="OpenDetailedNoteModal(@ViewBag.CaseId)"><i class="fa fa-file-text"></i> Notes</a>
     </li>
     <li class="nav-item detailed-header">
-        <a class="nav-link " href="javascript:void(0)" onclick="OpenTaskNoteModal(@ViewBag.CaseId)"><i class="fa fa-bell"></i> Tasks</a>
+        <a class="nav-link " href="javascript:void(0)" onclick="OpenDetailedTaskNoteModal(@ViewBag.CaseId)"><i class="fa fa-bell"></i> Tasks</a>
     </li>
     <li class="nav-item last-li detailed-header">
         <a class="nav-link " href="#"><i class="fa fa-money"></i> Accounting</a>
@@ -25,7 +25,7 @@
 
 </div>
 <script>
-    function OpenNoteModal(id)
+    function OpenDetailedNoteModal(id)
     {
             $.ajax({
                 url: "/Case/OpenCaseNote",
@@ -118,7 +118,7 @@
             });
     }
 
-    function OpenTaskNoteModal(id)
+    function OpenDetailedTaskNoteModal(id)
         {
             $.ajax({
                 url: "/Case/OpenTaskNote",

@@ -185,6 +185,17 @@
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="Deleted" Type="bit" />
         </EntityType>
+        <EntityType Name="DocumentNotes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DocumentId" Type="bigint" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="200" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+        </EntityType>
         <EntityType Name="Documents">
           <Key>
             <PropertyRef Name="ID" />
@@ -559,6 +570,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DocumentNotes_DocumentNotes">
+          <End Role="Documents" Type="Self.Documents" Multiplicity="0..1" />
+          <End Role="DocumentNotes" Type="Self.DocumentNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documents">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DocumentNotes">
+              <PropertyRef Name="DocumentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EducationDetails_Cases">
           <End Role="Cases" Type="Self.Cases" Multiplicity="1" />
           <End Role="EducationDetails" Type="Self.EducationDetails" Multiplicity="*" />
@@ -693,6 +716,7 @@
           <EntitySet Name="CorporateJobDetails" EntityType="Self.CorporateJobDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CorporatePositions" EntityType="Self.CorporatePositions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CorporateProfileInformation" EntityType="Self.CorporateProfileInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentNotes" EntityType="Self.DocumentNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EducationDetails" EntityType="Self.EducationDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Holidays" EntityType="Self.Holidays" Schema="dbo" store:Type="Tables" />
@@ -760,6 +784,10 @@
           <AssociationSet Name="FK_CorporatePositions_CorporateJobDetails" Association="Self.FK_CorporatePositions_CorporateJobDetails">
             <End Role="CorporateJobDetails" EntitySet="CorporateJobDetails" />
             <End Role="CorporatePositions" EntitySet="CorporatePositions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentNotes_DocumentNotes" Association="Self.FK_DocumentNotes_DocumentNotes">
+            <End Role="Documents" EntitySet="Documents" />
+            <End Role="DocumentNotes" EntitySet="DocumentNotes" />
           </AssociationSet>
           <AssociationSet Name="FK_EducationDetails_Cases" Association="Self.FK_EducationDetails_Cases">
             <End Role="Cases" EntitySet="Cases" />
@@ -928,6 +956,11 @@
             <End Role="TaskNote" EntitySet="TaskNotes" />
           </AssociationSet>
           <EntitySet Name="Documents" EntityType="EasyCaseDBModel.Document" />
+          <EntitySet Name="DocumentNotes" EntityType="EasyCaseDBModel.DocumentNote" />
+          <AssociationSet Name="FK_DocumentNotes_DocumentNotes" Association="EasyCaseDBModel.FK_DocumentNotes_DocumentNotes">
+            <End Role="Document" EntitySet="Documents" />
+            <End Role="DocumentNote" EntitySet="DocumentNotes" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Image">
           <Key>
@@ -1648,7 +1681,32 @@
           <Property Name="CretedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
           <Property Name="Deleted" Type="Boolean" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DocumentNotes" Relationship="EasyCaseDBModel.FK_DocumentNotes_DocumentNotes" FromRole="Document" ToRole="DocumentNote" />
         </EntityType>
+        <EntityType Name="DocumentNote">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DocumentId" Type="Int64" />
+          <Property Name="Subject" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Document" Relationship="EasyCaseDBModel.FK_DocumentNotes_DocumentNotes" FromRole="DocumentNote" ToRole="Document" />
+        </EntityType>
+        <Association Name="FK_DocumentNotes_DocumentNotes">
+          <End Type="EasyCaseDBModel.Document" Role="Document" Multiplicity="0..1" />
+          <End Type="EasyCaseDBModel.DocumentNote" Role="DocumentNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DocumentNote">
+              <PropertyRef Name="DocumentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2078,6 +2136,18 @@
                 <ScalarProperty Name="OriginalName" ColumnName="OriginalName" />
                 <ScalarProperty Name="LinkTable" ColumnName="LinkTable" />
                 <ScalarProperty Name="LinkId" ColumnName="LinkId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentNotes">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.DocumentNote">
+              <MappingFragment StoreEntitySet="DocumentNotes">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

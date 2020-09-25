@@ -87,6 +87,7 @@
     <Compile Include="Corporate\BLCorporateViewProfile.cs" />
     <Compile Include="Corporate\BLCorporateProfile.cs" />
     <Compile Include="Document\BLDocument.cs" />
+    <Compile Include="Document\BLDocumentNote.cs" />
     <Compile Include="Document\BLDocumentViewModal.cs" />
     <Compile Include="Email\BLCompose.cs" />
     <Compile Include="Log\BLLogs.cs" />

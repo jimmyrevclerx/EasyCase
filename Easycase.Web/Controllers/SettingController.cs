@@ -11,7 +11,8 @@ using System.Web.Mvc;
 namespace Easycase.Web.Controllers
 {
     [Authorize]
-    public class SettingController : Controller
+    [HandleError]
+    public class SettingController : BaseController
     {
         BLCompanyDetail companyDetail = new BLCompanyDetail();
         BLSupport bLsupport = new BLSupport();

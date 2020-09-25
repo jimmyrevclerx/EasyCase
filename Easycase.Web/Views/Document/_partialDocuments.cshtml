@@ -34,7 +34,7 @@
                 <td>@(item.CreatedOn.Value.ToString("ddd MMM dd, yyyy"))</td>
                 <td>
                     <i class="fa fa-pencil" onclick="EditName(@item.ID)" style="font-size:25px" aria-hidden="true"></i>
-                    <button type="button" class="btn btn-light" onclick="OpenNoteModal(@item.ID)"><i class="fa fa-file-text" style="color: blue;font-size: 25px;" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-light" onclick="OpenDocumentNoteModal(@item.ID)"><i class="fa fa-file-text" style="color: blue;font-size: 25px;" aria-hidden="true"></i></button>
                     <i class="fa fa-window-close" onclick="confirmDelete(@item.ID)" style="font-size:25px;color:red" aria-hidden="true"></i>
                 </td>
             </tr>
@@ -63,4 +63,5 @@
             }
         });
     }
+    
 </script>

@@ -15,7 +15,8 @@ using System.Web.Mvc;
 namespace Easycase.Web.Controllers
 {
     [Authorize]
-    public class CaseController : Controller
+    [HandleError]
+    public class CaseController : BaseController
     {
         BLCases casesbl = new BLCases();
         BLCaseviewModal caseviewmodal = new BLCaseviewModal();

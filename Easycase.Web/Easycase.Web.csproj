@@ -183,6 +183,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\CaseController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
@@ -1263,6 +1264,8 @@
     <Content Include="Views\Shared\_partialDetailHeader.cshtml" />
     <Content Include="Views\Shared\_partialDetails.cshtml" />
     <Content Include="Views\Document\_partialDocuments.cshtml" />
+    <Content Include="Views\Error\InternalError.cshtml" />
+    <Content Include="Views\Document\_partialDocumentNote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

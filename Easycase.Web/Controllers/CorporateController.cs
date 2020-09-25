@@ -10,7 +10,8 @@ using System.Web.Mvc;
 namespace Easycase.Web.Controllers
 {
     [Authorize]
-    public class CorporateController : Controller
+    [HandleError]
+    public class CorporateController : BaseController
     {
         BLCorporateProfile db = new BLCorporateProfile();
         BLCorporateViewProfile db_corporateViewProfile = new BLCorporateViewProfile();

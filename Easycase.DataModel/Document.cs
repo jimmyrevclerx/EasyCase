@@ -14,6 +14,12 @@ namespace Easycase.DataModel
     
     public partial class Document
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Document()
+        {
+            this.DocumentNotes = new HashSet<DocumentNote>();
+        }
+    
         public long ID { get; set; }
         public Nullable<long> LinkId { get; set; }
         public string LinkTable { get; set; }
@@ -25,5 +31,8 @@ namespace Easycase.DataModel
         public string CretedBy { get; set; }
         public Nullable<bool> Deleted { get; set; }
         public string Status { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DocumentNote> DocumentNotes { get; set; }
     }
 }
