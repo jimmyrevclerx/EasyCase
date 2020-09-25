@@ -54,10 +54,10 @@
                         <div id="list-view" style="overflow: auto;width:100%; background-color: rgb(246, 247, 247); padding: 10px; max-height: 421.8px;">
 
                             <div class="alert alert-info">
-                                <button type="button" class="close" onclick="deleteCaseNote(@item.ID)">×</button>
+                                <button type="button" class="close" onclick="deleteDocumentNote(@item.ID)">×</button>
                                 <p class="subject-line"><b>Subject:</b> <span id="subject_1" class="subject-info">@item.Subject</span> </p>
                                 <span id="note_1">@item.Notes </span>
-                                <div style="float:right"><i class="fa fa-pencil" onclick="EditNote(@item.ID,'@item.Subject','@item.Notes'" aria-hidden="true"></i></div>
+                                <div style="float:right"><i class="fa fa-pencil" onclick="EditNote(@item.ID,'@item.Subject','@item.Notes')" aria-hidden="true"></i></div>
                                 <br><span><sub>Created by: <b></b><span style="margin-left:1%" id="notedate_1" notedate="2020-09-04"> @item.CreatedOn.Value.ToString("MMM dd, yyyy @ hh:mm tt")</span></sub></span>
                             </div>
 

@@ -97,6 +97,24 @@ namespace Easycase.Model.Document
                 return new Tuple<bool, string, long>(false, ex.Message, 0);
             }
         }
+        public bool Delete(long id)
+        {
+            try
+            {
+                using (Easycase.DataModel.EasyCaseDBEntities DB = new DataModel.EasyCaseDBEntities())
+                {
+                    var client = DB.DocumentNotes.Where(d => d.ID == id).FirstOrDefault();
+                    DB.Entry(client).State = System.Data.Entity.EntityState.Deleted;
+                    DB.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logs.SaveLog(ex.Message);
+                return false;
+            }
+        }
         public void Dispose()
         {
             GC.Collect();

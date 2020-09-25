@@ -126,5 +126,12 @@ namespace Easycase.Web.Controllers
             }
             return Json(status, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult DeleteDocumentNotes(long id)
+        {
+            bool status = false;
+            if (id > 0)
+                status = documentNote.Delete(id);
+            return Json(status, JsonRequestBehavior.AllowGet);
+        }
     }
 }

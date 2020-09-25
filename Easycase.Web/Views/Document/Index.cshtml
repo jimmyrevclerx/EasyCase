@@ -235,7 +235,7 @@
             $("#minus-circle").css("display", "none");
             $("#note-edit").css("display", "none");
         }
-        function EditNote(noteId, subject, notes, date) {
+        function EditNote(noteId, subject, notes) {
             $("#subject").val(subject);
             $("#notes").val(notes);
             $("#currentNoteId").val(noteId);
@@ -265,14 +265,27 @@
                 });
             }
         }
-
-        function deleteCaseNote(id) {
+        function DocumentNoteList(id) {
             $.ajax({
-                url: "/Corporate/DeleteCaseNotes",
+                url: "/Document/OpenDocumentNote",
+                type: "GET",
+                data: { id: id },
+                success: function (response) {
+                    $("#documentnotemodal").html(response);
+                    $("#hdnDocumentId").val(id);
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
+        }
+        function deleteDocumentNote(id) {
+            $.ajax({
+                url: "/Document/DeleteDocumentNotes",
                 type: "POST",
                 data: { id: id },
                 success: function (response) {
-                    DocumentList();
+                    DocumentNoteList($("#hdnDocumentId").val());
                 },
                 error: function (er) {
                     toastr.error(er, 'Error');
