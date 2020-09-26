@@ -235,13 +235,24 @@
             $("#minus-circle").css("display", "none");
             $("#note-edit").css("display", "none");
         }
-        function EditNote(noteId, subject, notes) {
-            $("#subject").val(subject);
-            $("#notes").val(notes);
-            $("#currentNoteId").val(noteId);
-            $("#plus-circle").css("display", "none");
-            $("#minus-circle").css("display", "block");
-            $("#note-edit").css("display", "block");
+        function EditDocNote(noteId) {
+            $.ajax({
+                url: "/Document/GetDocumentNoteById",
+                type: "POST",
+                data: { id: noteId},
+                success: function (response) {
+                    $("#subject").val(response.Subject);
+                    $("#notes").val(response.Notes);
+                    $("#currentNoteId").val(response.ID);
+                    $("#plus-circle").css("display", "none");
+                    $("#minus-circle").css("display", "block");
+                    $("#note-edit").css("display", "block");
+                    $("#switch-1").prop("checked", response.Private);
+                },
+                error: function (er) {
+                    toastr.error(er, 'Error');
+                }
+            });
         }
         function SaveDocNotes() {
             var data = new Object();
@@ -249,6 +260,7 @@
             data.Notes = $("#notes").val();
             data.DocumentId = $("#hdnDocumentId").val();
             data.ID = $("#currentNoteId").val();
+            data.Private = $("#switch-1").prop("checked");
             if (data.Notes != "" && data.Date != "") {
                 $.ajax({
                     url: "/Document/SaveDocumentNote",

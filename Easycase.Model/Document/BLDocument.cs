@@ -16,6 +16,7 @@ namespace Easycase.Model.Document
         public string FileName { get; set; }
         public string DocPath { get; set; }
         public string FolderName { get; set; }
+        public IList<BLDocumentNote> DocumentNotes { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public string CretedBy { get; set; }
         public Nullable<bool> Deleted { get; set; }
@@ -32,14 +33,14 @@ namespace Easycase.Model.Document
                     {
                         OriginalName = this.OriginalName,
                         CreatedOn = DateTime.Now,
-                        CretedBy=this.CretedBy,
-                        Deleted=false,
-                        DocPath=this.DocPath,
-                        FileName=this.FileName,
-                        FolderName=this.FolderName,
-                        LinkId=this.LinkId,
-                        LinkTable=this.LinkTable,
-                        Status="In Review"
+                        CretedBy = this.CretedBy,
+                        Deleted = false,
+                        DocPath = this.DocPath,
+                        FileName = this.FileName,
+                        FolderName = this.FolderName,
+                        LinkId = this.LinkId,
+                        LinkTable = this.LinkTable,
+                        Status = "In Review"
                     };
                     DB.Documents.Add(image);
                     DB.SaveChanges();
@@ -64,15 +65,15 @@ namespace Easycase.Model.Document
                     {
                         ID = c.ID,
                         OriginalName = c.OriginalName,
-                        LinkId=c.LinkId,
-                        LinkTable=c.LinkTable,
-                        FolderName=c.FolderName,
-                        FileName=c.FileName,
-                        DocPath=c.DocPath,
-                        CreatedOn=c.CreatedOn,
-                        CretedBy=c.CretedBy,
-                        Deleted=c.Deleted,
-                        Status=c.Status
+                        LinkId = c.LinkId,
+                        LinkTable = c.LinkTable,
+                        FolderName = c.FolderName,
+                        FileName = c.FileName,
+                        DocPath = c.DocPath,
+                        CreatedOn = c.CreatedOn,
+                        CretedBy = c.CretedBy,
+                        Deleted = c.Deleted,
+                        Status = c.Status
                     }).FirstOrDefault();
                     return client;
                 }
@@ -90,7 +91,7 @@ namespace Easycase.Model.Document
             {
                 using (Easycase.DataModel.EasyCaseDBEntities DB = new DataModel.EasyCaseDBEntities())
                 {
-                    var client = DB.Documents.Where(d => d.CretedBy == createdby && d.Deleted==false).Select(c => new BLDocument
+                    var client = DB.Documents.Where(d => d.CretedBy == createdby && d.Deleted == false).Select(c => new BLDocument
                     {
                         ID = c.ID,
                         OriginalName = c.OriginalName,
@@ -102,7 +103,16 @@ namespace Easycase.Model.Document
                         CreatedOn = c.CreatedOn,
                         CretedBy = c.CretedBy,
                         Deleted = c.Deleted,
-                        Status=c.Status
+                        Status = c.Status,
+                        DocumentNotes = c.DocumentNotes.Select(s => new BLDocumentNote
+                        {
+                            CreatedBy = s.CreatedBy,
+                            CreatedOn = s.CreatedOn,
+                            DocumentId = s.DocumentId,
+                            Notes = s.Notes,
+                            ID = s.ID,
+                            Subject = s.Subject
+                        }).ToList()
                     }).ToList();
                     return client;
                 }

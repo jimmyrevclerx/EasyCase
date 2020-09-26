@@ -16,6 +16,7 @@ namespace Easycase.Model.Document
         public string Notes { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public string CreatedBy { get; set; }
+        public Nullable<Boolean> Private { get; set; }
 
         public List<BLDocumentNote> GetByDocumentId(long id)
         {
@@ -30,7 +31,8 @@ namespace Easycase.Model.Document
                         Subject = c.Subject,
                         CreatedOn = c.CreatedOn,
                         CreatedBy = c.CreatedBy,
-                        DocumentId=c.DocumentId
+                        DocumentId=c.DocumentId,
+                        Private= c.Private
                     }).ToList();
                     return casenote;
                 }
@@ -39,6 +41,31 @@ namespace Easycase.Model.Document
             {
                 Logs.SaveLog(ex.Message);
                 return new List<BLDocumentNote>();
+            }
+        }
+        public BLDocumentNote GetById(long id)
+        {
+            try
+            {
+                using (Easycase.DataModel.EasyCaseDBEntities DB = new DataModel.EasyCaseDBEntities())
+                {
+                    var casenote = DB.DocumentNotes.Where(d => d.ID == id).Select(c => new BLDocumentNote
+                    {
+                        ID = c.ID,
+                        Notes = c.Notes,
+                        Subject = c.Subject,
+                        CreatedOn = c.CreatedOn,
+                        CreatedBy = c.CreatedBy,
+                        DocumentId = c.DocumentId,
+                        Private = c.Private
+                    }).First();
+                    return casenote;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logs.SaveLog(ex.Message);
+                return new BLDocumentNote();
             }
         }
         public Tuple<bool, string, long> Save()
@@ -54,7 +81,8 @@ namespace Easycase.Model.Document
                         CreatedBy = this.CreatedBy,
                         CreatedOn = DateTime.Now,
                         Subject = this.Subject,
-                        DocumentId=this.DocumentId
+                        DocumentId=this.DocumentId,
+                        Private=this.Private
                     };
                     DB.DocumentNotes.Add(casenote);
                     DB.SaveChanges();
@@ -83,7 +111,8 @@ namespace Easycase.Model.Document
                         CreatedOn = DateTime.Now,
                         Subject = this.Subject,
                         ID = this.ID,
-                        DocumentId=this.DocumentId
+                        DocumentId=this.DocumentId,
+                        Private=this.Private
                     };
                     DB.Entry(casenote).State = System.Data.Entity.EntityState.Modified;
                     DB.SaveChanges();

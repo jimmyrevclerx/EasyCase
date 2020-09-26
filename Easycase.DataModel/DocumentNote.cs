@@ -20,6 +20,7 @@ namespace Easycase.DataModel
         public string Notes { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public string CreatedBy { get; set; }
+        public Nullable<bool> Private { get; set; }
     
         public virtual Document Document { get; set; }
     }

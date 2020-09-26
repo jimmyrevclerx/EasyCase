@@ -195,6 +195,7 @@
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+          <Property Name="Private" Type="bit" />
         </EntityType>
         <EntityType Name="Documents">
           <Key>
@@ -1694,6 +1695,7 @@
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Document" Relationship="EasyCaseDBModel.FK_DocumentNotes_DocumentNotes" FromRole="DocumentNote" ToRole="Document" />
+          <Property Name="Private" Type="Boolean" />
         </EntityType>
         <Association Name="FK_DocumentNotes_DocumentNotes">
           <End Type="EasyCaseDBModel.Document" Role="Document" Multiplicity="0..1" />
@@ -2143,6 +2145,7 @@
           <EntitySetMapping Name="DocumentNotes">
             <EntityTypeMapping TypeName="EasyCaseDBModel.DocumentNote">
               <MappingFragment StoreEntitySet="DocumentNotes">
+                <ScalarProperty Name="Private" ColumnName="Private" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />

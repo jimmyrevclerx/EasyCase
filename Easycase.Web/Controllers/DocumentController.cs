@@ -133,5 +133,11 @@ namespace Easycase.Web.Controllers
                 status = documentNote.Delete(id);
             return Json(status, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetDocumentNoteById(long id)
+        {
+            var result = documentNote.GetById(id);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -30,7 +30,12 @@
                     <input type="text" value="@item.OriginalName" onblur="ChangeName(@item.ID,this)" class="hide form-control" id="txtdocName@(item.ID)" />
                 </td>
                 <td><button type="button" class="btn btn-primary btn-sm">@item.Status</button></td>
-                <td></td>
+                <td>
+                    @foreach (var doc_note in item.DocumentNotes)
+                    {
+                        <span>@doc_note.Subject : @doc_note.Notes</span><br />
+                    }
+                </td>
                 <td>@(item.CreatedOn.Value.ToString("ddd MMM dd, yyyy"))</td>
                 <td>
                     <i class="fa fa-pencil" onclick="EditName(@item.ID)" style="font-size:25px" aria-hidden="true"></i>
