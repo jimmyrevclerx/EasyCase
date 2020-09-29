@@ -68,6 +68,16 @@
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
         </EntityType>
+        <EntityType Name="ClientAccount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BankName" Type="nvarchar(max)" />
+          <Property Name="Currency" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="168" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
         <EntityType Name="Clients">
           <Key>
             <PropertyRef Name="ID" />
@@ -710,6 +720,7 @@
           <EntitySet Name="CasesNote" EntityType="Self.CasesNote" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CaseStatus" EntityType="Self.CaseStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CaseTypes" EntityType="Self.CaseTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientAccount" EntityType="Self.ClientAccount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanyDetails" EntityType="Self.CompanyDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
@@ -962,6 +973,7 @@
             <End Role="Document" EntitySet="Documents" />
             <End Role="DocumentNote" EntitySet="DocumentNotes" />
           </AssociationSet>
+          <EntitySet Name="ClientAccounts" EntityType="EasyCaseDBModel.ClientAccount" />
           </EntityContainer>
         <EntityType Name="Image">
           <Key>
@@ -1709,6 +1721,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ClientAccount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BankName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Currency" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2151,6 +2173,17 @@
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
                 <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientAccounts">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.ClientAccount">
+              <MappingFragment StoreEntitySet="ClientAccount">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

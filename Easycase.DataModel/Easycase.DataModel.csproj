@@ -71,6 +71,9 @@
     <Compile Include="Client.cs">
       <DependentUpon>EasycaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ClientAccount.cs">
+      <DependentUpon>EasycaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CompanyDetail.cs">
       <DependentUpon>EasycaseModel.tt</DependentUpon>
     </Compile>

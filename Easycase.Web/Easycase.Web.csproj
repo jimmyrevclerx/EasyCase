@@ -1266,6 +1266,8 @@
     <Content Include="Views\Document\_partialDocuments.cshtml" />
     <Content Include="Views\Error\InternalError.cshtml" />
     <Content Include="Views\Document\_partialDocumentNote.cshtml" />
+    <Content Include="Views\Setting\Account.cshtml" />
+    <Content Include="Views\Setting\_partialAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

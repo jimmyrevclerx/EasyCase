@@ -94,6 +94,7 @@
     <Compile Include="Log\Logs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setting\BLAddServiceFee.cs" />
+    <Compile Include="Setting\BLClientAccount.cs" />
     <Compile Include="Setting\BLServiceFee.cs" />
     <Compile Include="Task\BLAssigned.cs" />
     <Compile Include="Task\BLMentions.cs" />

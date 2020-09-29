@@ -2,6 +2,7 @@
 using Easycase.Model.Company;
 using Easycase.Model.Setting;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -170,6 +171,37 @@ namespace Easycase.Web.Controllers
             if (id > 0)
                 status = serviceFee.Delete(id);
             return Json(status, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Client Account
+        public ActionResult Account() 
+        {
+            var userId = User.Identity.GetUserId();
+            BLClientAccount bLClientAccount = new BLClientAccount();
+            bLClientAccount = bLClientAccount.GetByUserId(userId);
+            bLClientAccount.CurrencyArray = JsonConvert.DeserializeObject<string[]>(bLClientAccount.Currency);
+            bLClientAccount.BankNameArray = JsonConvert.DeserializeObject<string[]>(bLClientAccount.BankName);
+            return View(bLClientAccount);
+        }
+        [HttpPost]
+        public ActionResult Account(BLClientAccount bLClientAccount)
+        {
+            var userId = User.Identity.GetUserId();
+            bLClientAccount.CreatedBy = userId;
+            bLClientAccount.BankName = JsonConvert.SerializeObject(bLClientAccount.BankNameArray);
+            bLClientAccount.Currency= JsonConvert.SerializeObject(bLClientAccount.CurrencyArray);
+            var result= bLClientAccount.Save();
+            return Json(result.Item2, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult PartialClientAccount()
+        {
+            var userId = User.Identity.GetUserId();
+            BLClientAccount bLClientAccount = new BLClientAccount();
+            bLClientAccount = bLClientAccount.GetByUserId(userId);
+            bLClientAccount.CurrencyArray = JsonConvert.DeserializeObject<string[]>(bLClientAccount.Currency);
+            bLClientAccount.BankNameArray = JsonConvert.DeserializeObject<string[]>(bLClientAccount.BankName);
+            return PartialView("_partialAccount", bLClientAccount);
         }
         #endregion
     }

@@ -1,0 +1,47 @@
+﻿@model Easycase.Model.Setting.BLClientAccount
+
+<table id="bankDetails">
+    <thead>
+        <tr><th>Banking Institution Name</th><th>Currency</th></tr>
+    </thead>
+    <tbody>
+        @if (Model.BankNameArray.Length > 0)
+        {
+            for (int i = 0; i < Model.BankNameArray.Length; i++)
+            {
+                <tr>
+                    <td><input type="text" value="@Model.BankNameArray[i]" class="form-control data-bank" /></td>
+                    <td><input type="text" value="@Model.CurrencyArray[i]" class="form-control data-currency" /></td>
+
+                    <td class="remove-control" style="width:20px">
+                        @if (i == 0)
+                        {
+                            <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-minus-circle" style="color:red" onclick="RemoveRow(this)" aria-hidden="true"></i>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td><input type="text" value="" class="form-control data-bank" /></td>
+                <td><input type="text" value="" class="form-control data-currency" /></td>
+                <td class="remove-control" style="width:20px">
+                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5">
+                <span onclick="AddRow()" style="float:right; color:#0088cc;text-decoration:none; cursor:pointer"><i class="fa fa-plus-square" style="font-size:1.3em;"></i> Add another row for more information</span>
+            </td>
+        </tr>
+    </tfoot>
+</table>
