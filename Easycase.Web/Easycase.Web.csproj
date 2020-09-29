@@ -1268,6 +1268,7 @@
     <Content Include="Views\Document\_partialDocumentNote.cshtml" />
     <Content Include="Views\Setting\Account.cshtml" />
     <Content Include="Views\Setting\_partialAccount.cshtml" />
+    <Content Include="Views\Setting\Tax.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Easycase.Model.Setting
 {
-    public class BLClientAccount
+    public class BLClientAccount : IDisposable
     {
         public long ID { get; set; }
         public string BankName { get; set; }
@@ -78,6 +78,10 @@ namespace Easycase.Model.Setting
                 Logs.SaveLog(ex.Message);
                 return new BLClientAccount();
             }
+        }
+        public void Dispose()
+        {
+            GC.Collect();
         }
     }
 }

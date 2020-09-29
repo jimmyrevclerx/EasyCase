@@ -204,5 +204,25 @@ namespace Easycase.Web.Controllers
             return PartialView("_partialAccount", bLClientAccount);
         }
         #endregion
+        #region TaxInformation
+        public ActionResult Tax()
+        {
+            var userId = User.Identity.GetUserId();
+            BLTaxInformation bLTaxInformation = new BLTaxInformation();
+            bLTaxInformation = bLTaxInformation.GetByUserId(userId);
+            return View(bLTaxInformation);
+        }
+        [HttpPost]
+        public ActionResult Tax(BLTaxInformation bLTaxInformation)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.GetUserId();
+                bLTaxInformation.UserId = userId;
+                bLTaxInformation.Save();
+            }
+            return View(bLTaxInformation);
+        }
+        #endregion
     }
 }

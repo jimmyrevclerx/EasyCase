@@ -1,0 +1,108 @@
+﻿@model Easycase.Model.Setting.BLTaxInformation
+@{
+    ViewBag.Title = "Tax";
+    Layout = "~/Views/Shared/_LayoutSetting.cshtml";
+}
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Tax Information</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/client/index"></a></li>
+                        <li class="breadcrumb-item active" aria-current="page"></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                @using (Ajax.BeginForm("Tax", "Setting",
+new AjaxOptions
+{
+OnSuccess = "OnSuccess",
+OnFailure = "OnFailure"
+}))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "form-horizontal" })
+                    @Html.HiddenFor(model=>model.ID)
+                    <div class="card-body">
+                        <h4 class="card-title"></h4>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Do you charge sales/service tax? </label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.IsTaxable, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="Yes", Value = "true" },
+                                        new SelectListItem{ Text="No", Value = "false" },
+                                     }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.IsTaxable, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Tax Type</label>
+                                <div class="col-sm-12">
+                                    @Html.DropDownListFor(model => model.TaxType, new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="Select", Value = "" },
+                                        new SelectListItem{ Text="GST", Value = "GST" },
+                                        new SelectListItem{ Text="HST", Value = "HST" },
+                                        new SelectListItem{ Text="QST", Value = "QST" },
+                                     }, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.TaxType, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label col-md-6">Tax Percentage (%)</label>
+                                <div class="col-sm-12">
+                                    @Html.EditorFor(model => model.TaxPercent, new { htmlAttributes = new { @type = "number", @min = "0",@class = "form-control", placeholder = "Tax Percent" } })
+                                    @Html.ValidationMessageFor(model => model.TaxPercent, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-top">
+                        <div class="card-body">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+    $(document).ready(function () {
+        $(".navigationli").removeClass("selected");
+        $("#taxInformationli").addClass("selected");
+         $(".select2").select2();
+        if ('@ViewData["SuccessClient"]' != null&&'@ViewData["SuccessClient"]' != '') {
+            toastr.success('@ViewData["SuccessClient"]', 'Success');
+        }
+        if ('@ViewData["FailedClient"]' != null&&'@ViewData["FailedClient"]' != '') {
+            toastr.error('@ViewData["FailedClient"]', 'Error');
+        }
+     });
+    </script>
+}
+

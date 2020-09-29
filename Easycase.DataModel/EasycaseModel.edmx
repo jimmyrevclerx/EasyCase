@@ -425,6 +425,17 @@
           <Property Name="NotifyUser" Type="nvarchar" MaxLength="500" />
           <Property Name="CreatedOn" Type="datetime" />
         </EntityType>
+        <EntityType Name="TaxInformation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsTaxable" Type="bit" />
+          <Property Name="TaxType" Type="varchar" MaxLength="10" />
+          <Property Name="TaxPercent" Type="float" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="168" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
         <Association Name="FK_Assigned_Clients">
           <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
           <End Role="Assigned" Type="Self.Assigned" Multiplicity="*" />
@@ -745,6 +756,7 @@
           <EntitySet Name="Support" EntityType="Self.Support" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskNote" EntityType="Self.TaskNote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaxInformation" EntityType="Self.TaxInformation" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Assigned_Clients" Association="Self.FK_Assigned_Clients">
             <End Role="Clients" EntitySet="Clients" />
             <End Role="Assigned" EntitySet="Assigned" />
@@ -974,6 +986,7 @@
             <End Role="DocumentNote" EntitySet="DocumentNotes" />
           </AssociationSet>
           <EntitySet Name="ClientAccounts" EntityType="EasyCaseDBModel.ClientAccount" />
+          <EntitySet Name="TaxInformations" EntityType="EasyCaseDBModel.TaxInformation" />
           </EntityContainer>
         <EntityType Name="Image">
           <Key>
@@ -1731,6 +1744,17 @@
           <Property Name="CreatedBy" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="TaxInformation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsTaxable" Type="Boolean" />
+          <Property Name="TaxType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TaxPercent" Type="Double" />
+          <Property Name="UserId" Type="String" MaxLength="168" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2184,6 +2208,18 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Currency" ColumnName="Currency" />
                 <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxInformations">
+            <EntityTypeMapping TypeName="EasyCaseDBModel.TaxInformation">
+              <MappingFragment StoreEntitySet="TaxInformation">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TaxPercent" ColumnName="TaxPercent" />
+                <ScalarProperty Name="TaxType" ColumnName="TaxType" />
+                <ScalarProperty Name="IsTaxable" ColumnName="IsTaxable" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -159,6 +159,9 @@
     <Compile Include="TaskNote.cs">
       <DependentUpon>EasycaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="TaxInformation.cs">
+      <DependentUpon>EasycaseModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

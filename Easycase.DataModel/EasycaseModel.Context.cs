@@ -56,5 +56,6 @@ namespace Easycase.DataModel
         public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<DocumentNote> DocumentNotes { get; set; }
         public virtual DbSet<ClientAccount> ClientAccounts { get; set; }
+        public virtual DbSet<TaxInformation> TaxInformations { get; set; }
     }
 }

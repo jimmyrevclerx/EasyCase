@@ -96,6 +96,7 @@
     <Compile Include="Setting\BLAddServiceFee.cs" />
     <Compile Include="Setting\BLClientAccount.cs" />
     <Compile Include="Setting\BLServiceFee.cs" />
+    <Compile Include="Setting\BLTaxInformation.cs" />
     <Compile Include="Task\BLAssigned.cs" />
     <Compile Include="Task\BLMentions.cs" />
     <Compile Include="Task\BLTask.cs" />
